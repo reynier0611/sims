@@ -234,14 +234,14 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	  ntu(42) = ntup%radphot/1000.			!radphot - GeV
 	  ntu(43) = main%sigcc
 	  ntu(44) = main%weight
-	  ntu(45) = main%jacobian                       !  jacobian to determine sigma
-	  ntu(46) = recon%e%theta                       !  electron scattering angle
-	  ntu(47) = recon%p%theta                       !  proton scattering angle
-	  ntu(48) = main%target%x                       !  vertex x generated event
-	  ntu(49) = main%target%y                       !  vertex y
-	  ntu(50) = main%target%z                       !  vertex x
-	  ntu(51) = main%gen_weight                     !  general weight for event generation
-	  ntu(52) = main%SF_weight                      !  Spectral Function
+	  ntu(45) = main%jacobian                      !  jacobian to determine sigma
+	  ntu(46) = recon%e%theta*180./3.1415926536    !  electron scattering angle reconstructed (deg)
+	  ntu(47) = recon%p%theta*180./3.141592653     !  proton   scattering angle reconstructed (deg)
+	  ntu(48) = main%target%x                      !  vertex x generated event
+	  ntu(49) = main%target%y                      !  vertex y
+	  ntu(50) = main%target%z                      !  vertex x
+	  ntu(51) = main%gen_weight                    !  general weight for event generation
+	  ntu(52) = main%SF_weight                     !  Spectral Function
 	  ntu(53) = main%jacobian_corr                 !  correction to jacobian
 	  ntu(54) = main%sig                           !  cross section
 	  ntu(55) = main%sig_recon                     !  cross section (reconstr. Laget)
@@ -249,15 +249,24 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	  ntu(57) = main%coul_corr                     !  coul. correction
 	  ntu(58) = main%RECON%p%zv                    !  p recon. vertex zv
 	  ntu(59) = main%RECON%p%yv                    !                  yv
-	  ntu(60) = main%RECON%e%zv                    !  e recon. vertex  zv
-	  ntu(61) = main%RECON%e%yv                    !           vertex  yv
+	  ntu(60) = main%RECON%e%zv                    !  e recon. vertex zv
+	  ntu(61) = main%RECON%e%yv                    !           vertex yv
 	  ntu(62) = recon%p%p                          !  final proton momentum
 	  ntu(63) = recon%e%p                          !  final electron momentum
-	  ntu(64) = recon%ein                          !  incident energy
-	  ntu(65) = recon%theta_rq                     !  recoil angle
-	  ntu(66) = main%SF_weight                     !  Spectral Function fro recon. quantities
-	  ntu(67) = (spec%p%theta-recon%p%yptar)*180./3.1415926536     !  RCT 8/9/2016 outgoing reconstructed proton in-plane angle  
+	  ntu(64) = orig%p%p                           !  generated proton momentum
+	  ntu(65) = orig%e%p                           !  generated electron momentum
+	  ntu(66) = recon%ein                          !  incident energy
+	  ntu(67) = recon%theta_rq*180./3.1415926536   !  recoil angle
+	  ntu(68) = main%SF_weight                     !  Spectral Function fro recon. quantities	
+	  ntu(69) = ACOS((COS(spec%e%theta)-orig%e%yptar*SIN(spec%e%theta))/SQRT(1+orig%e%yptar**2+orig%e%xptar**2))*180./3.1415926536     !  RCT 5/25/2017 outgoing reconstructed electron in-plane angle (deg)
+	  ntu(70) = ACOS((COS(spec%p%theta)+orig%p%yptar*SIN(spec%p%theta))/SQRT(1+orig%p%yptar**2+orig%p%xptar**2))*180./3.1415926536     !  RCT 5/25/2017 outgoing reconstructed proton   in-plane angle (deg)
+	  ntu(71) = spec%e%P                           !  RCT 5/25/2017 electron spectrometer central momentum
+	  ntu(72) = spec%p%P                           !  RCT 5/25/2017 proton   spectrometer central momentum
+	  ntu(73) = spec%e%theta*180./3.1415926536     !  RCT 5/25/2017 electron spectrometer central angle
+	  ntu(74) = spec%p%theta*180./3.1415926536     !  RCT 5/25/2017 proton   spectrometer central angle
+	  ntu(75) = recon%Q2/2./0.938/recon%nu/1000.   !  RCT 5/25/2017 Bjorken x
 	endif
+
 
 ! write output
 !

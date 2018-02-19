@@ -1,0 +1,90 @@
+****************************************************************************
+EXAMPLE: Combining histograms from two separate root files into a single
+histogram that contains both.
+
+OBJECTIVE: I modified SIMC with Werner at FIU to separate the 3He
+Spectral Function into the 2- and 3-body breakups. Thus, now we run SIMC
+twice and produce two output files that combined give the proper
+kinematics and all that.
+
+----------------------------------
+
+* Open root.
+* Create two TFile objects and associate them with the two root files
+corresponding to two-body breakup (bound.root in this case) and three-
+body breakup (not_bound.root in this case):
+
+root [0] fb = new TFile("bound.root")
+root [1] fnb = new TFile("not_bound.root")
+
+* Create a histogram and project the missing energy branch from fnb
+(since fnb was created after fb, that's the tree that we are accessing)
+onto said histogram:
+
+root [2] Emnbh = new TH1F("Emnbh","Emnb histo", 200, 0, .1)
+root [3] SNT->Project("Emnbh","Em","Weight")
+
+* Do a similar thing for fb. That is, access the fb tree, create a
+histogram and project the missing energy branch from fb onto said
+histogram:
+
+root [4] fb->cd()
+root [5] Embh = new TH1F("Embh","Emb histo", 200, 0, .1)
+root [6] SNT->Project("Embh","Em","Weight")
+
+* Draw both histograms onto the same canvas:
+
+root [7] Embh->Draw()
+root [8] fnb->cd()
+root [9] Emnbh->Draw("same")
+
+****************************************************************************
+
+OTHER EXAMPLES OF THINGS THAT CAN BE DONE
+
+fb=new TFile("bound.root")
+fc=new TFile("not_bound.root")
+SNT->Draw("Em","Em<0.02")
+fb->cd()
+SNT->Draw("Em","Em<0.05","same")
+SNT->Draw("Em","Em<0.05")
+Emh = new TH1F("Emh","Em histo", 200, 0, .1)
+SNT->Project("Emh","Em")
+fc->cd()
+SNT->Project("Emh","Em")
+Emh->Draw()
+Emch = new TH1F("Emch","Emc histo", 200, 0, .1)
+SNT->Project("Emch","Em")
+Emch->Draw()
+Emh->Draw()
+Emch->Draw("same")
+SNT->StartViewer()
+SNT->Draw("Em:SF_weight")
+SNT->Draw("Em:Pm")
+SNT->Draw("Em:Pm","Weight")
+SNT->Draw("Em","Weight")
+fb->cd()
+SNT->Project("Emh","Em","Weight")
+Emh->Draw()
+fc->cd()
+SNT->Project("Emch","Em","Weight")
+Emch->Draw("same")
+
+****************************************************************************
+
+WERNER ANALYZER CODE
+
+Execute by doing:
+root -l analyze_one.C
+
+Check which root file was just created
+ls -ltr
+
+Open said file:
+root -l fastkin.root
+
+See which histograms are in there:
+.ls
+
+Play with them!:
+Emiss->Draw("hist")

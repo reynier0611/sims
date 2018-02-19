@@ -70,13 +70,14 @@
 	write(6,*) '*                --- SIMC ---                  *'
 	write(6,*) '*                                              *'
 	write(6,*) '*          Welcome to Jefferson Lab            *'
-	write(6,*) '*         Last edited on: 11/18/2016           *'
+	write(6,*) '*         Last edited on: 05/24/2017           *'
 	write(6,*) '*                                              *'
 	write(6,*) '************************************************'
 	write(6,*) 'Enter the input filename'
 	write(6,*) '(assumed to be in infiles directory):'
 	!read(5,'(a)') dbase_file
 	dbase_file = 'current.data'
+	write(6,*) 'Will automatically read current.data'
 	write(6,*) '*************************************************'
 
 	j=index(dbase_file,'/')
@@ -563,34 +564,31 @@ C DJG:
 
 	if(doing_hepi.or.doing_hekaon .or. (doing_heavy.and.use_sf)) then
 	  if (nint(targ%A).eq.3) then
-	    if (sf_version.eq.0) then  
-	      write(6,*) 'Using the Benhar version of 3He S.F.'
-	    else if (sf_version.eq.1) then
-	      write(6,*) 'Using the Kaptari version of the 3He S.F.'
-	    else
-	      write(6,*) 'No proper S.F. specified. Defaulting to Benhar S.F.'
-	    endif
 ! ============================================================
 ! RCT 10/26/2016 - using different spectral function versions
-!           Benhar spectral function
 	    if (sf_version.eq.0) then
-	      tmpfile='benharsf_3mod.dat'
-!           Kaptari spectral function
+	      tmpfile='benharsf_3mod.dat'  
+	      write(6,*) 'Using the Benhar version of 3He S.F.'
 	    else if (sf_version.eq.1) then
 	      tmpfile='kaptarisf_3par.dat'
+	      write(6,*) 'Using the Kaptari version of the 3He S.F.'
 	    else
-	      write(6,*) 'Wrong value for sf_version. Defaulting to Benhar'
 	      tmpfile='benharsf_3mod.dat'
+	      write(6,*) 'No proper S.F. specified. Defaulting to Benhar S.F.'
 	    endif
 ! ============================================================
 	  else if (nint(targ%A).eq.4) then
 	    tmpfile='benharsf_4.dat'
+	    write(6,*) 'Using the A=4 Benhar S.F.'
 	  else if (nint(targ%A).eq.12) then
 	    tmpfile='benharsf_12.dat'
+	    write(6,*) 'Using the A=12 Benhar S.F.'
 	  else if (nint(targ%A).eq.56) then
 	    tmpfile='benharsf_56.dat'
+	    write(6,*) 'Using the A=56 Benhar S.F.'
 	  else if (nint(targ%A).eq.197) then
 	    tmpfile='benharsf_197.dat'
+	    write(6,*) 'Using the A=197 Benhar S.F.'
 	  else
 	    write(6,*) 'No spectral function for A = ',targ%A
 	    write(6,*) 'Defaulting to Carbon S.F.'
@@ -600,11 +598,22 @@ C DJG:
 ! *****************************************************************************
 ! RCT 9/13/2016 Added this little piece of code that takes the neutron
 ! 3He distribution and uses it for the proton distribution in tritium.
-	  if ((nint(targ%A).eq.3).and.(nint(targ%Z).eq.2)) then
-	    call sf_lookup_init(tmpfile,.true.)                 !the true flag calls the proton S.F.
-	  else if ((nint(targ%A).eq.3).and.(nint(targ%Z).eq.1)) then
-	    call sf_lookup_init(tmpfile,.false.)                !the false flag calls the neutron S.F.
+	  if ((nint(targ%A).eq.3).and.(nint(targ%Z).eq.1)) then
+	    call sf_lookup_init(tmpfile,.false.)                !the false flag calls the neutron S.F.	
+	  else 
+	    call sf_lookup_init(tmpfile,.true.) 
 	  endif
+
+!          if ((nint(targ%A).eq.3).and.(nint(targ%Z).eq.2)) then
+!            call sf_lookup_init(tmpfile,.true.)                 !the true flag calls the proton S.F.
+!          else if ((nint(targ%A).eq.3).and.(nint(targ%Z).eq.1)) then
+!            call sf_lookup_init(tmpfile,.false.)                !the false flag calls the neutron S.F.
+!          else if(nint(targ%A).eq.12) then
+!            call sf_lookup_init(tmpfile,.true.)
+!          else if(nint(targ%A).eq.56) then
+!            call sf_lookup_init(tmpfile,.true.)
+!          endif
+
 ! Choos proton or neutron spectral function based on targ.Mtar_struck
 !	  if (abs(targ%Mtar_struck-Mp).le.1.d-6) then
 !	    call sf_lookup_init(tmpfile,.true.)			!proton S.F.

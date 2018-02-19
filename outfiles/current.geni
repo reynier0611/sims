@@ -11,16 +11,16 @@
  Calo. Ps, Calo. Sh               0           0
  Successes                        0
 
- HRSl Trials:                      0
+ HRSl Trials:                   6206
  Col (Sieve) entr/exit             0           0
- Spec. entrance                    0
- Q1 entrance/mid/exit              0           0           0
+ Spec. entrance                 2364
+ Q1 entrance/mid/exit            650        1129         676
  Q2 entrance/mid/exit              0           0           0
- Dipole entrance/exit              0           0
- Q3 entrance/mid/exit              0           0           0
- Events reaching hut               0
- VDC1, VDC2                        0           0
- S0, Cher, S2	                0           0           0
- Calo. prl1, Calo. prl2            0           0
- Successes                         0
+ Dipole entrance/exit            216          40
+ Q3 entrance/mid/exit              0           5          76
+ Events reaching hut            1050
+ VDC1, VDC2                        0           2
+ S0, Cher, S2	               37           0           0
+ Calo. prl1, Calo. prl2            5           0
+ Successes                      1006
 
