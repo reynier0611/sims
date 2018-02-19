@@ -1,0 +1,61 @@
+! First kinematics for a hi_pm experiment
+! 'TF' stands for 'this field'
+! ONE equals TRUE unless specified otherwise
+ &EXPERIMENT
+     ngen  =  300000			!  POS: # of successe
+     EXPER%charge  =   1.0		!  total charge (mC)
+     doing_phsp  =  F		!  (T = TRUE)	- If all of the doing_* are
+     doing_kaon  =  F		!  (T = TRUE)   false, then doing (e,e'p).
+     doing_pion  =  F		!  (T = TRUE)
+     doing_decay  =  F		!  1=decay ON, 0=decay OFF.
+     ctau  =  780.4			!  decay length (cm)
+     extra_dbase_file = 'extra_hydrogen_norad.data'     !  additional input parameters.
+/ 
+ &KINEMATICS_MAIN
+     Ebeam  =  11000.000                       !  (MeV)
+     dEbeam  =  0.05                                   !  beam energy variation (%)
+     electron_arm  =  5                                !  1=hms,2=sos,3=hrsr,4=hrsl,5 = shms
+     hadron_arm  =  1                                  !  1=hms,2=sos,3=hrsr,4=hrsl,5 = shms
+     spec%e%P  =   9322.369                    !  e arm central momentum (MeV/c)
+     spec%e%theta  =     11.685                !  e arm angle setting (degrees)
+     spec%p%P  =   2305.289                    !  p arm central momentum (MeV/c)
+     spec%p%theta  =     53.474                !  p arm angle setting (degrees)
+/ 
+ &TARGET
+     targ%A  =  2.0			!  target A
+     targ%Z  =  1.0			!  target Z
+     targ%mass_amu  =  2.01355	!  target mass in amu
+     targ%mrec_amu  =  1.008665	!  recoil mass in amu (eep=A-1 system,pion=A-2)
+     targ%rho  =  0.167		!  target density (g/cm^3)
+     ! targ%thick  =  2505.		!  target thick 15cm (mg/cm^2) 
+     targ%thick  =  1670.		!  target thick 10cm (mg/cm^2)
+     targ%angle  =  0.		!  target angle (for solid target) (degrees)
+     targ%abundancy  =  100.		!  target purity (%)
+     targ%can  =  1                  !  1=beer can (fpi), 2=pudding can (nucpi)
+/ 
+
+ &DEBUG
+     debug(1)  =  F			!  turns on output from brem.f
+     debug(2)  =  F			!  into/outa subs.
+     debug(3)  =  F			!  spit out values (init. and main loop).
+     debug(4)  =  F			!  mostly comp_ev, gen_rad diagnostics.
+     debug(5)  =  F			!  a bit of everything.
+/ 
+
+ &E_ARM_ACCEPT
+     SPedge%e%delta%min  =  -10.0	!  delta min (SPECTROMETER ACCEPTANC
+     SPedge%e%delta%max  =   10.0	!  delta max
+     SPedge%e%yptar%min  =  -90.0	!  yptar min = {TF} / 1000 (mrad)
+     SPedge%e%yptar%max  =   90.0	!  yptar max = {TF} / 1000
+     SPedge%e%xptar%min  =  -100.0	!  xptar min = {TF} / 1000 (mrad)
+     SPedge%e%xptar%max  =   100.0	!  xptar max = {TF} / 1000
+/ 
+
+ &P_ARM_ACCEPT
+     SPedge%p%delta%min  =  -15.0	!  delta min (SPECTROMETER ACCEPTANC
+     SPedge%p%delta%max  =   15.0	!  delta max
+     SPedge%p%yptar%min  =  -90.0	!  yptar min = {TF} / 1000 (mrad)
+     SPedge%p%yptar%max  =   90.0	!  yptar max = {TF} / 1000
+     SPedge%p%xptar%min  =  -100.0	!  xptar min = {TF} / 1000 (mrad)
+     SPedge%p%xptar%max  =   100.0	!  xptar max = {TF} / 1000
+/ 

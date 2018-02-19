@@ -1,0 +1,8 @@
+ &RESTSW
+    mc_smear = F
+    electron_arm = 0
+    hadron_arm = 0
+    use_first_cer = 0
+    extra_dbase_file = 0,
+/ 
+

@@ -1,0 +1,55 @@
+ Enter the input filename (assumed to be in infiles directory)
+ filename=infiles/current.data                                                 
+ filename=infiles/extra_hydrogen_norad.data                                    
+ E_bind =   2.2249399999998332      MeV in limits_init (QF only)
+  ****--------  D(e,e'p)  --------****
+    HRSL is detecting electrons
+    HRSR is detecting hadrons
+ Kees welcomes you to Hall A at Jefferson Lab - Enjoy your stay!
+ NOTE: Will NOT be applying radiative corrections
+ NOTE: Will NOT be calculating energy loss in the target
+ NOTE: Will NOT be calculating Coulomb correction (default for Hydrogen target)
+ NOTE: Will NOT correct reconstructed data for energy loss
+  
+ Generating Event        1 ...        0  successes so far - Monitor: 0.0000E+00
+ Generating Event     1001 ...       29  successes so far - Monitor: 0.9437E+01
+ Generating Event     2001 ...       65  successes so far - Monitor: 0.1332E+02
+ Generating Event     3001 ...       95  successes so far - Monitor: 0.1154E+02
+ Generating Event     4001 ...      133  successes so far - Monitor: 0.1493E+02
+ Generating Event     5001 ...      159  successes so far - Monitor: 0.1344E+02
+ Generating Event    20001 ...      638  successes so far - Monitor: 0.1199E+02
+ Generating Event    40001 ...     1275  successes so far - Monitor: 0.1093E+02
+ Generating Event    60001 ...     1913  successes so far - Monitor: 0.1086E+02
+ Generating Event    80001 ...     2548  successes so far - Monitor: 0.1074E+02
+ Generating Event   100001 ...     3185  successes so far - Monitor: 0.1101E+02
+ Generating Event   120001 ...     3821  successes so far - Monitor: 0.1125E+02
+ Generating Event   140001 ...     4418  successes so far - Monitor: 0.1110E+02
+ Generating Event   160001 ...     5022  successes so far - Monitor: 0.1102E+02
+ Generating Event   180001 ...     5620  successes so far - Monitor: 0.1094E+02
+ Generating Event   200001 ...     6300  successes so far - Monitor: 0.1092E+02
+ Generating Event   220001 ...     6911  successes so far - Monitor: 0.1087E+02
+ Generating Event   240001 ...     7531  successes so far - Monitor: 0.1089E+02
+ Generating Event   260001 ...     8142  successes so far - Monitor: 0.1090E+02
+ Generating Event   280001 ...     8791  successes so far - Monitor: 0.1088E+02
+ Generating Event   300001 ...     9410  successes so far - Monitor: 0.1088E+02
+ Generating Event   320001 ...    10044  successes so far - Monitor: 0.1089E+02
+ Generating Event   340001 ...    10688  successes so far - Monitor: 0.1099E+02
+ Generating Event   360001 ...    11318  successes so far - Monitor: 0.1098E+02
+ Generating Event   380001 ...    11934  successes so far - Monitor: 0.1097E+02
+ Generating Event   400001 ...    12566  successes so far - Monitor: 0.1097E+02
+ Generating Event   420001 ...    13213  successes so far - Monitor: 0.1099E+02
+ Generating Event   440001 ...    13857  successes so far - Monitor: 0.1104E+02
+ Generating Event   460001 ...    14459  successes so far - Monitor: 0.1100E+02
+ Generating Event   480001 ...    15085  successes so far - Monitor: 0.1099E+02
+ Generating Event   500001 ...    15670  successes so far - Monitor: 0.1092E+02
+ Generating Event   520001 ...    16276  successes so far - Monitor: 0.1086E+02
+ Generating Event   540001 ...    16884  successes so far - Monitor: 0.1086E+02
+ Generating Event   560001 ...    17481  successes so far - Monitor: 0.1083E+02
+ Generating Event   580001 ...    18096  successes so far - Monitor: 0.1083E+02
+ Generating Event   600001 ...    18703  successes so far - Monitor: 0.1085E+02
+ Generating Event   620001 ...    19339  successes so far - Monitor: 0.1086E+02
+ Generating Event   640001 ...    19948  successes so far - Monitor: 0.1084E+02
+ ---> Last Event    641776 ...    20000  successes
+ Closing file:worksim/current.data                                        
+ ... writing outfiles/current.gen                                                            
+ Come back soon!

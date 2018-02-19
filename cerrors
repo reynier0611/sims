@@ -1,0 +1,41 @@
+brem.f:296.15:
+
+      bx= dabs(ax)                                                             
+               1
+Error: 'a' argument of 'dabs' intrinsic at (1) must be double precision
+brem.f:192.37:
+
+        write(6,*)' exp=   ',1.-dexp(-1.*(bsoft))*(1.-bhard)                   
+                                     1
+Error: 'x' argument of 'dexp' intrinsic at (1) must be double precision
+brem.f:207.28:
+
+        brem = -dbsoft/dexp(bsoft)                                             
+                            1
+Error: 'x' argument of 'dexp' intrinsic at (1) must be double precision
+brem.f:551.36:
+
+        write(6,*)' exp=     ',dexp(-1.*(bsoft))*(1.-bhard)                    
+                                    1
+Error: 'x' argument of 'dexp' intrinsic at (1) must be double precision
+brem.f:553.36:
+
+        write(6,*)' exps=    ',dexp(-1.*(bsoft))                               
+                                    1
+Error: 'x' argument of 'dexp' intrinsic at (1) must be double precision
+brem.f:554.36:
+
+        write(6,*)' expse=   ',dexp(-1.*b)                                     
+                                    1
+Error: 'x' argument of 'dexp' intrinsic at (1) must be double precision
+brem.f:555.36:
+
+        write(6,*)' expsp=   ',dexp(-1.*(bz+bzz))                              
+                                    1
+Error: 'x' argument of 'dexp' intrinsic at (1) must be double precision
+brem.f:567.30:
+
+        bremos = -dbsoft/dexp(bsoft)                                           
+                              1
+Error: 'x' argument of 'dexp' intrinsic at (1) must be double precision
+make: *** [brem.o] Error 1

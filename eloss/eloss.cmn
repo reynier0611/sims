@@ -1,0 +1,14 @@
+C
+C --------------------------------------------------------------------
+C     ELOSS.CMN
+C         Variable declarations/common area for energy loss routines.
+C --------------------------------------------------------------------
+C
+      COMMON /TG1_D/ zin,zout,atg,radius,rho,b,imep,
+     &               delta,cshell,elwalk,celoss,eloss_mp
+      COMMON /TG1_I/ ztg
+C
+      DOUBLE PRECISION zin,zout,atg,radius,rho,b,imep
+      DOUBLE PRECISION delta(3),cshell(3),elwalk(5),celoss(3)
+      DOUBLE PRECISION eloss_mp(3)
+      INTEGER          ztg 

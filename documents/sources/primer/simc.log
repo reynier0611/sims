@@ -1,0 +1,426 @@
+This is pdfTeXk, Version 3.1415926-1.40.9 (Web2C 7.5.7) (format=pdflatex 2008.12.28)  14 SEP 2009 20:20
+entering extended mode
+ %&-line parsing enabled.
+**\input simc.tex
+(./simc.tex (/usr/local/texlive/2008/texmf-dist/tex/latex/base/latex209.def
+File: latex209.def 1998/05/13 v0.52 Standard LaTeX file
+
+
+          Entering LaTeX 2.09 COMPATIBILITY MODE
+ *************************************************************
+    !!WARNING!!    !!WARNING!!    !!WARNING!!    !!WARNING!!   
+ 
+ This mode attempts to provide an emulation of the LaTeX 2.09
+ author environment so that OLD documents can be successfully
+ processed. It should NOT be used for NEW documents!
+ 
+ New documents should use Standard LaTeX conventions and start
+ with the \documentclass command.
+ 
+ Compatibility mode is UNLIKELY TO WORK with LaTeX 2.09 style
+ files that change any internal macros, especially not with
+ those that change the FONT SELECTION or OUTPUT ROUTINES.
+ 
+ Therefore such style files MUST BE UPDATED to use
+          Current Standard LaTeX: LaTeX2e.
+ If you suspect that you may be using such a style file, which
+ is probably very, very old by now, then you should attempt to
+ get it updated by sending a copy of this error message to the
+ author of that file.
+ *************************************************************
+
+\footheight=\dimen102
+\@maxsep=\dimen103
+\@dblmaxsep=\dimen104
+\@cla=\count79
+\@clb=\count80
+\mscount=\count81
+(/usr/local/texlive/2008/texmf-dist/tex/latex/base/tracefnt.sty
+Package: tracefnt 1997/05/29 v3.0j Standard LaTeX package (font tracing)
+\tracingfonts=\count82
+LaTeX Info: Redefining \selectfont on input line 101.
+)
+\symbold=\mathgroup4
+\symsans=\mathgroup5
+\symtypewriter=\mathgroup6
+\symitalic=\mathgroup7
+\symsmallcaps=\mathgroup8
+\symslanted=\mathgroup9
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 293.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 294.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 295.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 301.
+LaTeX Info: Redefining \em on input line 311.
+
+(/usr/local/texlive/2008/texmf-dist/tex/latex/base/latexsym.sty
+Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
+\symlasy=\mathgroup10
+LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+)
+LaTeX Font Info:    Redeclaring math delimiter \lgroup on input line 375.
+LaTeX Font Info:    Redeclaring math delimiter \rgroup on input line 377.
+LaTeX Font Info:    Redeclaring math delimiter \bracevert on input line 379.
+)
+(/usr/local/texlive/2008/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2005/09/16 v1.4f Standard LaTeX document class
+(/usr/local/texlive/2008/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2005/09/16 v1.4f Standard LaTeX file (size option)
+)
+\c@part=\count83
+\c@section=\count84
+\c@subsection=\count85
+\c@subsubsection=\count86
+\c@paragraph=\count87
+\c@subparagraph=\count88
+\c@figure=\count89
+\c@table=\count90
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+Compatibility mode: definition of \rm ignored.
+Compatibility mode: definition of \sf ignored.
+Compatibility mode: definition of \tt ignored.
+Compatibility mode: definition of \bf ignored.
+Compatibility mode: definition of \it ignored.
+Compatibility mode: definition of \sl ignored.
+Compatibility mode: definition of \sc ignored.
+LaTeX Info: Redefining \cal on input line 506.
+LaTeX Info: Redefining \mit on input line 507.
+\bibindent=\dimen105
+)
+(/usr/local/texlive/2008/texmf-dist/tex/latex/graphics/epsfig.sty
+Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
+
+(/usr/local/texlive/2008/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2008/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/local/texlive/2008/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2006/02/20 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/local/texlive/2008/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/usr/local/texlive/2008/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 90.
+
+(/usr/local/texlive/2008/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2008/09/08 v0.04l Graphics/color for pdfTeX
+\Gread@gobject=\count91
+))
+\Gin@req@height=\dimen106
+\Gin@req@width=\dimen107
+)
+\epsfxsize=\dimen108
+\epsfysize=\dimen109
+)
+(./simc.aux)
+\openout1 = `simc.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+ (/usr/local/texlive/2008/texmf-dist/tex/context/base/supp-pdf.tex
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count92
+\scratchdimen=\dimen110
+\scratchbox=\box26
+\nofMPsegments=\count93
+\nofMParguments=\count94
+\everyMPshowfont=\toks15
+\MPscratchCnt=\count95
+\MPscratchDim=\dimen111
+\MPnumerator=\count96
+\everyMPtoPDFconversion=\toks16
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <14.4> on input line 22.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 22.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 22.
+ (/usr/local/texlive/2008/texmf-dist/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 50.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 50.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 50.
+ [1
+
+{/usr/local/texlive/2008/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (52.65042pt too wide) in paragraph at lines 75--85
+\OT1/cmr/m/n/12 First you need to copy over the SIMC dis-tri-bu-tion. The cur-r
+ent ver-sion is in SIMC[]120899.tar.gz,
+ []
+
+[2] [3] [4] [5] [6] [7] [8]
+Overfull \hbox (4.80522pt too wide) in paragraph at lines 466--466
+[]  \OT1/cmtt/m/n/12 ngen = 2000                   ;  POS: # of successes; NEG:
+ # of tries[] 
+ []
+
+
+Overfull \hbox (29.50523pt too wide) in paragraph at lines 466--466
+[]  \OT1/cmtt/m/n/12 doing_piplus = 1              ;  pi+ or pi- production (ON
+E = TRUE = pi+)[] 
+ []
+
+[9]
+Overfull \hbox (10.98022pt too wide) in paragraph at lines 484--484
+[]  \OT1/cmtt/m/n/12 hms_e_flag = 0                ;  e- in HMS if set to ONE (
+SOS if ZERO)[] 
+ []
+
+
+Overfull \hbox (60.38025pt too wide) in paragraph at lines 518--518
+[]  \OT1/cmtt/m/n/12 targ.mrec_amu = 0.            ;  recoil mass in amu (eep=A
+-1 system,pion=A-2 )[] 
+ []
+
+
+Overfull \hbox (35.68024pt too wide) in paragraph at lines 518--518
+[]  \OT1/cmtt/m/n/12 targ.angle = 0.               ;  target angle (for solid t
+arget) (degrees)[] 
+ []
+
+
+Overfull \hbox (23.33023pt too wide) in paragraph at lines 518--518
+[]  \OT1/cmtt/m/n/12 targ.can = 1                  ;  1=beer can (fpi), 2=puddi
+ng can (nucpi)[] 
+ []
+
+[10]
+Overfull \hbox (17.15523pt too wide) in paragraph at lines 534--534
+[]  \OT1/cmtt/m/n/12 debug(3) = 0                  ;  spit out values (init. an
+d main loop).[] 
+ []
+
+
+Overfull \hbox (4.80522pt too wide) in paragraph at lines 534--534
+[]  \OT1/cmtt/m/n/12 debug(4) = 0                  ;  mostly comp_ev, gen_rad d
+iagnostics.[] 
+ []
+
+
+Overfull \hbox (29.50523pt too wide) in paragraph at lines 574--574
+[]  \OT1/cmtt/m/n/12 SPedge.e.delta.min = -22.0    ;  delta min (%) (SPECTROMET
+ER ACCEPTANCE!)[] 
+ []
+
+[11]
+Overfull \hbox (29.50523pt too wide) in paragraph at lines 593--593
+[]  \OT1/cmtt/m/n/12 gen.xwid = 0.008868           ;  beam width - one sigma (c
+m)  (89microns)[] 
+ []
+
+
+Overfull \hbox (29.50523pt too wide) in paragraph at lines 593--593
+[]  \OT1/cmtt/m/n/12 gen.ywid = 0.004235           ;  beam width - one sigma (c
+m)  (42microns)[] 
+ []
+
+
+Overfull \hbox (4.80522pt too wide) in paragraph at lines 593--593
+[]  \OT1/cmtt/m/n/12 targ.fr_pattern = 1.          ;  raster pattern: 1=square,
+ 2=circular[] 
+ []
+
+
+Overfull \hbox (41.85524pt too wide) in paragraph at lines 593--593
+[]  \OT1/cmtt/m/n/12 targ.zoffset = 0.06           ;  target z-offset (cm) z_ta
+r=nominal+zoffset[] 
+ []
+
+
+Overfull \hbox (48.03024pt too wide) in paragraph at lines 620--620
+[]  \OT1/cmtt/m/n/12 spec.e.offset.xptar = 2.62    ;  xptar offset (mr)    !x(y
+)ptar is slope, so[] 
+ []
+
+
+Overfull \hbox (48.03024pt too wide) in paragraph at lines 620--620
+[]  \OT1/cmtt/m/n/12 spec.e.offset.yptar = 0.      ;  yptar offset (mr)    !it'
+s really unitless.[] 
+ []
+
+[12]
+Overfull \hbox (60.38025pt too wide) in paragraph at lines 651--651
+[]  \OT1/cmtt/m/n/12 cuts.Em.max = 200.    ;  Must be wider than cuts in analys
+is(elastic or e,e'p)[] 
+ []
+
+
+Overfull \hbox (10.98022pt too wide) in paragraph at lines 651--651
+[]  \OT1/cmtt/m/n/12 correct_Eloss = 1     ;  ONE = correct reconstructed event
+s for eloss.[] 
+ []
+
+
+Overfull \hbox (78.90526pt too wide) in paragraph at lines 651--651
+[]  \OT1/cmtt/m/n/12 correct_raster = 1    ;  ONE = Reconstruct events using 'r
+aster' matrix elements.[] 
+ []
+
+
+Overfull \hbox (17.15523pt too wide) in paragraph at lines 651--651
+[]  \OT1/cmtt/m/n/12 mc_smear = 1          ;  ONE = target & hut mult scatt AND
+ DC smearing.[] 
+ []
+
+[13]
+Overfull \hbox (23.10367pt too wide) in paragraph at lines 727--727
+[]\OT1/cmr/bx/n/17.28 Appendix C: SIMC Co-or-di-nate Sys-tem and Units. 
+ []
+
+[14]
+Overfull \hbox (4.80522pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! phase_space: Generate electron E,yptar,xptar and hadron yp
+tar,xptar??[] 
+ []
+
+
+Overfull \hbox (54.20525pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! doing_deuterium: fixed Em, generate electron fully and pro
+ton angles, calc Ep[] 
+ []
+
+
+Overfull \hbox (48.03024pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! doing_eep, A>2: generate electron and hadron energy and an
+gles (calc Em/Pm).[] 
+ []
+
+
+Overfull \hbox (4.80522pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 !               E       yptar   xptar   E       yptar   xpta
+r   p_fermi[] 
+ []
+
+[15]
+Overfull \hbox (4.80522pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 !-----------------------------------------------------------
+-----------[] 
+ []
+
+
+Overfull \hbox (4.80522pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 !-----------------------------------------------------------
+-----------[] 
+ []
+
+
+Overfull \hbox (35.68024pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! 2) generate hadron yptar and xptar for all cases except H(
+e,e'p), D(e,e'p)[] 
+ []
+
+
+Overfull \hbox (60.38025pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! After we generate xptar/yptar/energy, we calculate physics
+ angles (theta/phi),[] 
+ []
+
+
+Overfull \hbox (4.80522pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! Note that there are also jacobians associated with some an
+d/or all of[] 
+ []
+
+
+Overfull \hbox (10.98022pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! 1: We generate uniformly in xptar/yptar, not theta/phi.  W
+e define the[] 
+ []
+
+
+Overfull \hbox (35.68024pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! phase space volume (genvol contribution) as the product of
+ the xptar/yptar[] 
+ []
+
+
+Overfull \hbox (29.50523pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! range, and have a jacobian for each event taking into acco
+unt the mapping[] 
+ []
+
+
+Overfull \hbox (23.33023pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! between the solid angle on the unit sphere, and the dxptar
+/dyptar volume[] 
+ []
+
+
+Overfull \hbox (23.33023pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! (the jacobian is 1/cos**3(dtheta), where dtheta is the ang
+le between the[] 
+ []
+
+
+Overfull \hbox (29.50523pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! 2: For the D(e,e'p), we take Em as fixed in order to calcu
+late the proton[] 
+ []
+
+
+Overfull \hbox (17.15523pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! energy.  There is a jacobian ( |dEp'/dEm| ).  It comes fro
+m integrating[] 
+ []
+
+
+Overfull \hbox (29.50523pt too wide) in paragraph at lines 808--808
+[]\OT1/cmtt/m/n/12 ! over the energy conservation delta function: delta(E_D - E
+_p - E_n - Em).[] 
+ []
+
+[16] [17]
+Overfull \hbox (31.39944pt too wide) in paragraph at lines 895--898
+[]\OT1/cmr/m/n/12 -FOR (e,e'p) ONLY: Miss-ing en-ergy and re-coil momentum:$\OM
+L/cmm/m/it/12 E[]; T[]$\OT1/cmr/m/n/12 . $\OML/cmm/m/it/12 T[] \OT1/cmr/m/n/12 
+= []$,
+ []
+
+[18] (./simc.aux) ) 
+Here is how much of TeX's memory you used:
+ 1105 strings out of 493876
+ 14031 string characters out of 1150567
+ 66149 words of memory out of 3000000
+ 4393 multiletter control sequences out of 10000+50000
+ 19521 words of font info for 71 fonts, out of 3000000 for 5000
+ 714 hyphenation exceptions out of 8191
+ 34i,6n,21p,219b,223s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/local/texlive/2008/texmf-dist/fonts/type1/bluesky/cm/c
+mbx12.pfb></usr/local/texlive/2008/texmf-dist/fonts/type1/bluesky/cm/cmex10.pfb
+></usr/local/texlive/2008/texmf-dist/fonts/type1/bluesky/cm/cmmi12.pfb></usr/lo
+cal/texlive/2008/texmf-dist/fonts/type1/bluesky/cm/cmmi6.pfb></usr/local/texliv
+e/2008/texmf-dist/fonts/type1/bluesky/cm/cmmi8.pfb></usr/local/texlive/2008/tex
+mf-dist/fonts/type1/bluesky/cm/cmr12.pfb></usr/local/texlive/2008/texmf-dist/fo
+nts/type1/bluesky/cm/cmr17.pfb></usr/local/texlive/2008/texmf-dist/fonts/type1/
+bluesky/cm/cmr8.pfb></usr/local/texlive/2008/texmf-dist/fonts/type1/bluesky/cm/
+cmsy10.pfb></usr/local/texlive/2008/texmf-dist/fonts/type1/bluesky/cm/cmsy6.pfb
+></usr/local/texlive/2008/texmf-dist/fonts/type1/bluesky/cm/cmsy8.pfb></usr/loc
+al/texlive/2008/texmf-dist/fonts/type1/bluesky/cm/cmti12.pfb></usr/local/texliv
+e/2008/texmf-dist/fonts/type1/bluesky/cm/cmtt12.pfb>
+Output written on simc.pdf (18 pages, 138256 bytes).
+PDF statistics:
+ 112 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 131072)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

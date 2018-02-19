@@ -1,0 +1,154 @@
+ =?
+ &RESTSW
+    MC_SMEAR = T
+    electron_arm = 1
+    hadron_arm = 0
+    use_first_cer = 0
+    extra_dbase_file = ' '
+/ 
+ &EXPERIMENT
+    Ebeam = 0
+    dEbeam = 0
+    EXPER%charge = 0
+    doing_kaon = F
+    which_kaon = 0
+    doing_pion = F
+    which_pion = 0
+    doing_delta = F
+     doing_semi = F
+     doing_hplus = T
+    doing_rho = F
+    doing_decay = F
+    ctau = 0
+ / 
+
+ &DEBUG_PARM
+    debug = F,F,F,F,F,F
+/ 
+ =?
+
+ &TARGET
+    targ%A = 0.
+    targ%Z = 0
+    targ%mass_amu = 0
+    targ%mrec_amu = 0
+    targ%rho = 0
+    targ%thick = 0
+    targ%xoffset = 0
+    targ%yoffset = 0
+    targ%fr_pattern = 0
+    targ%fr1 = 0
+    targ%fr2 = 0
+    targ%zoffset = 0
+    targ%angle = 0
+    targ%abundancy = 0
+    targ%can = 0
+    targ_Bangle = 0
+    targ_Bphi = 0
+    targ_pol = 0
+ / 
+ =?
+
+ &E_ARM_MAIN
+    spec%e%P = 0.
+    spec%e%theta = 0.
+    spec%e%sig_musc = 1.1e-6, 1.2e-6
+ / 
+ =?
+
+ &P_ARM_MAIN
+    spec%p%P = 0.
+    spec%p%theta = 0.
+    spec%p%sig_musc = 1.1e-6, 1.2e-6
+ / 
+ =?
+
+ &E_ARM_OFFSET
+    gen%ywid = 0
+    gen%xwid = 0
+    spec%e%offset%x = 0
+    spec%e%offset%y = 0
+    spec%e%offset%z = 0
+    spec%e%offset%xptar = 0
+    spec%e%offset%yptar = 0
+ / 
+
+ =?
+ &P_ARM_OFFSET
+    spec%p%offset%x = 0.
+    spec%p%offset%y = 0.
+    spec%p%offset%z = 0.
+    spec%p%offset%xptar = 0
+    spec%p%offset%yptar = 0
+ / 
+
+ =?
+ &MISC2INT
+    use_expon = 0
+    one_tail = 0
+    intcor_mode = 0
+ / 
+
+ =?
+ &SIMULATE
+    hard_cuts = F
+    using_rad = F
+    doing_phsp = F
+    using_Eloss = F
+    standard_Eloss = F
+    correct_Eloss = F
+    correct_raster = F
+    using_cit_generation = F
+    using_Coulomb = F
+    use_offshell_rad = F
+    do_fermi = F
+    using_tgt_field = F
+    tgt_field_file = ' '
+    mc_smear = F
+    mc_smear_addl = F   
+
+    ngen = 0
+    spect_mode = 0
+    cuts%Em%min = 0
+    cuts%Em%max = 0
+    deForest_flag = 0
+    rad_flag = 0
+    extrad_flag = 0
+    lambda = 0., 0., 0.
+    Nntu = 0
+    dE_edge_test = 0
+    Egamma_gen_max = 0
+    pt_b_param = 0
+    sigc_flag = 0
+    sigc_nbin = 10
+    sigc_kin_min = 0
+    sigc_kin_max = 1.0
+    sigc_kin_ind = 0.0
+    drift_to_cal = 0
+ / 
+ =?
+ &E_ARM_ACCEPT
+    SPedge%e%delta%min = -0.01
+    SPedge%e%delta%max = 0.01
+    SPedge%e%yptar%min = -0.02
+    SPedge%e%yptar%max = 0.02
+    SPedge%e%xptar%min = -0.03
+    SPedge%e%xptar%max = 0.03
+ / 
+ =?
+ &P_ARM_ACCEPT
+    SPedge%p%delta%min = 0
+    SPedge%p%delta%max = 0
+    SPedge%p%yptar%min = 0
+    SPedge%p%yptar%max = 0
+    SPedge%p%xptar%min = 0
+    SPedge%p%xptar%max = 0
+ / 
+ =?
+ &THEORY_CTRL
+    theory_par%model = ''
+    theory_par%data_file = ''
+    theory_par%FLAGS = 10*F	
+    theory_par%parameter = 10*0.
+ /
+
