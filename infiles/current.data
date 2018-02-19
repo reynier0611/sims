@@ -9,17 +9,16 @@
 
  =?
  &EXPERIMENT
-     ngen  =  150000					!  POS: # of successes
-     EXPER%charge  =   2160.0				!  total charge (mC) for I = 25uA current and 1 day beam time
+     ngen  =  50000					!  POS: # of successes
+     EXPER%charge  =  17280.0				!  total charge (mC) for I = 25uA current and 8 day beam time
      doing_phsp  =  F					!  (T = TRUE)	- If all of the doing_* are
      doing_kaon  =  F					!  (T = TRUE)   false, then doing (e,e'p).
      doing_pion  =  F					!  (T = TRUE)
      doing_decay  =  F					!  1=decay ON, 0=decay OFF.
      ctau  =  780.4					!  decay length (cm)
      extra_dbase_file = 'extra_deuteron.data' 		!  additional input parameters.
-     !extra_dbase_file = 'extra_deuteron_rad.data'   	!  additional input parameters.
-     !use_benhar_sf = T					!  Benhar
-     !doing_bound = T            			!  T = 2-body break up, F = 3-body break up
+     use_benhar_sf = T					!  Benhar
+     doing_bound = F            			!  T = 2-body break up, F = 3-body break up
 / 
  =?
  &KINEMATICS_MAIN
@@ -27,18 +26,18 @@
      dEbeam  =  0.05                          	!  beam energy variation (%)
      electron_arm  =  4                         !  1=hms,2=sos,3=hrsr,4=hrsl,5 = shms
      hadron_arm  =  3                           !  1=hms,2=sos,3=hrsr,4=hrsl,5 = shms
-     spec%e%P  =   3470.15                    	!  e arm central momentum (MeV/c)
-     spec%e%theta  = 20.862                	!  e arm angle setting (degrees)
-     spec%p%P  =  1606.68                    	!  p arm central momentum (MeV/c)
-     spec%p%theta  =  48.6763                	!  p arm angle setting (degrees)
+     spec%e%P  =   3643.28                    	!  e arm central momentum (MeV/c)
+     spec%e%theta  = 20.3549                	!  e arm angle setting (degrees)
+     spec%p%P  =  1352.43                    	!  p arm central momentum (MeV/c)
+     spec%p%theta  =  58.55                	!  p arm angle setting (degrees)
 / 
 
  ?=
  &TARGET
-     targ%A  =  2.0				!  target A
-     targ%Z  =  1.0				!  target Z
-     targ%mass_amu  =  2.01355	        	!  target mass in amu
-     targ%mrec_amu  =  1.008665	        	!  recoil mass in amu (eep=A-1 system,pion=A-2)
+     targ%A  =  3.0				!  target A
+     targ%Z  =  2.0				!  target Z
+     targ%mass_amu  =  3.01604	        	!  target mass in amu
+     targ%mrec_amu  =  2.01410	        	!  recoil mass in amu (eep=A-1 system,pion=A-2)
      targ%rho  =  0.003		        	!  target density (g/cm^3)
      targ%thick  =  75.				!  target thick (mg/cm^2)
      targ%angle  =  0.		        	!  target angle (for solid target) (degrees)
@@ -64,12 +63,12 @@
 / 
 
  &P_ARM_ACCEPT
-     SPedge%p%delta%min  =  -60		!  delta min (SPECTROMETER ACCEPTANC
-     SPedge%p%delta%max  =   60		!  delta max
-     SPedge%p%yptar%min  =  -100.0		!  yptar min = {TF} / 1000 (mrad)
-     SPedge%p%yptar%max  =   100.0		!  yptar max = {TF} / 1000
-     SPedge%p%xptar%min  =  -150.0		!  xptar min = {TF} / 1000 (mrad)
-     SPedge%p%xptar%max  =   150.0		!  xptar max = {TF} / 1000
+     SPedge%p%delta%min  =  -4.5		!  delta min (SPECTROMETER ACCEPTANCE)
+     SPedge%p%delta%max  =   4.5		!  delta max
+     SPedge%p%yptar%min  =  -60.0		!  yptar min = {TF} / 1000 (mrad)
+     SPedge%p%yptar%max  =   60.0		!  yptar max = {TF} / 1000
+     SPedge%p%xptar%min  =  -130.0		!  xptar min = {TF} / 1000 (mrad)
+     SPedge%p%xptar%max  =   130.0		!  xptar max = {TF} / 1000
 / 
 
  &THEORY_CTRL

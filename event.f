@@ -1448,34 +1448,8 @@ CDJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_targ) ang
 	      Pm_val = vertex%Pm
 	      Em_val = vertex%Em 
 
-	      do i=1,nrhoPm
-		 weight = 0.0
-
-! ... use linear interpolation to determine rho(pm)
-
-		 r = (Pm_val-Pm_theory(i)%min)/Pm_theory(i)%bin
-		 if (r.ge.0 .and. r.le.Pm_theory(i)%n) then
-		    iPm1 = nint(r)
-		    if (iPm1.eq.0) iPm1 = 1
-		    if (iPm1.eq.Pm_theory(i)%n) iPm1 = Pm_theory(i)%n-1
-		    frac = r+0.5-float(iPm1)
-		    b = theory(i,iPm1)
-		    a = theory(i,iPm1+1)-b
-		    weight = a*frac + b
-		 endif
-
-		 if (doing_heavy) then
-		    width=Emsig_theory(i)/2.0
-		    if (Em_val.lt.E_Fermi) weight = 0.0
-		    weight=weight/pi/Em_int_theory(i) * width/
-     >                    ((Em_val-Em_theory(i))**2+width**2)
-		 endif
-		 main%SF_weight = main%SF_weight+weight*nprot_theory(i)
-	      enddo		! <i=1,nrhoPm>
-	   ! calculate for reconstructed kinematics
-	      Pm_val = recon%Pm
-	      Em_val = recon%Em 
-	      main%SF_weight_recon = 0.0
+! RCT 8/30/2016 here I removed a piece of code that Werner had accidentally duplicated and
+! was effectively multiplying the weight times two
 
 	      do i=1,nrhoPm
 		 weight = 0.0
