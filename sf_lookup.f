@@ -98,8 +98,7 @@
         return
         end
 
-!----------------------------------------------------------------------
-
+!#######################################################################################
 	subroutine sf_lookup(Em,Pm,SF,doing_bound)
 
 ! Get value of spectral function <SF_PROB> at Em, Pm.
@@ -110,7 +109,6 @@
 !
 
 	implicit none
-
 	include 'sf_lookup.inc'
 
 	integer*4 ind,iPm,iEm
@@ -118,24 +116,27 @@
 	real*8 Em1,Em2,sf1,sf2,logsf,w1,w2
 	real*8 SF
 	logical doing_bound
-!find nearest Pm value
 
-	if(doing_bound) then
-	  write(6,*) 'Rey : doing_bound is true'
-	else if (.not.doing_bound) then
-	  write(6,*) 'Rey : doing_bound is false'
-	endif
+! --------------------------------------------------------------
+!find nearest Pm value
+! ----------------------------------------------
+! If Pm is greater than the greatest value of Pm in the SF file
+! *** w1 is the weight from the right. Similarly,
+! *** w2 is the weight from the left.
 
 	if (Pm.ge.Pmval(numPm)) then
 	  iPm=numPm-1
 	  w1=0
 	  w2=1
+! --------------------------------------------------------------
+! If Pm is smaller than the smallest value of Pm in the SF file
 	else if (Pm.le.Pmval(1)) then
 	  iPm=1
 	  w1=1
 	  w2=0
+! --------------------------------------------------------------
+! If Pm lies somewhere in the middle of Pm values in the SF file
 	else
-
 	  ind=1
 	  do while(Pm.gt.Pmval(ind))
 	    ind = ind + 1
@@ -147,61 +148,59 @@
 	        write(6,*) 'w1,w2,Pm,Pmval(iPm)=',w1,w2,Pm,Pmval(iPm)
 	        stop
 	      endif
-!	write(6,*) 'Pm,iPm,Pm,w1,w2=',Pm,iPm,Pmval(iPm),w1,w2
-
-!	  do ind=1,numPm
-!	    if (Pm.gt.Pmval(ind)) then
-!	      iPm=ind			!ind, or ind-1 ???
-!	      w2=(Pm-Pmval(iPm))/(Pmval(iPm+1)-Pmval(iPm))
-!	      w1=(Pmval(iPm+1)-Pm)/(Pmval(iPm+1)-Pmval(iPm))
-!	      if (abs(w1*Pmval(iPm)+w2*Pmval(iPm+1)-Pm).gt.0.0001) then
-!	        write(6,*) 'w1,w2,Pm,Pmval(iPm)=',w1,w2,Pm,Pmval(iPm)
-!	        stop
-!	      endif
-!	write(6,*) 'Pm,iPm,Pm,w1,w2=',Pm,iPm,Pmval(iPm),w1,w2
-!	    endif
-!	  enddo
 
 	endif
+! --------------------------------------------------------------
 	if (abs(w1+w2-1).gt.0.0001) then
 	  write(6,*) 'iPm,Pm,w1+w2=',iPm,Pm,w1+w2
 	  stop
 	endif
 
-	if (Em.le.Emval(1)) then	!linear extrapolation of LOG(f(Em)).
-	  Em1=Emval(1)
-	  Em2=Emval(2)
-	  sf1=w1*sfval(1,iPm)+w2*sfval(1,iPm+1)
-	  sf2=w1*sfval(2,iPm)+w2*sfval(2,iPm+1)
+! --------------------------------------------------------------
+! RCT 8/2/2016 Only take values that are above the 3-body break up threshold
+! The first E miss bin represents the 2-body break up threshold. Therefore, if not
+! doing bound should ignore anything at or below the first bin in E miss.
 
-	else if (Em.gt.Emval(numEm)) then	!linear extrapolation of LOG(f(Em))
-	  Em1=Emval(numEm-1)
-	  Em2=Emval(numEm)
-	  sf1=w1*sfval(numEm-1,iPm)+w2*sfval(numEm-1,iPm+1)
-	  sf2=w1*sfval(numEm,iPm)+w2*sfval(numEm,iPm+1)
+	if (.not.doing_bound) then
 
-	else
-	  do iEm=1,numEm-1
-	    if (Em.ge.Emval(iEm) .and. Em.lt.Emval(iEm+1)) then
-	      Em1=Emval(iEm)
-	      Em2=Emval(iEm+1)
-	      sf1=w1*sfval(iEm,iPm)+w2*sfval(iEm,iPm+1)
-	      sf2=w1*sfval(iEm+1,iPm)+w2*sfval(iEm+1,iPm+1)
-!	write(6,*) 'iEm,w1,w2=',iEm,w1,w2
-	    endif
-	  enddo
+	  if (Em.gt.Emval(numEm)) then	!linear extrapolation of LOG(f(Em))
+	    Em1=Emval(numEm-1)
+	    Em2=Emval(numEm)
+	    sf1=w1*sfval(numEm-1,iPm)+w2*sfval(numEm-1,iPm+1)
+	    sf2=w1*sfval(numEm,iPm)+w2*sfval(numEm,iPm+1)
+	  else if ((Em.lt.Emval(2))) then   !The first bin represents 2-body breakup!
+	    SF=0
+	    return
+	  else
+	    do iEm=1,numEm-1
+	      if (Em.ge.Emval(iEm) .and. Em.lt.Emval(iEm+1)) then
+	        Em1=Emval(iEm)
+	        Em2=Emval(iEm+1)
+	        sf1=w1*sfval(iEm,iPm)+w2*sfval(iEm,iPm+1)
+	        sf2=w1*sfval(iEm+1,iPm)+w2*sfval(iEm+1,iPm+1)
+	      endif
+	    enddo
+	  endif
+
+	  logsf=(sf1 + (Em-Em1)*(sf2-sf1)/(Em2-Em1))  
+	  SF=logsf
+	  if (SF.lt.1.d-20) SF=0 !If the obtained value is extremely small, just return zero!
+
+	else if (.not.doing_bound) then
+	! Return the value corresponding to the first bin!
+	  if(w1.ge.w2) then
+	    SF = sfval(1,iPm) 
+	  else if (w1.lt.w2) then
+	    SF = sfval(1,iPm+1)
+	  endif
+	  if (SF.lt.1.d-20) SF=0 !If the obtained value is extremely small, just return zero!
 	endif
-
-	logsf=(sf1 + (Em-Em1)*(sf2-sf1)/(Em2-Em1))
-	SF=logsf
-
-	if (SF.lt.1.d-20) SF=0
 
 	return
 	end
 
 
-!----------------------------------------------------------------------
+!#######################################################################################
 
 	subroutine generate_em(Pm,Em, doing_bound)
 
