@@ -43,7 +43,8 @@
      >	   doing_decay, 
      >	   extra_dbase_file,
      >	   ctau,
-     >     use_benhar_sf,
+     >     use_sf,
+     >     sf_version,
      >     transparency
 
 *	DEBUG

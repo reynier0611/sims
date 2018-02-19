@@ -21,7 +21,8 @@
     doing_decay = F
     ctau = 0
     doing_bound = F
-    use_benhar_sf = F
+    use_sf = F
+    sf_version = 0
     transparency = 1
  / 
 

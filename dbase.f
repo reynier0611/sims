@@ -70,7 +70,7 @@
 	write(6,*) '*                --- SIMC ---                  *'
 	write(6,*) '*                                              *'
 	write(6,*) '*          Welcome to Jefferson Lab            *'
-	write(6,*) '*         Last edited on: 09/13/2016           *'
+	write(6,*) '*         Last edited on: 10/26/2016           *'
 	write(6,*) '*                                              *'
 	write(6,*) '************************************************'
 	write(6,*) 'Enter the input filename'
@@ -561,10 +561,28 @@ C DJG:
 ! ... Normalizing to one may not be correct if there is strength beyond
 ! ... Em_max,Pm_max.
 
-	if(doing_hepi.or.doing_hekaon .or. (doing_heavy.and.use_benhar_sf)) then
+	if(doing_hepi.or.doing_hekaon .or. (doing_heavy.and.use_sf)) then
 	  if (nint(targ%A).eq.3) then
-	    write(6,*) 'Using the mod version of 3He S.F. rather than Paris.'
-	    tmpfile='benharsf_3mod.dat'
+	    if (sf_version.eq.0) then  
+	      write(6,*) 'Using the Benhar version of 3He S.F.'
+	    else if (sf_version.eq.1) then
+	      write(6,*) 'Using the Kaptari version of the 3He S.F.'
+	    else
+	      write(6,*) 'No proper S.F. specified. Defaulting to Benhar S.F.'
+	    endif
+! ============================================================
+! RCT 10/26/2016 - using different spectral function versions
+!           Benhar spectral function
+	    if (sf_version.eq.0) then
+	      tmpfile='benharsf_3mod.dat'
+!           Kaptari spectral function
+	    else if (sf_version.eq.1) then
+	      tmpfile='kaptarisf_3par.dat'
+	    else
+	      write(6,*) 'Wrong value for sf_version. Defaulting to Benhar'
+	      tmpfile='benharsf_3mod.dat'
+	    endif
+! ============================================================
 	  else if (nint(targ%A).eq.4) then
 	    tmpfile='benharsf_4.dat'
 	  else if (nint(targ%A).eq.12) then

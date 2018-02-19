@@ -1430,12 +1430,12 @@ CDJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_targ) ang
 
 ! ********************************************************************************
 ! RCT 8/2/2016 Using spectral functions
-	else if (use_benhar_sf.and.doing_heavy) then
+	else if (use_sf.and.doing_heavy) then
            call sf_lookup_diff(vertex%Em, vertex%Pm, weight, doing_bound)
            main%SF_weight = targ%Z*transparency*weight
 ! ********************************************************************************
 	
-	else if (doing_deuterium .or. (doing_heavy.and.(.not.use_benhar_sf))) then
+	else if (doing_deuterium .or. (doing_heavy.and.(.not.use_sf))) then
            ! WB 7/9/2016
 	   ! SF_weight can always be calculated. In that way one needs only 
            ! to do one calculation to get PS and PWIA (SIMC version) from 

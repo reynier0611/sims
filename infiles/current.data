@@ -9,15 +9,16 @@
 
  =?
  &EXPERIMENT
-     ngen  =  50000					!  POS: # of successes
-     EXPER%charge  =  17280.0				!  total charge (mC) for I = 25uA current and 8 day beam time
+     ngen  =  90000					!  POS: # of successes
+     EXPER%charge  =   2160.0                           !  total charge (mC) for I = 25uA current and 1 day beam time
      doing_phsp  =  F					!  (T = TRUE)	- If all of the doing_* are
      doing_kaon  =  F					!  (T = TRUE)   false, then doing (e,e'p).
      doing_pion  =  F					!  (T = TRUE)
      doing_decay  =  F					!  1=decay ON, 0=decay OFF.
      ctau  =  780.4					!  decay length (cm)
      extra_dbase_file = 'extra_deuteron.data' 		!  additional input parameters.
-     use_benhar_sf = T					!  Benhar
+     use_sf = T                                         !  Use spectral function
+     sf_version = 1                                     !  Spectral function version (0=Benhar, 1=Kaptari)
      doing_bound = F            			!  T = 2-body break up, F = 3-body break up
 / 
  =?
@@ -35,7 +36,7 @@
  ?=
  &TARGET
      targ%A  =  3.0				!  target A
-     targ%Z  =  1.0				!  target Z
+     targ%Z  =  2.0				!  target Z
      targ%mass_amu  =  3.01604	        	!  target mass in amu
      targ%mrec_amu  =  2.01410	        	!  recoil mass in amu (eep=A-1 system,pion=A-2)
      targ%rho  =  0.003		        	!  target density (g/cm^3)
