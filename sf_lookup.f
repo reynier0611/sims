@@ -19,7 +19,7 @@
 	real*8 tmpPm,tmpEm,tmpsfp,tmpsfn,tmpdEm,tmpdPm
 	integer*4 iPm,iEm
 	character infile*80
-	logical protonflag
+	logical protonflag, doing_bound
 
 	open(unit=55,file=infile,status='old')
 
@@ -82,8 +82,25 @@
 
 
 !----------------------------------------------------------------------
+! RCT 8/2/2016 This is the subroutine used to get the weighing
+! for (for example) 3-Helium
 
-	subroutine sf_lookup(Em,Pm,SF)
+        subroutine sf_lookup_diff(Em,Pm,SFd, doing_bound)
+! Get value of fully differential spectral function at Em, Pm.
+        implicit none
+        real*8 Em, Pm
+        real*8 SFd
+	logical doing_bound
+
+        real*8 SF
+        call sf_lookup(Em, Pm, SF,doing_bound)
+        SFd = SF/4/3.1415926535/(Pm*Pm)/5.0/20.0
+        return
+        end
+
+!----------------------------------------------------------------------
+
+	subroutine sf_lookup(Em,Pm,SF,doing_bound)
 
 ! Get value of spectral function <SF_PROB> at Em, Pm.
 !
@@ -100,8 +117,15 @@
 	real*8 Em,Pm
 	real*8 Em1,Em2,sf1,sf2,logsf,w1,w2
 	real*8 SF
-
+	logical doing_bound
 !find nearest Pm value
+
+	if(doing_bound) then
+	  write(6,*) 'Rey : doing_bound is true'
+	else if (.not.doing_bound) then
+	  write(6,*) 'Rey : doing_bound is false'
+	endif
+
 	if (Pm.ge.Pmval(numPm)) then
 	  iPm=numPm-1
 	  w1=0
@@ -179,7 +203,7 @@
 
 !----------------------------------------------------------------------
 
-	subroutine generate_em(Pm,Em)
+	subroutine generate_em(Pm,Em, doing_bound)
 
 ! Generate a missing energy for an event with a given Pm.
 !
@@ -196,17 +220,17 @@
 	real*8 x(nEmmax),y(nEmmax)
 	real*8 ynorm
 	real*8 ranprob
-
+	logical doing_bound
 	real*8 grnd
 
 ! Determine Em distribution at fixed Pm (integrated SF up to Em).
 	ynorm = 0.
 	x(1) = Emval(1)
-	call sf_lookup(x(1),Pm,y(1))
+	call sf_lookup(x(1),Pm,y(1),doing_bound)
 
 	do iEm = 2 , numEm
 	  x(iEm) = Emval(iEm)
-	  call sf_lookup(x(iEm),Pm,y(iEm))
+	  call sf_lookup(x(iEm),Pm,y(iEm),doing_bound)
 	  y(iEm) = y(iEm) + y(iEm-1)
 	enddo
 

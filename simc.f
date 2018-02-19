@@ -177,6 +177,8 @@ cdg	call time (timestring1(11:23))
 
 ! ... keep the human interested
 
+! ******************************************************************
+
 	  ntried = ntried + 1
 
 	  if(debug(2)) then
@@ -876,11 +878,14 @@ c	  write(7,*) 'BP thingie in/out     ',shmsSTOP_BP_in,shmsSTOP_BP_out
      >		'correct_raster',correct_raster, 'doing_decay', doing_decay
 	write(iun,'(5x,2(2x,a19,''='',l2))') 
      >		'using_E_arm_montecarlo', using_E_arm_montecarlo,
-     >		'using_P_arm_montecarlo', using_P_arm_montecarlo
+     >		'using_P_arm_montecarlo', using_P_arm_montecarlo,
+     >          'use_benhar_sf', use_benhar_sf
 	if (electron_arm.eq.5 .or. hadron_arm.eq.5 .or.
      >	    electron_arm.eq.6 .or. hadron_arm.eq.6)
      >	    write(iun,'(7x,a19,''='',l2)') 'use_first_cer',use_first_cer
 	write(iun,'(7x,a11,''='',f10.3,a4)') 'ctau',ctau,'cm'
+        if (use_benhar_sf)
+     >      write(iun,'(7x,a12,''='',f8.4)') 'transparency',transparency
 
 ! Counters
 	write(iun,*) 'COUNTERS:'

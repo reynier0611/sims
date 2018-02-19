@@ -549,7 +549,7 @@ C DJG:
 ! ... Normalizing to one may not be correct if there is strength beyond
 ! ... Em_max,Pm_max.
 
-	if(doing_hepi.or.doing_hekaon) then
+	if(doing_hepi.or.doing_hekaon .or. (doing_heavy.and.use_benhar_sf)) then
 	  if (nint(targ%A).eq.3) then
 	    write(6,*) 'Using the mod version of 3He S.F. rather than Paris.'
 	    tmpfile='benharsf_3mod.dat'

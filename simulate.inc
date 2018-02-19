@@ -71,10 +71,11 @@
 	logical doing_eep, doing_pion, doing_delta, doing_kaon, doing_rho
 	logical doing_semi, doing_semipi, doing_semika, doing_hplus, doing_bound
 	integer*4 which_kaon, which_pion
-	logical using_cit_generation, using_Coulomb, using_Eloss
+	logical using_cit_generation, using_Coulomb, using_Eloss, use_benhar_sf
 	logical correct_Eloss, standard_Eloss, correct_raster,do_fermi
 	logical using_tgt_field
 	integer*4 electron_arm, hadron_arm, use_first_cer
+	real*8 transparency
 
 
 	common /gnrl/   Mh, Mh2, Mh2_final, Ebeam, dEbeam, Ebeam_vertex_ave,
@@ -92,7 +93,7 @@
      >    doing_semipi, doing_semika, doing_hplus, which_kaon,
      >    which_pion, using_cit_generation, using_Coulomb, using_Eloss,
      >    correct_Eloss, standard_Eloss, correct_raster, do_fermi,using_tgt_field,
-     >    electron_arm, hadron_arm, use_first_cer, doing_bound
+     >    electron_arm, hadron_arm, use_first_cer, doing_bound, use_benhar_sf, transparency
 
 ! ........ note: make these first two parameters at least ONE BIGGER than the actual dimensions you want to read in
 	integer*4 ntheorymax,nrhoPmmax

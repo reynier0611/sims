@@ -17,7 +17,8 @@
      doing_decay  =  F		!  1=decay ON, 0=decay OFF.
      ctau  =  780.4			!  decay length (cm)
      extra_dbase_file = 'extra_hydrogen_norad.data' !  additional input parameters.
-!     extra_dbase_file = 'extra_hydrogen_rad.data' !  additional input parameters.
+     use_benhar_sf = T		!Benhar
+     doing_bound = T            ! T = 2-body break up, F = 3-body break up
 / 
  =?
  &KINEMATICS_MAIN
@@ -33,10 +34,10 @@
 
  ?=
  &TARGET
-     targ%A  =  2.0			!  target A
-     targ%Z  =  1.0			!  target Z
-     targ%mass_amu  =  2.01355	        !  target mass in amu
-     targ%mrec_amu  =  1.008665	        !  recoil mass in amu (eep=A-1 system,pion=A-2)
+     targ%A  =  3.0			!  target A
+     targ%Z  =  2.0			!  target Z
+     targ%mass_amu  =  3.01355	        !  target mass in amu
+     targ%mrec_amu  =  2.008665	        !  recoil mass in amu (eep=A-1 system,pion=A-2)
      targ%rho  =  0.167		        !  target density (g/cm^3)
      targ%thick  =  2505.		!  target thick (mg/cm^2)
      targ%angle  =  0.		        !  target angle (for solid target) (degrees)

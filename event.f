@@ -353,7 +353,7 @@ C modified 5/15/06 for poinct
 	    efer = targ%M - sqrt(m_spec**2+pfer**2)
 	  endif
 	  if (doing_hepi .or. doing_hekaon .or. doing_hedelta .or. doing_herho) then
-	    call generate_em(pfer,vertex%Em)		!Generate Em
+	    call generate_em(pfer,vertex%Em, doing_bound)		!Generate Em
 	    m_spec = targ%M - targ%Mtar_struck + vertex%Em != M^*_{A-1}
 	    efer = targ%M - sqrt(m_spec**2+pfer**2)
 	  endif
@@ -1407,6 +1407,14 @@ CDJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_targ) ang
 
 	if (doing_hyd_elast.or.doing_pion.or.doing_kaon.or.doing_delta.or.doing_phsp.or.doing_rho.or.doing_semi) then !no SF.
 	  main%SF_weight=1.0
+
+! ********************************************************************************
+! RCT 8/2/2016 Using spectral functions
+	else if (use_benhar_sf.and.doing_heavy) then
+           call sf_lookup_diff(vertex%Em, vertex%Pm, weight, doing_bound)
+           main%SF_weight = targ%Z*transparency*weight
+! ********************************************************************************
+	
 	else if (doing_deuterium .or. doing_heavy) then
            ! WB 7/9/2016
 	   ! SF_weight can always be calculated. In that way one needs only 

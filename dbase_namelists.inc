@@ -42,7 +42,9 @@
      >	   doing_rho, 
      >	   doing_decay, 
      >	   extra_dbase_file,
-     >	   ctau
+     >	   ctau,
+     >     use_benhar_sf,
+     >     transparency
 
 *	DEBUG
 	namelist /DEBUG_PARM/
