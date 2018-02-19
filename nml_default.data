@@ -20,6 +20,7 @@
     doing_rho = F
     doing_decay = F
     ctau = 0
+    doing_bound = F
  / 
 
  &DEBUG_PARM

@@ -30,6 +30,7 @@
      >	   dEbeam, 
      >	   EXPER, 
 !      EXPER%charge, 
+     >     doing_bound,
      >     doing_phsp,
      >	   doing_kaon, 
      >	   which_kaon, 

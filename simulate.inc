@@ -69,7 +69,7 @@
 	logical doing_phsp, using_rad, hard_cuts
 	logical doing_hyd_elast, doing_deuterium, doing_heavy
 	logical doing_eep, doing_pion, doing_delta, doing_kaon, doing_rho
-	logical doing_semi, doing_semipi, doing_semika, doing_hplus
+	logical doing_semi, doing_semipi, doing_semika, doing_hplus, doing_bound
 	integer*4 which_kaon, which_pion
 	logical using_cit_generation, using_Coulomb, using_Eloss
 	logical correct_Eloss, standard_Eloss, correct_raster,do_fermi
@@ -92,7 +92,7 @@
      >    doing_semipi, doing_semika, doing_hplus, which_kaon,
      >    which_pion, using_cit_generation, using_Coulomb, using_Eloss,
      >    correct_Eloss, standard_Eloss, correct_raster, do_fermi,using_tgt_field,
-     >    electron_arm, hadron_arm, use_first_cer
+     >    electron_arm, hadron_arm, use_first_cer, doing_bound
 
 ! ........ note: make these first two parameters at least ONE BIGGER than the actual dimensions you want to read in
 	integer*4 ntheorymax,nrhoPmmax

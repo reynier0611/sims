@@ -3,7 +3,7 @@
 ! dbase_read reads the input file and sets the run-time flags for the run.
 ! Note that there are four INDEPENDENT ways to run SIMC.
 !
-! 1. doing_eep: (e,e'p) subcases:doing_hyd_elast, doing_deuterium, doing_heavy
+! 1. doing_eep: (e,e'p) subcases:doing_hyd_elast, doing_deuterium, doing_heavy, doing_bound
 !
 ! 2. doing_kaon:(e,e'K) subcases:doing_hydkaon, doing_deutkaon,doing_hekaon.
 !	which_kaon= 0/ 1/ 2 for Lambda/Sigam0/Sigma- quasifree.
