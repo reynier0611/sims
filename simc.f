@@ -324,7 +324,8 @@ cdg	call time (timestring1(11:23))
 
 ! ... update the "contribution" and "slop" limits
 	    call limits_update(main,vertex,orig,recon,doing_deuterium,
-     >		doing_pion,doing_kaon,doing_delta,doing_rho,contrib,slop)
+     >		doing_pion,doing_kaon,doing_delta,doing_rho,contrib,slop,
+     >		doing_heavy, doing_bound)
 
 	  endif ! <success>
 
@@ -382,7 +383,7 @@ c	call time (timestring2(11:23))
 	  genvol = genvol * domega_p * (gen%e%E%max-gen%e%E%min)
 	endif
 
-	if (doing_heavy.or.doing_semi) then		!6-fold
+	if ((doing_heavy.and.(.not.doing_bound)).or.doing_semi) then		!6-fold
 	  genvol = genvol * (gen%p%E%max-gen%p%E%min)	
 	endif
 

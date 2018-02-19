@@ -172,7 +172,7 @@
 	    SF=0
 	    return
 	  else
-	    do iEm=1,numEm-1
+	    do iEm=2,numEm-1
 	      if (Em.ge.Emval(iEm) .and. Em.lt.Emval(iEm+1)) then
 	        Em1=Emval(iEm)
 	        Em2=Emval(iEm+1)
@@ -186,7 +186,7 @@
 	  SF=logsf
 	  if (SF.lt.1.d-20) SF=0 !If the obtained value is extremely small, just return zero!
 
-	else if (.not.doing_bound) then
+	else if (doing_bound) then
 	! Return the value corresponding to the first bin!
 	  if(w1.ge.w2) then
 	    SF = sfval(1,iPm) 

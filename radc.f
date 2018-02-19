@@ -245,7 +245,7 @@ cdg	endif
 ! ... If only the incoming electron arm radiates, then we can compare Em
 ! ... to edge.Em.min (the SPECTROMETER Em limit) as well.
 
-	  if (doing_heavy) then
+	  if (doing_heavy .and.(.not. doing_bound)) then
 	    if (debug(5)) write(6,*)'gen_rad: at 2a'
 	if (debug(5)) write(6,*)'vertex%Em=',vertex%Em
 	if (debug(5)) write(6,*)'VERTEXedge%Em%max=',VERTEXedge%Em%max
@@ -276,7 +276,7 @@ cdg	endif
 
 ! ... CASE 3: D(e,e'p) - limit radiation so that E_beam > E' at the vertex.
 
-	  else if (doing_deuterium) then
+	  else if (doing_deuterium .or.(doing_heavy.and.doing_bound)) then
 	    Egamma_max(1) = min(Egamma1_max, gen%sumEgen%max - vertex%e%E)
 	    if (ntail.ne.0) Egamma_min(1) = gen%sumEgen%min - vertex%e%E
 
@@ -338,7 +338,7 @@ CDJG	    if (ntail.ne.0) Egamma_min(1) = gen.sumEgen.min - vertex.e.E
 ! The VERTEX kinematics are now set, so check that we are inside the
 ! VERTEXedges (SF limits).
 
-	if (doing_heavy) then
+	if (doing_heavy .and.(.not. doing_bound)) then
 	  if (debug(5)) write(6,*)'gen_rad: Em, min, max =',vertex%Em,
      >		VERTEXedge%Em%min,VERTEXedge%Em%max
 	  if (debug(5)) write(6,*)'gen_rad: Pm, min, max =',vertex%Pm,

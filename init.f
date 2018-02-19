@@ -293,7 +293,7 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 	slop_Ee = slop_Ee + (targ%Eloss(2)%max-targ%Eloss(2)%min)
 	slop_Ep = slop_Ep + (targ%Eloss(3)%max-targ%Eloss(3)%min)
 
-	if (doing_heavy) then		! 'reconstructed' Em cuts.
+	if (doing_heavy .and. (.not.doing_bound)) then		! 'reconstructed' Em cuts.
 	  slop%total%Em%used = slop_Ebeam + slop_Ee + slop_Ep + dE_edge_test
 	  edge%Em%min = cuts%Em%min - slop%total%Em%used
 	  edge%Em%max = cuts%Em%max + slop%total%Em%used
@@ -316,18 +316,20 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 !    from spectral function.  Em limit (max) has to come from energy
 !    conservation after everything else is calculated.
 !
-
+! -------------------------------------------------------------------------------------------
 	if (doing_hyd_elast) then
 	  VERTEXedge%Em%min = 0.0
 	  VERTEXedge%Em%max = 0.0
 	  VERTEXedge%Pm%min = 0.0
 	  VERTEXedge%Pm%max = 0.0
-	else if (doing_deuterium) then
-	  VERTEXedge%Em%min = Mp + Mn - targ%M		!2.2249 MeV, I hope.
+! -------------------------------------------------------------------------------------------
+	else if (doing_deuterium .or.(doing_heavy.and.doing_bound)) then
+	  VERTEXedge%Em%min = Mp + Mn - targ%M		!2.2249 MeV, if deuterium, I hope.
 	  VERTEXedge%Em%max = Mp + Mn - targ%M
 	  VERTEXedge%Pm%min = 0.0
 	  VERTEXedge%Pm%max = max(abs(Pm_theory(1)%min),abs(Pm_theory(1)%max))
-	else if (doing_heavy) then
+! -------------------------------------------------------------------------------------------
+	else if (doing_heavy .and.(.not.doing_bound)) then
 	  VERTEXedge%Pm%min=0.0
 	  VERTEXedge%Pm%max=0.0
 	  do i = 1, nrhoPm
@@ -336,6 +338,7 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 	  enddo
 	  VERTEXedge%Em%min = E_Fermi
 	  VERTEXedge%Em%max = 1000.	!Need Egamma_tot_max for good limit.
+! -------------------------------------------------------------------------------------------
 	else if (doing_hydpi .or. doing_hydkaon .or. doing_hyddelta .or. doing_hydrho) then
 	  VERTEXedge%Em%min = 0.0
 	  VERTEXedge%Em%max = 0.0
@@ -356,10 +359,9 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 	  VERTEXedge%Em%max = 0.0
 	  VERTEXedge%Pm%min = 0.0
 	  VERTEXedge%Pm%max = 0.0
-	   
 	endif
 	write(6,*) 'E_bind =',VERTEXedge%Em%min,'MeV in limits_init (QF only)'
-
+! -------------------------------------------------------------------------------------------
 
 ! Calculate limits for recoiling (A-1) system, if there is one.
 ! M_{A-1} (Mrec) limits from Em range, since M_{A-1} = M_A - M_N + E_m
@@ -406,7 +408,7 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 	Egamma_tot_max = Ebeam_max + targ%Mtar_struck - targ%Mrec_struck -
      >		edge%e%E%min - edge%p%E%min - VERTEXedge%Em%min -
      >		VERTEXedge%Trec%min - VERTEXedge%Trec_struck%min
-	if (doing_heavy) then
+	if (doing_heavy .and. (.not.doing_bound)) then
 	  t2 = (edge%Em%max - VERTEXedge%Em%min) +
      >		(VERTEXedge%Trec%max - VERTEXedge%Trec%min)
 	  Egamma_tot_max = min(Egamma_tot_max,t2)
@@ -419,7 +421,7 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 	if (doing_tail(2)) Egamma2_max = Egamma_tot_max
 	if (doing_tail(3)) Egamma3_max = Egamma_tot_max
 
-	if (doing_heavy) then	!Needed Egamma_tot_max for final limits.
+	if (doing_heavy.and. (.not.doing_bound)) then	!Needed Egamma_tot_max for final limits.
 	  VERTEXedge%Em%min = max(VERTEXedge%Em%min,edge%Em%min-Egamma_tot_max)
 	  VERTEXedge%Em%max = min(VERTEXedge%Em%max,edge%Em%max)
 	endif
@@ -434,7 +436,7 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 	  gen%sumEgen%min = 0.0
 	  gen%sumEgen%max = 0.0
 
-	else if (doing_heavy) then	!generated TOTAL (e+p) energy limits.
+	else if (doing_heavy.and.(.not. doing_bound)) then	!generated TOTAL (e+p) energy limits.
 	  gen%sumEgen%max = Ebeam_max + targ%Mtar_struck -
      >		VERTEXedge%Trec%min - VERTEXedge%Em%min
 	  gen%sumEgen%min = Ebeam_min + targ%Mtar_struck -
@@ -463,20 +465,25 @@ c	   gen%sumEgen%min = Ebeam_min - VERTEXedge%Trec%max - VERTEXedge%Trec_struck%
 	gen%sumEgen%max = gen%sumEgen%max + dE_edge_test
 	gen%sumEgen%min = max(0.d0,gen%sumEgen%min)
 
+! ****************************************************************************************
 ! ... E arm GENERATION limits from sumEgen.
 ! ... Not used for doing_hyd_elast, but define for the hardwired histograms.
-
+! ----------------------------------------------------------------------------
 	if (doing_hyd_elast) then
 	  gen%e%E%min = edge%e%E%min
 	  gen%e%E%max = edge%e%E%max + Egamma2_max
+! ----------------------------------------------------------------------------
 	else if (doing_deuterium .or. doing_pion .or. doing_kaon 
-     >      .or. doing_rho .or. doing_delta) then
+     >      .or. doing_rho .or. doing_delta
+     >      .or. (doing_heavy.and.doing_bound)) then
 	  gen%e%E%min = gen%sumEgen%min
 	  gen%e%E%max = gen%sumEgen%max
-	else if (doing_heavy .or. doing_semi) then
+! ----------------------------------------------------------------------------
+	else if ((doing_heavy.and.(.not.doing_bound)) .or. doing_semi) then
 	  gen%e%E%min = gen%sumEgen%min - edge%p%E%max - Egamma3_max
 	  gen%e%E%max = gen%sumEgen%max - edge%p%E%min
 	endif
+! ****************************************************************************************
 
 ! ... Apply limits from direct comparison to acceptance.
 	gen%e%E%min = max(gen%e%E%min, edge%e%E%min)
@@ -489,17 +496,22 @@ c	   gen%sumEgen%min = Ebeam_min - VERTEXedge%Trec%max - VERTEXedge%Trec_struck%
 	gen%e%xptar%min = edge%e%xptar%min
 	gen%e%xptar%max = edge%e%xptar%max
 
+! ****************************************************************************************
 ! ... P arm GENERATION limits from sumEgen.  Not used for any case
 ! ... except doing_heavy, but need to define for code that writes out limits.
-
+! ----------------------------------------------------------------------------
 	if (doing_hyd_elast.or.doing_deuterium.or.doing_pion.or.doing_kaon .or.
-     >    doing_rho .or. doing_delta) then
+     >    doing_rho .or. doing_delta
+     >    .or. (doing_heavy.and.doing_bound)) then
 	  gen%p%E%min = edge%p%E%min
 	  gen%p%E%max = edge%p%E%max + Egamma3_max
-	else if (doing_heavy .or. doing_semi)then
+! ----------------------------------------------------------------------------
+	else if ((doing_heavy.and.(.not.doing_bound)) .or. doing_semi)then
 	  gen%p%E%min = gen%sumEgen%min - edge%e%E%max - Egamma2_max
 	  gen%p%E%max = gen%sumEgen%max - edge%e%E%min
 	endif
+! ****************************************************************************************
+
 ! ... Apply limits from direct comparison to acceptance.
         gen%p%E%min = max(gen%p%E%min, edge%p%E%min)
         gen%p%E%max = min(gen%p%E%max, edge%p%E%max + Egamma3_max)
@@ -863,11 +875,13 @@ c	exponentiate = use_expon
 	  write(6,*) 'Defaulting to c12.theory'
 	  theory_file='c12.theory'
 	endif
+	write(6,*) 'Rey 0'
 c	open(unit=1,file=theory_file,status='old',readonly,shared,iostat=iok)
 	open(unit=1,file=theory_file,status='old',iostat=iok)
-
+	write(6,*) 'Rey 1'
 ! ... read in the theory file
 	read(1,*,err=40) nrhoPm, absorption, E_Fermi
+	write(6,*) 'Rey 2'
 	do m=1, nrhoPm
 	  read(1,*,err=40) nprot_theory(m), Em_theory(m), Emsig_theory(m),
      >		bs_norm_theory(m)

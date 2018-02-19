@@ -1,5 +1,6 @@
 	subroutine limits_update(main,vertex,orig,recon,doing_deuterium,
-     >		doing_pion,doing_kaon,doing_delta,doing_rho,contrib,slop)
+     >		doing_pion,doing_kaon,doing_delta,doing_rho,contrib,slop,
+     >		doing_heavy, doing_bound)
 
 	implicit none
 
@@ -11,6 +12,7 @@
 	type(sloptype):: slop
 	integer i
 	logical	doing_deuterium, doing_pion, doing_kaon, doing_delta, doing_rho
+	logical	doing_heavy, doing_bound
 
 ! Update the "contribution limits" records
 
@@ -24,7 +26,8 @@
 	call update_range(main%Trec, contrib%gen%Trec)
 
 ! ........ another tricky shift
-	if (doing_deuterium .or. doing_pion .or. doing_kaon .or. doing_delta .or. doing_rho) then
+	if (doing_deuterium .or. (doing_heavy .and. doing_bound) 
+     >		.or. doing_pion .or. doing_kaon .or. doing_delta .or. doing_rho) then
 	  call update_range(vertex%e%E-main%Ein_shift,contrib%gen%sumEgen)
 	else
 	  call update_range(vertex%e%E+vertex%p%E-main%Ein_shift,contrib%gen%sumEgen)
@@ -226,7 +229,8 @@ C modified 5/15/06 for poinct
 !
 !H(e,e'p)		X	X
 !D(e,e'p)	X	X	X		X	X
-!A(e,e'p)	X	X	X	X	X	X
+!A(e,e'p)	X	X	X		X	X	if doing_bound = T (2-body breakup)
+!A(e,e'p)       X       X       X       X       X       X	if doing_bound = F (3-body breakup)
 !----------------------------------------------------------------------
 !H(e,e'pi)	X	X	X		X	X
 !A(e,e'pi)	X	X	X		X	X	X	X
@@ -259,10 +263,12 @@ C modified 5/15/06 for poinct
 ! energy.  There is a jacobian ( |dEp'/dEm| ).  It comes from integrating
 ! over the energy conservation delta function: delta(E_D - E_p - E_n - Em).
 
+! -----------------------------------------------------------------------------
 ! Generate Electron Angles (all cases):
 	vertex%e%yptar=gen%e%yptar%min+grnd()*(gen%e%yptar%max-gen%e%yptar%min)
 	vertex%e%xptar=gen%e%xptar%min+grnd()*(gen%e%xptar%max-gen%e%xptar%min)
 
+! -----------------------------------------------------------------------------
 ! Generate Hadron Angles (all but H(e,e'p)):
 	if (doing_deuterium.or.doing_heavy.or.doing_pion.or.doing_kaon
      >         .or.doing_delta.or.doing_semi) then
@@ -272,8 +278,9 @@ C modified 5/15/06 for poinct
      >          (gen%p%xptar%max-gen%p%xptar%min)
 	endif
 
-! Generate Hadron Momentum (A(e,e'p) or semi-inclusive production).
-	if (doing_heavy .or. doing_semi) then
+! -----------------------------------------------------------------------------
+! Generate Hadron Momentum (A(e,e'p) .not.doing_bound or semi-inclusive production).
+	if ((doing_heavy .and. (.not. doing_bound)) .or. doing_semi) then
 	  Emin = max(gen%p%E%min, gen%sumEgen%min - gen%e%E%max)
 	  Emax = min(gen%p%E%max, gen%sumEgen%max - gen%e%E%min)
 	  if (Emin.gt.Emax) goto 100
@@ -283,15 +290,17 @@ C modified 5/15/06 for poinct
 	  vertex%p%delta = 100.*(vertex%p%P-spec%p%P)/spec%p%P
 	endif
 
+! -----------------------------------------------------------------------------
 ! Generate Electron Energy (all but hydrogen elastic)
 	if (doing_deuterium.or.doing_heavy.or.doing_pion.or.doing_kaon
      >       .or.doing_delta.or.doing_rho.or.doing_semi) then
 	  Emin=gen%e%E%min
 	  Emax=gen%e%E%max
-	  if (doing_deuterium .or. doing_pion .or. doing_kaon .or. doing_delta .or. doing_rho) then
+	  if (doing_deuterium .or. (doing_heavy .and. doing_bound) 
+     >	     .or. doing_pion .or. doing_kaon .or. doing_delta .or. doing_rho) then
 	    Emin = max(Emin,gen%sumEgen%min)
 	    Emax = min(Emax,gen%sumEgen%max)
-	  else if (doing_heavy) then		! A(e,e'p)
+	  else if (doing_heavy .and. (.not. doing_bound)) then		! A(e,e'p)
 	    Emin = max(Emin, gen%sumEgen%min - vertex%p%E)
 	    Emax = min(Emax, gen%sumEgen%max - vertex%p%E)
 	  endif
@@ -302,7 +311,7 @@ C modified 5/15/06 for poinct
 	  vertex%e%delta = 100.*(vertex%e%P-spec%e%P)/spec%e%P
 	endif	!not (doing_hyd_elast)
 
-
+! -----------------------------------------------------------------------------
 ! Calculate the electron and proton PHYSICS angles from the spectrometer angles.
 ! Note that the proton angles are not yet know for hydrogen elastic.
 ! NOTE: this needs to be done again for the exclusive rho stuff (just on the hadron side).
@@ -313,6 +322,7 @@ C modified 5/15/06 for poinct
      &		vertex%p%xptar,vertex%p%yptar,vertex%p%theta,vertex%p%phi)
 
 
+! -----------------------------------------------------------------------------
 ! Generate Fermi Momentum and Em for A(e,e'pi) and A(e,e'K). 
 	pfer=0.0
 	pferx=0.0
@@ -359,6 +369,7 @@ C modified 5/15/06 for poinct
 	  endif
 	endif
 
+! -----------------------------------------------------------------------------
 ! Compute all non-generated quantities
 
 	if (debug(5)) write(6,*)'gen: calling comp_ev with false, main, vertex'
@@ -367,9 +378,7 @@ C modified 5/15/06 for poinct
 
 	call complete_ev(main,vertex,success)
 
-
 	main%sigcc = 1.0
-
 	if (debug(2)) write(6,*)'gen: initial success =',success
 	if (.not.success) goto 100
 
@@ -388,7 +397,7 @@ C Call energy loss here - just before sending on to the spectrometers.
 	  if (debug(2)) write(6,*)'gen: after gen_rad, success =',success
 	else
 	  success = .true.
-	  if (doing_heavy) success = 
+	  if (doing_heavy .and. (.not. doing_bound)) success = 
      >		(vertex%Em .ge. VERTEXedge%Em%min .and.
      >		 vertex%Em .le. VERTEXedge%Em%max .and.
      >		 vertex%Pm .ge. VERTEXedge%Pm%min .and. 
@@ -544,7 +553,8 @@ C Call energy loss here - just before sending on to the spectrometers.
 	  vertex%p%delta = (vertex%p%P - spec%p%P)*100./spec%p%P
 	  if (debug(4)) write(6,*)'comp_ev: at 6'
 
-	elseif (doing_deuterium) then	!need Ep, and a jacobian.
+! ---------------------------------------------------------------------------------------------------------
+	elseif (doing_deuterium .or. (doing_heavy .and. doing_bound)) then	!need Ep, and a jacobian.
 
 	  vertex%Em = targ%Mtar_struck + targ%Mrec - targ%M	!=2.2249 MeV
 	  vertex%Mrec = targ%M - targ%Mtar_struck + vertex%Em	!=targ.Mrec
@@ -595,6 +605,7 @@ C Call energy loss here - just before sending on to the spectrometers.
      > 		(2*(a**2-c**2)*vertex%p%E + c*t)
 	  main%jacobian = abs(main%jacobian)
 
+! ---------------------------------------------------------------------------------------------------------
 	elseif (doing_pion .or. doing_kaon .or. doing_delta) then
 	   
 c	  if (doing_rho) then 
@@ -923,16 +934,24 @@ C       DJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_ta
 ! and A-1 system.  For now, just take Trec for the A-1 system, and ignore
 ! the recoiling struck nucleon (hyperon), so Trec=0 for hydrogen target.
 
+! -----------------------------------------------------------------------------------------
+! Hydrogen elastic
 	if (doing_hyd_elast) then
 	  vertex%Trec = 0.0
-	else if (doing_deuterium) then
+! -----------------------------------------------------------------------------------------
+! Deuterium or heavy two-body breakup
+	else if (doing_deuterium .or. (doing_heavy .and. doing_bound) ) then
 	  vertex%Pm = vertex%Pmiss
 	  vertex%Trec = sqrt(vertex%Mrec**2 + vertex%Pm**2) - vertex%Mrec
-	else if (doing_heavy) then
+! -----------------------------------------------------------------------------------------
+! Heavy three-body breakup
+	else if (doing_heavy .and. (.not.doing_bound)) then
 	  vertex%Pm = vertex%Pmiss
 	  vertex%Mrec = sqrt(vertex%Emiss**2-vertex%Pmiss**2)
 	  vertex%Em = targ%Mtar_struck + vertex%Mrec - targ%M
 	  vertex%Trec = sqrt(vertex%Mrec**2 + vertex%Pm**2) - vertex%Mrec
+! -----------------------------------------------------------------------------------------
+! Others
 	else if (doing_hydpi .or. doing_hydkaon .or. doing_hyddelta .or. doing_hydrho) then
 	  vertex%Trec = 0.0
 	else if (doing_deutpi.or.doing_hepi.or.doing_deutkaon.or.doing_hekaon
@@ -942,6 +961,7 @@ C       DJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_ta
 	   vertex%Pm = vertex%Pmiss
 	   vertex%Em = vertex%Emiss
 	endif
+! -----------------------------------------------------------------------------------------
 
 	if (debug(5)) write(6,*) 'vertex%Pm,vertex%Trec,vertex%Em',vertex%Pm,vertex%Trec,vertex%Em
 	if (debug(4)) write(6,*)'comp_ev: at 10'
@@ -1415,7 +1435,7 @@ CDJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_targ) ang
            main%SF_weight = targ%Z*transparency*weight
 ! ********************************************************************************
 	
-	else if (doing_deuterium .or. doing_heavy) then
+	else if (doing_deuterium .or. (doing_heavy.and.(.not.use_benhar_sf))) then
            ! WB 7/9/2016
 	   ! SF_weight can always be calculated. In that way one needs only 
            ! to do one calculation to get PS and PWIA (SIMC version) from 
@@ -1483,6 +1503,7 @@ CDJG Calculate the "Collins" (phi_pq+phi_targ) and "Sivers"(phi_pq-phi_targ) ang
 	      enddo		! <i=1,nrhoPm>
 	   ! endif
 	endif
+! ********************************************************************************
 
 ! ... if we have come up with weight<=, quit now (avoid weight<0 in ntuple)
 ! ... unless FORCE_SIGCC is on (to get central sigcc).
