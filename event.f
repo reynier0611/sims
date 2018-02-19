@@ -1582,6 +1582,10 @@ C If using Coulomb corrections, include focusing factor
 ! for the Laget Model the Jacobian has already been included	
 ! include the correction factors to the jacobian that is already included in the cross section     
 	   main%weight = main%sig*main%gen_weight*main%jacobian_corr*main%coul_corr
+	
+! ============================================================
+! RCT - This is where the main weight is put together.
+!       This main%weight is the one written in the ntuple
 	else
 	   main%sig = main%SF_weight*main%jacobian*main%sigcc
 	   main%weight = main%SF_weight*
@@ -1591,6 +1595,7 @@ C If using Coulomb corrections, include focusing factor
      >                   main%coul_corr
 	endif
 	main%weight = main%weight * tgtweight	!correct for #/nucleons involved
+! ============================================================
 	if ((doing_kaon.or.doing_semika) .and. .not.doing_decay) 
      >		main%weight = main%weight*survivalprob
 	if (debug(5))write(6,*) 
@@ -1607,7 +1612,7 @@ C If using Coulomb corrections, include focusing factor
 	return
 	end
 
-
+! #########################################################################################
 	subroutine physics_angles(theta0,phi0,dx,dy,theta,phi)
 
 !Generate physics angles in lab frame.  Theta is angle from beamline.
