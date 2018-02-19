@@ -355,7 +355,8 @@
 	  NtupleTag(m) = 'theta_rq'	! 65 recoil angle
 	  m = m+1
 	  NtupleTag(m) = 'SF_weight_recon'	! 66 spectral function with reconstructed quantities
-
+	  m = m+1                     ! 67 RCT 8/9/2016 outgoing proton in-plane angle
+          NtupleTag(m) = 'h_Thf'      ! 67 RCT 8/9/2016 outgoing proton in-plane angle
 	endif
 
 !	else		!used to be the if (doing_phsp) option.

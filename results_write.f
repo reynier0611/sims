@@ -245,12 +245,12 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	  ntu(59) = main%RECON%p%yv                    !                  yv
 	  ntu(60) = main%RECON%e%zv                    !  e recon. vertex  zv
 	  ntu(61) = main%RECON%e%yv                    !           vertex  yv
-	  ntu(62) = recon%p%p                     !   final proton momentum
-	  ntu(63) = recon%e%p                     !   final electron momentum
-	  ntu(64) = recon%ein                     !   incident energy
-	  ntu(65) = recon%theta_rq                !   recoil angle
-	  ntu(66) = main%SF_weight                !   Spectral Function fro recon. quantities
-	  
+	  ntu(62) = recon%p%p                          !  final proton momentum
+	  ntu(63) = recon%e%p                          !  final electron momentum
+	  ntu(64) = recon%ein                          !  incident energy
+	  ntu(65) = recon%theta_rq                     !  recoil angle
+	  ntu(66) = main%SF_weight                     !  Spectral Function fro recon. quantities
+	  ntu(67) = (spec%p%theta+recon%p%yptar)*180./3.1415926536     !  RCT 8/9/2016 outgoing reconstructed proton in-plane angle  
 	endif
 
 ! write output
