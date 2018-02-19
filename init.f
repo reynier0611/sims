@@ -870,18 +870,28 @@ c	exponentiate = use_expon
 	  theory_file='fe56.theory'
 	else if ( nint(targ%A) .eq. 197) then
 	  theory_file='au197.theory'
+
+!---------------------------------------------------------------------
+	! RCT 8/5/2016 This simc version uses a Spectral Function for
+	! 3He implemented by Werner and myself. This part of the code
+	! uses c12.theory just to set the Pmiss range
+	else if ( nint(targ%A) .eq. 3) then
+	  write(6,*) 'Defaulting to c12.theory to set Pmiss range'
+	  theory_file='c12.theory'
+!---------------------------------------------------------------------
+
 	else
 	  write(6,*) 'No Theory File (spectral function) for A = ',targ%A
 	  write(6,*) 'Defaulting to c12.theory'
 	  theory_file='c12.theory'
 	endif
-	write(6,*) 'Rey 0'
+
 c	open(unit=1,file=theory_file,status='old',readonly,shared,iostat=iok)
 	open(unit=1,file=theory_file,status='old',iostat=iok)
-	write(6,*) 'Rey 1'
+
 ! ... read in the theory file
 	read(1,*,err=40) nrhoPm, absorption, E_Fermi
-	write(6,*) 'Rey 2'
+
 	do m=1, nrhoPm
 	  read(1,*,err=40) nprot_theory(m), Em_theory(m), Emsig_theory(m),
      >		bs_norm_theory(m)

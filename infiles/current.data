@@ -9,16 +9,17 @@
 
  =?
  &EXPERIMENT
-     ngen  =  50000				!  POS: # of successes
-     EXPER%charge  =   2160.0			!  total charge (mC) for I = 25uA current and 1 hour beam time
-     doing_phsp  =  F				!  (T = TRUE)	- If all of the doing_* are
-     doing_kaon  =  F				!  (T = TRUE)   false, then doing (e,e'p).
-     doing_pion  =  F				!  (T = TRUE)
-     doing_decay  =  F				!  1=decay ON, 0=decay OFF.
-     ctau  =  780.4				!  decay length (cm)
-     extra_dbase_file = 'extra_deuteron.data' 	!  additional input parameters.
-     use_benhar_sf = T				!  Benhar
-     doing_bound = F            		!  T = 2-body break up, F = 3-body break up
+     ngen  =  50000					!  POS: # of successes
+     EXPER%charge  =   2160.0				!  total charge (mC) for I = 25uA current and 1 day beam time
+     doing_phsp  =  F					!  (T = TRUE)	- If all of the doing_* are
+     doing_kaon  =  F					!  (T = TRUE)   false, then doing (e,e'p).
+     doing_pion  =  F					!  (T = TRUE)
+     doing_decay  =  F					!  1=decay ON, 0=decay OFF.
+     ctau  =  780.4					!  decay length (cm)
+     extra_dbase_file = 'extra_deuteron.data' 		!  additional input parameters.
+     !extra_dbase_file = 'extra_deuteron_rad.data'   	!  additional input parameters.
+     use_benhar_sf = T					!  Benhar
+     doing_bound = T            			!  T = 2-body break up, F = 3-body break up
 / 
  =?
  &KINEMATICS_MAIN

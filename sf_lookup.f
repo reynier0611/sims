@@ -19,21 +19,23 @@
 	real*8 tmpPm,tmpEm,tmpsfp,tmpsfn,tmpdEm,tmpdPm
 	integer*4 iPm,iEm
 	character infile*80
-	logical protonflag, doing_bound
+	logical protonflag, doing_bound	
 
 	open(unit=55,file=infile,status='old')
 
 	read (55,*) numPm , numEm
 
+! *************************************************************
+! Loop over the SF file to get all the values
 	do iPm = 1 , numPm
 	  do iEm = 1 , numEm
 	    read (55,*) tmpPm,tmpEm,tmpsfp,tmpsfn,tmpdPm,tmpdEm
 
 ! Choose proton or neutron spectral function.
 	    if (protonflag) then
-	      sfval(iEm,iPm)=tmpsfp
+	      sfval(iEm,iPm)=tmpsfp 
 	    else
-	      sfval(iEm,iPm)=tmpsfn
+	      sfval(iEm,iPm)=tmpsfn 
 	    endif
 
 ! Check that Pm value is consistent with others in same bin
@@ -57,6 +59,7 @@
 	        write(6,*) 'iEm,oldEm,newEm=',iEm,Emval(iEm),tmpEm
 	      endif
 	    endif
+
 	  enddo
 	enddo
 
@@ -67,19 +70,23 @@
 	    sfnorm(iPm) = sfnorm(iPm) + sfval(iEm,iPm)
 	    sftotnorm = sftotnorm + sfval(iEm,iPm)
 	  enddo
-!	  write(6,*) 'Pm=',Pmval(iPm),' has normalization=',sfnorm(iPm)
+
 	enddo
-	write(6,*) 'Uncorrected S.F. has normalization=',sftotnorm
+	write(6,*) '------------------------------------------------------'
+	write(6,*) 'sf_lookup: Uncorrected S.F. has normalization = ',sftotnorm
 
 	do iPm = 1 , numPm
 	  do iEm = 1 , numEm
 	    sfval(iEm,iPm) = sfval(iEm,iPm) / sftotnorm
+	    sfval(iEm,iPm) = sfval(iEm,iPm) /4./3.1415926535
+	    sfval(iEm,iPm) = sfval(iEm,iPm) /(Pmval(iPm)*Pmval(iPm))
+	    sfval(iEm,iPm) = sfval(iEm,iPm) /dPm(iPm)/dEm(iEm)
 	  enddo
 	enddo
-
+	write(6,*) 'sf_lookup: Uncorrected S.F. has been normalized to 1'
+	write(6,*) '------------------------------------------------------'
 	return
 	end
-
 
 !----------------------------------------------------------------------
 ! RCT 8/2/2016 This is the subroutine used to get the weighing
@@ -94,8 +101,13 @@
 
         real*8 SF
         call sf_lookup(Em, Pm, SF,doing_bound)
-        SFd = SF/4/3.1415926535/(Pm*Pm)/5.0/20.0
-        return
+        !SFd = SF/4/3.1415926535/(Pm*Pm)/5.0/20.0
+	! RCT 8/4/2016 in the line above we were dividing by 4*Pi,
+	!Pm**2, dPm, and dEm. This process is done now right when we
+	!import the spectral function. Furthermore, dEm and dPm are
+	!not assumed to be constant (5.0 and 20.0 above)
+        SFd = SF
+	return
         end
 
 !#######################################################################################
@@ -161,6 +173,8 @@
 ! The first E miss bin represents the 2-body break up threshold. Therefore, if not
 ! doing bound should ignore anything at or below the first bin in E miss.
 
+! -----------------------------------------------------
+! RCT 8/4/2016 This corresponds to the 3-body break up
 	if (.not.doing_bound) then
 
 	  if (Em.gt.Emval(numEm)) then	!linear extrapolation of LOG(f(Em))
@@ -175,17 +189,20 @@
 	    do iEm=2,numEm-1
 	      if (Em.ge.Emval(iEm) .and. Em.lt.Emval(iEm+1)) then
 	        Em1=Emval(iEm)
-	        Em2=Emval(iEm+1)
-	        sf1=w1*sfval(iEm,iPm)+w2*sfval(iEm,iPm+1)
-	        sf2=w1*sfval(iEm+1,iPm)+w2*sfval(iEm+1,iPm+1)
+	        Em2=Emval(iEm+1)  
+	        sf1 = w1*sfval(  iEm,iPm) + w2*sfval(  iEm,iPm+1)
+	        sf2 = w1*sfval(iEm+1,iPm) + w2*sfval(iEm+1,iPm+1)
 	      endif
 	    enddo
 	  endif
 
 	  logsf=(sf1 + (Em-Em1)*(sf2-sf1)/(Em2-Em1))  
+	  
 	  SF=logsf
 	  if (SF.lt.1.d-20) SF=0 !If the obtained value is extremely small, just return zero!
 
+! -----------------------------------------------------
+! RCT 8/4/2016 This corresponds to the 2-body break up
 	else if (doing_bound) then
 	! Return the value corresponding to the first bin!
 	  if(w1.ge.w2) then

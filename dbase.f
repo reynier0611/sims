@@ -64,8 +64,20 @@
 
 	dbase_file=' '
 	extra_dbase_file=' '
-	write(6,*) 'Enter the input filename (assumed to be in infiles directory)'
+	write(6,*) ' '
+	write(6,*) '************************************************'
+	write(6,*) '*                                              *'
+	write(6,*) '*                --- SIMC ---                  *'
+	write(6,*) '*                                              *'
+	write(6,*) '*          Welcome to Jefferson Lab            *'
+	write(6,*) '*         Last edited on: 08/05/2016           *'
+	write(6,*) '*                                              *'
+	write(6,*) '************************************************'
+	write(6,*) 'Enter the input filename'
+	write(6,*) '(assumed to be in infiles directory):'
 	read(5,'(a)') dbase_file
+
+	write(6,*) '*************************************************'
 
 	j=index(dbase_file,'/')
 	if (j.eq.0) then					!no path given
@@ -822,7 +834,9 @@ C DJG:
      >		 electron_arm.eq.6 .or. hadron_arm.eq.6) then
 	  write(6,*) 'Grumpy Dutch Giant welcomes you to Hall C++ at JLab12 - Get to work!'
 	else if ((hadron_arm+electron_arm).eq.7) then
-	  write(6,*) 'Kees welcomes you to Hall A at Jefferson Lab - Enjoy your stay!'
+	  write(6,*) '------------------------------------------------------'
+	  write(6,*) 'Kees welcomes you to Hall A at JLab - Enjoy your stay!'
+	  write(6,*) '------------------------------------------------------'
 	else if ( electron_arm.eq.7 .and. hadron_arm .eq. 5) then
 	  write(6,*) ' Bigcal and SHMS'
 	else if ( electron_arm.eq.8 .and. hadron_arm .eq. 1) then
@@ -842,10 +856,11 @@ C DJG:
 	if (.not.standard_Eloss) write(6,*) 'NOTE: Will be calculating full energy loss in the target for recon'
 	if (.not.using_Coulomb) write(6,*) 'NOTE: Will NOT be calculating Coulomb correction (default for Hydrogen target)'
 	if (using_Coulomb) write(6,*) 'NOTE: WILL be calculating Coulomb corrections. 
-     >             Implmemented for beam and scattered electron only!'
+     >     (Implemented for beam and scattered electron only)'
 	if (.not.correct_Eloss) write(6,*) 'NOTE: Will NOT correct reconstructed data for energy loss'
 	if (.not.correct_raster) write(6,*) 'NOTE: Will NOT use raster terms in reconstruction'
-
+	write(6,*) ''
+	write(6,*) ' *************************************************'	
 ! everything has been set now dump the parameters	
 	call dump_parameters(dump3)
 
