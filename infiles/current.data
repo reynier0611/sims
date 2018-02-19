@@ -36,7 +36,7 @@
  ?=
  &TARGET
      targ%A  =  3.0				!  target A
-     targ%Z  =  2.0				!  target Z
+     targ%Z  =  1.0				!  target Z
      targ%mass_amu  =  3.01604	        	!  target mass in amu
      targ%mrec_amu  =  2.01410	        	!  recoil mass in amu (eep=A-1 system,pion=A-2)
      targ%rho  =  0.003		        	!  target density (g/cm^3)

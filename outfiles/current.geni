@@ -1,19 +1,26 @@
- HRSr Trials:              11824491
- Slit hor/vert               835290     9590756
- Q1 entrance/mid/exit             0         568      248076
- Q2 entrance/mid/exit             0           0         747
- Dipole entrance/exit        439890      298479
- Q3 entrance/mid/exit          6399       37335       48573
- Events reaching hut         318378
- VDC1, VDC2                    4331        5464
- S1, S2, Cal	               0           0           0
+ HRSr Trials:               6058552
+ Col (Sieve) entr/exit            0           0
+ Spec. entrance             3563880
+ Q1 entrance/mid/exit        323012      559400      414244
+ Q2 entrance/mid/exit             0        4260        2629
+ Dipole entrance/exit        328670      444188
+ Q3 entrance/mid/exit          9213       49458       59635
+ Events reaching hut         299963
+ VDC1, VDC2                       4        5535
+ S0, Cher, S2	            3938           0        1741
+ Calo. Ps, Calo. Sh               0          11
+ Successes                   288734
 
- HRSl Trials:                308583
- Slit hor/vert                41440      167518
- Q1 entrance/mid/exit             0           0        1514
- Q2 entrance/mid/exit             0           0           0
- Dipole entrance/exit          4655         119
- Q3 entrance/mid/exit             1           7        3329
- Events reaching hut          90000
- VDC1, VDC2                       0           0
- S1, S2, Cal	               0           0           0
+ HRSl Trials:                 288734
+ Col (Sieve) entr/exit             0           0
+ Spec. entrance                46682
+ Q1 entrance/mid/exit          28926       58128       42707
+ Q2 entrance/mid/exit              0           0           0
+ Dipole entrance/exit          15311         597
+ Q3 entrance/mid/exit              0           1        3504
+ Events reaching hut           92878
+ VDC1, VDC2                        0           0
+ S0, Cher, S2	             2878           0           0
+ Calo. prl1, Calo. prl2            0           0
+ Successes                     90000
+

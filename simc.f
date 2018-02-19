@@ -40,16 +40,16 @@
 
 	real*8 grnd
 	real*8 ang_targ_earm,ang_targ_parm
-c 
+c
 
 ! INITIALIZE
 !-----------
 
-! ... initialize all the *min/max variables here since we can 
+! ... initialize all the *min/max variables here since we can
 ! ... no longer do it in the * include file
 	call min_max_init(contrib)
 
-	
+
 
 ! ... initialize histogram area for HBOOK
 
@@ -107,7 +107,7 @@ c
 ! GAW - insert calls to initialize target field for both arms
 ! mkj 10-20-2003 add if statements to determine the angle magnitude
 !                and sign between target direction and e-arm or p-arm.
-!       
+!
 	if(using_tgt_field) then
 	   if ( degrad*abs(targ_Bphi-spec%e%phi) .lt. .01) then
 	      if (targ_Bangle .ge. spec%e%theta) then
@@ -115,7 +115,7 @@ c
 	      else
 		 ang_targ_earm = +1*sin(spec%e%phi)*(spec%e%theta-targ_Bangle)
 	      endif
-	   elseif ( degrad*abs(targ_Bphi-spec%e%phi)-180.0 .lt. .01) then 
+	   elseif ( degrad*abs(targ_Bphi-spec%e%phi)-180.0 .lt. .01) then
 	      ang_targ_earm = +1*sin(spec%e%phi)*(targ_Bangle+spec%e%theta)
 	   else
 	      write(*,*) ' Error determining angle between target and e-arm'
@@ -129,7 +129,7 @@ c
 	      else
 		 ang_targ_parm = +1*sin(spec%p%phi)*(targ_Bangle-spec%p%theta)
 	      endif
-	   elseif ( degrad*abs(targ_Bphi-spec%p%phi)-180.0 .lt. .01) then 
+	   elseif ( degrad*abs(targ_Bphi-spec%p%phi)-180.0 .lt. .01) then
 	      ang_targ_parm = +1*sin(spec%p%phi)*(targ_Bangle+spec%p%theta)
 	   else
 	      write(*,*) ' Error determining angle between target and p-arm'
@@ -138,8 +138,8 @@ c
 	   endif
 c
 	   write(*,*) ' targ_Bangle =',targ_Bangle*degrad,' targ_Bphi =',targ_Bphi*degrad
-	   write(*,*) ' Angle between target and e-arm',ang_targ_earm*degrad	
-	   write(*,*) ' Angle between target and p-arm',ang_targ_parm*degrad	
+	   write(*,*) ' Angle between target and e-arm',ang_targ_earm*degrad
+	   write(*,*) ' Angle between target and p-arm',ang_targ_parm*degrad
 c
 
 	   call trgInit(tgt_field_file,ang_targ_earm*degrad,0.,
@@ -277,7 +277,7 @@ cdg	call time (timestring1(11:23))
 	    call inc(H%gen%p%yptar, vertex%p%yptar, one)
 	    call inc(H%gen%p%xptar, -vertex%p%xptar, one)
 	    call inc(H%gen%Em, vertex%Em, one)
-	    
+
 ! ... update counters and integrated weights AND keep track of resolution
 ! ...  FOR EVENTS INSIDE OF spectrometer population limits (events are only
 ! ...  generated to fill region inside of the given delta limits) and below
@@ -299,7 +299,7 @@ cdg	call time (timestring1(11:23))
 
 ! For z, we HAVE to use main.SP.e.z, but there are not corrections, so USE MAIN.SP
 !  vertex.e.z is not defined (main.target.x/y/z --> y_E_arm
-!  (offsets and rotation)  --> spectrometer M.C. --> RECON.e.z 
+!  (offsets and rotation)  --> spectrometer M.C. --> RECON.e.z
 
 	    if (pass_cuts) then
 	      npasscuts = npasscuts + 1
@@ -384,7 +384,7 @@ c	call time (timestring2(11:23))
 	endif
 
 	if ((doing_heavy.and.(.not.doing_bound)).or.doing_semi) then		!6-fold
-	  genvol = genvol * (gen%p%E%max-gen%p%E%min)	
+	  genvol = genvol * (gen%p%E%max-gen%p%E%min)
 	endif
 
 	normfac = normfac * genvol
@@ -475,30 +475,37 @@ c	call time (timestring2(11:23))
 	  write(7,*) 'Events reaching hut   ',sSTOP_hut
 	  write(7,*) 'DC1, DC2, Scin, Cal   ',sSTOP_dc1,sSTOP_dc2,sSTOP_scin,sSTOP_cal
 	  write(7,*) 'Successes             ',sSTOP_successes
-	  write(7,*) 
-	endif
-	if (electron_arm.eq.3 .or. hadron_arm.eq.3) then
-	  write(7,*) 'HRSr Trials:          ',rSTOP_trials
-	  write(7,*) 'Slit hor/vert         ',rSTOP_slit_vert,rSTOP_slit_hor
-	  write(7,*) 'Q1 entrance/mid/exit  ',rSTOP_Q1_in,rSTOP_Q1_mid,rSTOP_Q1_out
-	  write(7,*) 'Q2 entrance/mid/exit  ',rSTOP_Q2_in,rSTOP_Q2_mid,rSTOP_Q2_out
-	  write(7,*) 'Dipole entrance/exit  ',rSTOP_D1_in,rSTOP_D1_out
-	  write(7,*) 'Q3 entrance/mid/exit  ',rSTOP_Q3_in,rSTOP_Q3_mid,rSTOP_Q3_out
-	  write(7,*) 'Events reaching hut   ',rSTOP_hut
-	  write(7,*) 'VDC1, VDC2            ',rSTOP_dc1,rSTOP_dc2
-	  write(7,*) 'S1, S2, Cal	    ',rSTOP_s1,rSTOP_s2,rSTOP_cal
 	  write(7,*)
 	endif
+	if (electron_arm.eq.3 .or. hadron_arm.eq.3) then
+		write(7,*) 'HRSr Trials:          ',rSTOP_trials
+		write(7,*) 'Col (Sieve) entr/exit ',rSTOP_col_entr,rSTOP_col_exit
+		write(7,*) 'Spec. entrance        ',rSTOP_spec_entr
+		write(7,*) 'Q1 entrance/mid/exit  ',rSTOP_Q1_in,rSTOP_Q1_mid,rSTOP_Q1_out
+		write(7,*) 'Q2 entrance/mid/exit  ',rSTOP_Q2_in,rSTOP_Q2_mid,rSTOP_Q2_out
+		write(7,*) 'Dipole entrance/exit  ',rSTOP_D1_in,rSTOP_D1_out
+		write(7,*) 'Q3 entrance/mid/exit  ',rSTOP_Q3_in,rSTOP_Q3_mid,rSTOP_Q3_out
+		write(7,*) 'Events reaching hut   ',rSTOP_hut
+		write(7,*) 'VDC1, VDC2            ',rSTOP_dc1,rSTOP_dc2
+		write(7,*) 'S0, Cher, S2	    ',rSTOP_s0,rSTOP_cer,rSTOP_s2
+		write(7,*) 'Calo. Ps, Calo. Sh    ',rSTOP_ps,rSTOP_sh
+		write(7,*) 'Successes             ',rSTOP_successes
+		write(7,*)
+	endif
 	if (electron_arm.eq.4 .or. hadron_arm.eq.4) then
-	  write(7,*) 'HRSl Trials:          ',lSTOP_trials
-	  write(7,*) 'Slit hor/vert         ',lSTOP_slit_vert,lSTOP_slit_hor
-	  write(7,*) 'Q1 entrance/mid/exit  ',lSTOP_Q1_in,lSTOP_Q1_mid,lSTOP_Q1_out
-	  write(7,*) 'Q2 entrance/mid/exit  ',lSTOP_Q2_in,lSTOP_Q2_mid,lSTOP_Q2_out
-	  write(7,*) 'Dipole entrance/exit  ',lSTOP_D1_in,lSTOP_D1_out
-	  write(7,*) 'Q3 entrance/mid/exit  ',lSTOP_Q3_in,lSTOP_Q3_mid,lSTOP_Q3_out
-	  write(7,*) 'Events reaching hut   ',lSTOP_hut
-	  write(7,*) 'VDC1, VDC2            ',lSTOP_dc1,lSTOP_dc2
-	  write(7,*) 'S1, S2, Cal	    ',lSTOP_s1,lSTOP_s2,lSTOP_cal
+		write(7,*) 'HRSl Trials:           ',lSTOP_trials
+		write(7,*) 'Col (Sieve) entr/exit  ',lSTOP_col_entr,lSTOP_col_exit
+		write(7,*) 'Spec. entrance         ',lSTOP_spec_entr
+		write(7,*) 'Q1 entrance/mid/exit   ',lSTOP_Q1_in,lSTOP_Q1_mid,lSTOP_Q1_out
+		write(7,*) 'Q2 entrance/mid/exit   ',lSTOP_Q2_in,lSTOP_Q2_mid,lSTOP_Q2_out
+		write(7,*) 'Dipole entrance/exit   ',lSTOP_D1_in,lSTOP_D1_out
+		write(7,*) 'Q3 entrance/mid/exit   ',lSTOP_Q3_in,lSTOP_Q3_mid,lSTOP_Q3_out
+		write(7,*) 'Events reaching hut    ',lSTOP_hut
+		write(7,*) 'VDC1, VDC2             ',lSTOP_dc1,lSTOP_dc2
+		write(7,*) 'S0, Cher, S2	     ',lSTOP_s0,lSTOP_cer,lSTOP_s2
+		write(7,*) 'Calo. prl1, Calo. prl2 ',lSTOP_prl1,lSTOP_prl2
+		write(7,*) 'Successes              ',lSTOP_successes
+		write(7,*)
 	endif
 	if (electron_arm.eq.5 .or. hadron_arm.eq.5 .or.
      >	    electron_arm.eq.6 .or. hadron_arm.eq.6) then
@@ -662,9 +669,9 @@ c	  write(7,*) 'BP thingie in/out     ',shmsSTOP_BP_in,shmsSTOP_BP_out
 	  else
 	    stop 'I don''t have ANY idea what (e,e''p) we''re doing!!!'
 	  endif
-	else if (doing_semi) then 
-	   if (doing_semipi) then 
-	      if (targ%A .eq. 1) then 
+	else if (doing_semi) then
+	   if (doing_semipi) then
+	      if (targ%A .eq. 1) then
 		 if(doing_hplus) then
 		    write(iun,*) ' ****--------  H(e,e''pi+)X  --------****'
 		 else
@@ -679,8 +686,8 @@ c	  write(7,*) 'BP thingie in/out     ',shmsSTOP_BP_in,shmsSTOP_BP_out
 	      else
 		 stop 'I don''t have ANY idea what A(e,e''pi)X we''re doing!!!'
 	      endif
-	   else if (doing_semika) then  
-	      if (targ%A .eq. 1) then 
+	   else if (doing_semika) then
+	      if (targ%A .eq. 1) then
 		 if(doing_hplus) then
 		    write(iun,*) ' ****--------  H(e,e''k+)X  --------****'
 		 else
@@ -695,9 +702,9 @@ c	  write(7,*) 'BP thingie in/out     ',shmsSTOP_BP_in,shmsSTOP_BP_out
 	      else
 		 stop 'I don''t have ANY idea what A(e,e''k)X we''re doing!!!'
 	      endif
-	   else   
+	   else
 	      stop 'I don''t have ANY idea what A(e,e''x)X we''re doing!!!'
-          endif         
+          endif
 	else if (doing_rho) then
 	   if (targ%A .eq. 1) then
 	      write(iun,*) '              ****--------  H(e,e''rho)  --------****'
@@ -877,7 +884,7 @@ c	  write(7,*) 'BP thingie in/out     ',shmsSTOP_BP_in,shmsSTOP_BP_out
      >		'using_Coulomb',using_Coulomb,'deForest_flag',deForest_flag
 	write(iun,'(5x,3(2x,a19,''='',l2)))') 'correct_Eloss', correct_Eloss,
      >		'correct_raster',correct_raster, 'doing_decay', doing_decay
-	write(iun,'(5x,2(2x,a19,''='',l2))') 
+	write(iun,'(5x,2(2x,a19,''='',l2))')
      >		'using_E_arm_montecarlo', using_E_arm_montecarlo,
      >		'using_P_arm_montecarlo', using_P_arm_montecarlo,
      >          'use_sf', use_sf
@@ -1391,15 +1398,15 @@ c	enddo
 
 !       WB take into account spectrometer offsets in Hall Coord. system
 !       WB 2016: x_vert, y_vert, z_vert are all in Hall Coord. syste,
-	  
+
 
 	  x_vert = main%target%x - spec%p%offset%x
 	  y_vert = main%target%y - spec%p%offset%y
 	  z_vert = main%target%z - spec%p%offset%z
 
 !       vertex in Hall System
-!       x,y,z_P_arm: vertex in SP. coord. system 	 
-	  
+!       x,y,z_P_arm: vertex in SP. coord. system
+
 	  x_P_arm = x_vert
 	  y_P_arm =  -z_vert*spec%p%sin_th*sin(spec%p%phi) + y_vert*spec%p%cos_th
 
@@ -1420,7 +1427,7 @@ c	   write(*,*) 'sign_hms_part =' ,sign_hms_part
            endif
             call track_from_tgt(x_P_arm,y_P_arm,z_P_arm,dx_P_arm,dy_P_arm,
      >       sign_hadron*spec%p%P*(1+delta_P_arm/100.),Mh,1,ok_P_arm)
-          endif 
+          endif
 ! GAW - end 99/11/3
 
 C DJG need to decay the rho here before we begin transporting through the
@@ -1547,10 +1554,10 @@ C DJG For spectrometers to the left of the beamline, need to pass ctheta,-stheta
 	call physics_angles(spec%p%theta,spec%p%phi,dx_tmp,
      >           dy_tmp,recon%p%theta,recon%p%phi)
 ! ... correct for energy loss - use most probable (last flag = 4)
-! WB here one should claculate the proper location of the vertex from reconstructed spectrometer 
+! WB here one should claculate the proper location of the vertex from reconstructed spectrometer
 ! values.
 
-	call recon_vertex(main, recon%p, 'P', 
+	call recon_vertex(main, recon%p, 'P',
      >                    zv, yv)
 
 ! store reconstructed vertex locations
@@ -1599,10 +1606,10 @@ C	  recon%p%delta = (recon%p%P-spec%p%P)/spec%p%P*100.
 	  dangles_extra(1)=0.0
 	  dangles_extra(2)=0.0
 	endif
-	
+
 	main%SP%e%yptar = orig%e%yptar + dangles(1) + dangles_extra(1) + dang_in(1)
 ! WB this is most likely wrong !
-!	main%SP%e%xptar = orig%e%xptar + dangles(2) + dangles_extra(1) + dang_in(2)*spec%p%cos_th 
+!	main%SP%e%xptar = orig%e%xptar + dangles(2) + dangles_extra(1) + dang_in(2)*spec%p%cos_th
 	main%SP%e%xptar = orig%e%xptar + dangles(2) + dangles_extra(2) + dang_in(2)*spec%e%cos_th
 
 ! CASE 1: Using the spectrometer Monte Carlo
@@ -1619,7 +1626,7 @@ C	  recon%p%delta = (recon%p%P-spec%p%P)/spec%p%P*100.
 
 ! WB take into account spectrometer offsets in Hall Coord. system
 ! WB 2016 x,y,z_vert in Hall System
-	  
+
 	  x_vert = main%target%x - spec%e%offset%x
 	  y_vert = main%target%y - spec%e%offset%y
 	  z_vert = main%target%z - spec%e%offset%z
@@ -1646,7 +1653,7 @@ C	  recon%p%delta = (recon%p%P-spec%p%P)/spec%p%P*100.
             endif
             call track_from_tgt(x_E_arm,y_E_arm,z_E_arm,dx_E_arm,dy_E_arm,
      >                          -spec%e%P*(1+delta_E_arm/100.),Me,-1,ok_E_arm)
-          endif 
+          endif
 
 ! ........ drift this position back to z=0, the plane through the target center
 
@@ -1778,8 +1785,8 @@ C DJG For spectrometers to the left of the beamline, need to pass ctheta,-stheta
 
 ! ... correct for energy loss and correct for Coulomb deceleration
 ! WB need to calculate the proper vertex z-position
-	
-	call recon_vertex(main, recon%e, 'E', 
+
+	call recon_vertex(main, recon%e, 'E',
      >                    zv, yv)
 
 ! store reconstruced values
@@ -1799,7 +1806,7 @@ C DJG For spectrometers to the left of the beamline, need to pass ctheta,-stheta
 	endif
 c	recon%e%E = recon%e%E + targ%Coulomb%ave
 c Generally, we do not correct for coulomb effects in the reconstruction
-	recon%e%E = recon%e%E 
+	recon%e%E = recon%e%E
 	recon%e%P = recon%e%E
 C DJG Should not correct delta for energy loss - delta is a SPECTROMETER
 C variable!!
@@ -1844,9 +1851,9 @@ c	recon.e.delta = (recon.e.P-spec.e.P)/spec.e.P*100.
 	data dtr/0.017453292519943295/
 
 ! this calculation is happeing in the z-y plane (parallel to the floor)
-! beam position 
+! beam position
 
-	y_b = main%target%y 
+	y_b = main%target%y
 !     beam trajectory
 	ubz = 1.
 	uby = 0.
@@ -1867,7 +1874,7 @@ c	recon.e.delta = (recon.e.P-spec.e.P)/spec.e.P*100.
 	   print *, 'recon_vertex: unknown spectrometer type : ', sp_type
 	   stop
 	endif
-	
+
 ! trajectory directions
 	th_t = sp%theta
 	ph_t = sp%phi
@@ -1888,14 +1895,14 @@ c	recon.e.delta = (recon.e.P-spec.e.P)/spec.e.P*100.
 !
 ! zt = utz*alpha_t + z_v
 ! yr = uty*alpha_t + y_v
-! 
+!
 ! intersection:
 ! zb = zt
 ! yb = yt
-! solve for beta_t 
+! solve for beta_t
 
 	beta_t = ((y_v - y_b)*utz - z_v*uty)/(uby*utz - ubz*uty)
-	
+
 ! solve for alpha_t
 	alpha_t = ((y_v - y_b)*ubz - z_v*uby)/(utz*uby - uty*ubz)
 
@@ -1910,10 +1917,10 @@ c	recon.e.delta = (recon.e.P-spec.e.P)/spec.e.P*100.
 ! return the vertex location
 !
 ! for debugging
-!	
+!
 !	print *, "Vertex :", main%target%z, main%target%y
 !	print *, "beam : ",zv_b, yv_b, beta_t
 !	print *, "Spec : ",sp_type , ": ",zv_t, yv_t, alpha_t
-	
+
 	return
 	end
