@@ -70,13 +70,13 @@
 	write(6,*) '*                --- SIMC ---                  *'
 	write(6,*) '*                                              *'
 	write(6,*) '*          Welcome to Jefferson Lab            *'
-	write(6,*) '*         Last edited on: 10/26/2016           *'
+	write(6,*) '*         Last edited on: 11/18/2016           *'
 	write(6,*) '*                                              *'
 	write(6,*) '************************************************'
 	write(6,*) 'Enter the input filename'
 	write(6,*) '(assumed to be in infiles directory):'
-	read(5,'(a)') dbase_file
-
+	!read(5,'(a)') dbase_file
+	dbase_file = 'current.data'
 	write(6,*) '*************************************************'
 
 	j=index(dbase_file,'/')

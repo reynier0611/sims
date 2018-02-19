@@ -54,11 +54,17 @@
 	if (doing_hyd_elast .or. doing_deuterium .or. doing_heavy) then
 	  poftheta = Mp*Ebeam / (2*ebeam*sin(recon%e%theta/2.)**2 + Mp)
 	  corrsing = recon%e%P - poftheta
-	  Pm_Heepz = -(recon%Pmy*recon%uq%y+recon%Pmz*recon%uq%z)
-     >		/ sqrt(recon%uq%y**2+recon%uq%z**2)
-	  Pm_Heepy =  (recon%Pmz*recon%uq%y-recon%Pmy*recon%uq%z)
-     >		/ sqrt(recon%uq%y**2+recon%uq%z**2)
-	  Pm_Heepx =  -recon%Pmx
+! -------------------------------------------------------------------------
+!	  Pm_Heepz = -(recon%Pmy*recon%uq%y+recon%Pmz*recon%uq%z)
+!     >		/ sqrt(recon%uq%y**2+recon%uq%z**2)
+!	  Pm_Heepy =  (recon%Pmz*recon%uq%y-recon%Pmy*recon%uq%z)
+!     >		/ sqrt(recon%uq%y**2+recon%uq%z**2)
+!	  Pm_Heepx =  -recon%Pmx
+	  !Keep in lab coordinate system. Barak Schmookler, March 2017
+          Pm_Heepz = recon%Pmz
+          Pm_Heepy = recon%Pmy
+          Pm_Heepx = recon%Pmx
+! -------------------------------------------------------------------------
 	endif
 
 	if(electron_arm.eq.1 .or. electron_arm.eq.3.or. electron_arm.eq.7)then !electron = right side.
@@ -250,7 +256,7 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	  ntu(64) = recon%ein                          !  incident energy
 	  ntu(65) = recon%theta_rq                     !  recoil angle
 	  ntu(66) = main%SF_weight                     !  Spectral Function fro recon. quantities
-	  ntu(67) = (spec%p%theta+recon%p%yptar)*180./3.1415926536     !  RCT 8/9/2016 outgoing reconstructed proton in-plane angle  
+	  ntu(67) = (spec%p%theta-recon%p%yptar)*180./3.1415926536     !  RCT 8/9/2016 outgoing reconstructed proton in-plane angle  
 	endif
 
 ! write output

@@ -1,26 +1,26 @@
- HRSr Trials:               6058552
+ HRSr Trials:                     0
  Col (Sieve) entr/exit            0           0
- Spec. entrance             3563880
- Q1 entrance/mid/exit        323012      559400      414244
- Q2 entrance/mid/exit             0        4260        2629
- Dipole entrance/exit        328670      444188
- Q3 entrance/mid/exit          9213       49458       59635
- Events reaching hut         299963
- VDC1, VDC2                       4        5535
- S0, Cher, S2	            3938           0        1741
- Calo. Ps, Calo. Sh               0          11
- Successes                   288734
+ Spec. entrance                   0
+ Q1 entrance/mid/exit             0           0           0
+ Q2 entrance/mid/exit             0           0           0
+ Dipole entrance/exit             0           0
+ Q3 entrance/mid/exit             0           0           0
+ Events reaching hut              0
+ VDC1, VDC2                       0           0
+ S0, Cher, S2	               0           0           0
+ Calo. Ps, Calo. Sh               0           0
+ Successes                        0
 
- HRSl Trials:                 288734
+ HRSl Trials:                      0
  Col (Sieve) entr/exit             0           0
- Spec. entrance                46682
- Q1 entrance/mid/exit          28926       58128       42707
+ Spec. entrance                    0
+ Q1 entrance/mid/exit              0           0           0
  Q2 entrance/mid/exit              0           0           0
- Dipole entrance/exit          15311         597
- Q3 entrance/mid/exit              0           1        3504
- Events reaching hut           92878
+ Dipole entrance/exit              0           0
+ Q3 entrance/mid/exit              0           0           0
+ Events reaching hut               0
  VDC1, VDC2                        0           0
- S0, Cher, S2	             2878           0           0
+ S0, Cher, S2	                0           0           0
  Calo. prl1, Calo. prl2            0           0
- Successes                     90000
+ Successes                         0
 
