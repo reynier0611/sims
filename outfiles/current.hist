@@ -1,6 +1,6 @@
 
- BEGIN Time: Mon Feb 19 22:59:12 2018      
- END Time:   Mon Feb 19 22:59:13 2018      
+ BEGIN Time: Tue Feb 20 00:29:09 2018      
+ END Time:   Tue Feb 20 00:29:09 2018      
  KINEMATICS:
                ****--------  A(e,e'p)  --------****
                 Ebeam =       4300.0000         MeV
@@ -109,7 +109,7 @@
                 luminosity =     0.955665E+05  GeV^2
                     genvol =     0.193903E+05       
                    normfac =     0.187061E+14       
-            Theory file:  c12.theory
+            Theory file:  ./SF_files/c12.theory
  RECON SUMMARY:            Ave.Error   Resolution
    Electron arm: delta =     0.07380     0.30505  x10^-3
                  xptar =     0.01177     2.37896  mr

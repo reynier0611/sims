@@ -533,18 +533,18 @@ C DJG:
 ! ... may not be correct if there is strength beyond p=p_max (MeV/c)
 
 	if(doing_deutpi.or.doing_hepi.or.doing_deutkaon.or.doing_hekaon.or.doing_deutsemi) then
-	  if(doing_deutpi .or. doing_deutkaon .or. doing_deutsemi) open(1,file='deut.dat',status='old',form='formatted')
+	  if(doing_deutpi .or. doing_deutkaon .or. doing_deutsemi) open(1,file='./SF_files/deut.dat',status='old',form='formatted')
 	  if(doing_hepi .or. doing_hekaon) then
 	    if (nint(targ%A).eq.3) then
-	      open(1,file='he3.dat',status='old',form='formatted')
+	      open(1,file='./SF_files/he3.dat',status='old',form='formatted')
 	    else if (nint(targ%A).eq.4) then
-	      open(1,file='he4.dat',status='old',form='formatted')
+	      open(1,file='./SF_files/he4.dat',status='old',form='formatted')
 	    else if (nint(targ%A).eq.12) then
-	      open(1,file='c12.dat',status='old',form='formatted')
+	      open(1,file='./SF_files/c12.dat',status='old',form='formatted')
 	    else
 	      write(6,*) 'No Momentum Distribution for A = ',targ%A
 	      write(6,*) 'Defaulting to carbon momentum distribution'
-	      open(1,file='c12.dat',status='old',form='formatted')
+	      open(1,file='./SF_files/c12.dat',status='old',form='formatted')
 	    endif
 	  endif
 	  do ii=1,2000
@@ -567,32 +567,32 @@ C DJG:
 ! ============================================================
 ! RCT 10/26/2016 - using different spectral function versions
 	    if (sf_version.eq.0) then
-	      tmpfile='benharsf_3mod.dat'  
+	      tmpfile='./SF_files/benharsf_3mod.dat'  
 	      write(6,*) 'Using the Benhar version of 3He S.F.'
 	    else if (sf_version.eq.1) then
-	      tmpfile='kaptarisf_3par.dat'
+	      tmpfile='./SF_files/kaptarisf_3par.dat'
 	      write(6,*) 'Using the Kaptari version of the 3He S.F.'
 	    else
-	      tmpfile='benharsf_3mod.dat'
+	      tmpfile='./SF_files/benharsf_3mod.dat'
 	      write(6,*) 'No proper S.F. specified. Defaulting to Benhar S.F.'
 	    endif
 ! ============================================================
 	  else if (nint(targ%A).eq.4) then
-	    tmpfile='benharsf_4.dat'
+	    tmpfile='./SF_files/benharsf_4.dat'
 	    write(6,*) 'Using the A=4 Benhar S.F.'
 	  else if (nint(targ%A).eq.12) then
-	    tmpfile='benharsf_12.dat'
+	    tmpfile='./SF_files/benharsf_12.dat'
 	    write(6,*) 'Using the A=12 Benhar S.F.'
 	  else if (nint(targ%A).eq.56) then
-	    tmpfile='benharsf_56.dat'
+	    tmpfile='./SF_files/benharsf_56.dat'
 	    write(6,*) 'Using the A=56 Benhar S.F.'
 	  else if (nint(targ%A).eq.197) then
-	    tmpfile='benharsf_197.dat'
+	    tmpfile='./SF_files/benharsf_197.dat'
 	    write(6,*) 'Using the A=197 Benhar S.F.'
 	  else
 	    write(6,*) 'No spectral function for A = ',targ%A
 	    write(6,*) 'Defaulting to Carbon S.F.'
-	    tmpfile='benharsf_12.dat'
+	    tmpfile='./SF_files/benharsf_12.dat'
 	  endif
 
 ! *****************************************************************************
