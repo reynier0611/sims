@@ -1,0 +1,18 @@
+
+	implicit none
+
+	real*8 thick,len,dens,zeff,aeff,epart,mpart,Eloss
+	real*8 x,chsi,lambda,gauss1,Eloss_mp,gamma
+	real*8 denscorr,CO,hnup,log10bg,I,beta,Eloss_mp_new
+
+	integer typeflag          !1=normal eloss (picked from distribution)
+                                  !2=min eloss
+	                          !3=max eloss
+                                  !4=most probable eloss
+        write (6,*) 'enter  length, density :'
+        read (5,*) len, dens
+        write (6,*) 'enter zeff, aeff : '
+        read (5,*) 
+        write (6,*) 'energy : '
+        write (6,*) 'mpart : ',
+	call enerloss_new(len,dens,zeff,aeff,epart,mpart,typeflag,Eloss)

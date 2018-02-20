@@ -1,0 +1,15 @@
+! q3_d20 kinematic of E01020 to test the calculation
+! of radiative corrections
+!
+! kinematics from mceep input q3_d20_mp.inp
+! 5008.550,0.,0.,2750.659,29.235050,-0.060390,3031.415,-30.590997,0.082506
+!
+! 'TF' stands for 'this field'
+! ONE equals TRUE unless specified otherwise
+
+ =?
+ &THEORY
+    theory_par%model = 'My Model'
+    theory_par%FLAGS = 10*T	
+    theory_par%parameter = 10*100.
+/ 

@@ -1,0 +1,69 @@
+ALREADY FIXED
+####################################################################################################################
+(ALMOST) ALL PLACES IN THE CODE WHERE THE FLAG "doing_deuterium" IS USED
+{I say almost because this list does not include "old" "non-used" pieces of code that are still in the directory, or
+or pieces of code that contain "doing_deuterium .or. doing_heavy"}
+
+####################################################
+********        event.f:        subroutine limits_update(main,vertex,orig,recon,doing_deuterium,                // this one should be changed
+********        event.f:        logical doing_deuterium, doing_pion, doing_kaon, doing_delta, doing_rho         // this one should be changed
+********        event.f:        if (doing_deuterium .or. doing_pion .or. doing_kaon .or. doing_deltav...        // this one should be changed
+********        event.f:        if (doing_deuterium .or. doing_pion .or. doing_kaon .or. doing_delta ...        // this one should be changed
+********        event.f:        elseif (doing_deuterium) then   !need Ep, and a jacobian.                       // this one should be changed
+********        event.f:        else if (doing_deuterium) then                                                  // this one should be changed
+
+####################################################
+********        radc.f:   else if (doing_deuterium) then                                                        // this one should be changed
+
+####################################################
+********        dbase.f:        else if (doing_deuterium) then                                                  // this one should stay the same
+
+####################################################
+********        init.f: else if (doing_deuterium) then                                                          // this one should be changed
+********        init.f: else if (doing_deuterium .or. doing_pion .or. doing_kaon                                // this one should be changed
+********        init.f: if (doing_hyd_elast.or.doing_deuterium.or.doing_pion.or.doing_kaon .or.                 // this one should be changed
+********        init.f: doing_deuterium = (nrhoPm.eq.1 .and. E_Fermi.lt.1.0) .or.                               // keep this one the same
+
+####################################################
+********        simc.f:     call limits_update(main,vertex,orig,recon,doing_deuterium,                          // this one should be changed
+********        simc.f:   else if (doing_deuterium) then                                                        // this one stays the same
+********        simc.f: if ((doing_deuterium .or. doing_pion .or. doing_kaon .or. doing_delta) .and. using_rad) then // stays the same
+
+####################################################################################################################
+(ALMOST) ALL PLACES IN THE CODE WHERE THE FLAG "doing_heavy" IS USED
+{I say almost because this list does not include "old" "non-used" pieces of code that are still in the directory, or
+or pieces of code that contain "doing_deuterium .or. doing_heavy"}
+
+####################################################
+********        event.f:        if (doing_heavy .or. doing_semi) then                                           // this one should be changed
+********        event.f:          else if (doing_heavy) then            ! A(e,e'p)                              // this one should be changed
+********        event.f:          if (doing_heavy) success =                                                    // this one should be changed
+********        event.f:        else if (doing_heavy) then                                                      // this one should be changed
+********        event.f:C       if (doing_heavy .or. doing_pion .or. doing_kaon .or.                            // this one is commented out, so I ignored it
+********        event.f:        else if (use_benhar_sf.and.doing_heavy) then                                    // this one should stay the same!
+********        event.f:                 if (doing_heavy) then                                                  // this one is if not using_benhar so keep the same
+********        event.f:                 if (doing_heavy) then                                                  // this one is if not using_benhar so keep the same
+
+####################################################
+********        radc.f:   if (doing_heavy) then                                                                 // this one should be changed
+********        radc.f: if (doing_heavy) then                                                                   // this one should be changed
+
+####################################################
+********        dbase.f:        if(doing_hepi.or.doing_hekaon .or. (doing_heavy.and.use_benhar_sf)) then        // this one should stay the same
+********        dbase.f:          else if (doing_heavy) then                                                    // this one should stay the same
+
+####################################################
+********        init.f: if (doing_heavy) then           ! 'reconstructed' Em cuts.                              // this one should be changed
+********        init.f: else if (doing_heavy) then                                                              // this one should be changed
+********        init.f: if (doing_heavy) then                                                                   // this one should be changed
+********        init.f: if (doing_heavy) then   !Needed Egamma_tot_max for final limits.                        // this one should be changed
+********        init.f: else if (doing_heavy) then      !generated TOTAL (e+p) energy limits.                   // this one should be changed
+********        init.f: else if (doing_heavy .or. doing_semi) then                                              // this one should be changed
+********        init.f: else if (doing_heavy .or. doing_semi)then                                               // this one should be changed
+********        init.f: if (doing_heavy) then                                                                   // not clear about this one. Keep same
+
+####################################################
+********        simc.f: if (doing_heavy.or.doing_semi) then             !6-fold                                 // this one should be changed
+********        simc.f:   else if (doing_heavy) then                                                            // keep the same
+********        simc.f: if (doing_heavy) then                                                                   // not sure. Keep same
+

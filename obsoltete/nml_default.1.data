@@ -1,0 +1,130 @@
+ &RESTSW
+    !mc_smear = T
+    !electron_arm = 0
+    !hadron_arm = 0
+    !use_first_cer = 0
+    !extra_dbase_file = 0
+/ 
+
+ &EXPERIMENT
+    Ebeam = 0
+    dEbeam = 0
+    EXPER%charge = 0
+    doing_kaon = 0
+    which_kaon = 0
+    doing_pion = 0
+    which_pion = 0
+    doing_delta = 0
+     doing_semi = 0
+     doing_hplus = 1
+    doing_rho = 0
+    doing_decay = 0
+    ctau = 0
+ / 
+
+ &DEBUG
+    debug = 6, 0
+ / 
+
+ &TARGET
+    targ%A = 0
+    targ%Z = 0
+    targ%mass_amu = 0
+    targ%mrec_amu = 0
+    targ%rho = 0
+    targ%thick = 0
+    targ%xoffset = 0
+    targ%yoffset = 0
+    targ%fr_pattern = 0
+    targ%fr1 = 0
+    targ%fr2 = 0
+    targ%zoffset = 0
+    targ%angle = 0
+    targ%abundancy = 0
+    targ%can = 0
+    targ_Bangle = 0
+    targ_Bphi = 0
+    targ_pol = 0
+ / 
+
+ &E_ARM_MAIN
+    spec%e%P = 0
+    spec%e%theta = 0
+ / 
+
+ &P_ARM_MAIN
+    spec%p%P = 0
+    spec%p%theta = 0
+ / 
+
+ &E_ARM_OFFSET
+    gen%ywid = 0
+    gen%xwid = 0
+    spec%e%offset%x = 0
+    spec%e%offset%y = 0
+    spec%e%offset%z = 0
+    spec%e%offset%xptar = 0
+    spec%e%offset%yptar = 0
+ / 
+
+ &P_ARM_OFFSET
+    spec%p%offset%x = 0
+    spec%p%offset%y = 0
+    spec%p%offset%z = 0
+    spec%p%offset%xptar = 0
+    spec%p%offset%yptar = 0
+ / 
+
+ &MISC2INT
+    use_expon = 0
+    one_tail = 0
+    intcor_mode = 0
+ / 
+ &SIMULATE
+    ngen = 0
+    hard_cuts = 0
+    using_rad = 0
+    spect_mode = 0
+    doing_phsp = 0
+    cuts%Em%min = 0
+    cuts%Em%max = 0
+    using_Eloss = 0
+    correct_eloss = 0
+    correct_raster = 0
+    deForest_flag = 0
+    rad_flag = 0
+    extrad_flag = 0
+    lambda = 3, 0
+    using_cit_generation = 0
+    Nntu = 0
+    using_Coulomb = 0
+    dE_edge_test = 0
+    use_offshell_rad = 0
+    Egamma_gen_max = 0
+    do_fermi = 0
+    pt_b_param = 0
+    sigc_flag = 0
+    sigc_nbin = 10
+    sigc_kin_min = 0
+    sigc_kin_max = 1.0
+    sigc_kin_ind = 0.0
+    using_tgt_field = 0
+    tgt_field_file = 0
+    drift_to_cal = 0
+ / 
+ &E_ARM_ACCEPT
+    SPedge%e%delta%min = 0
+    SPedge%e%delta%max = 0
+    SPedge%e%yptar%min = 0
+    SPedge%e%yptar%max = 0
+    SPedge%e%xptar%min = 0
+    SPedge%e%xptar%max = 0
+ / 
+ &P_ARM_ACCEPT
+    SPedge%p%delta%min = 0
+    SPedge%p%delta%max = 0
+    SPedge%p%yptar%min = 0
+    SPedge%p%yptar%max = 0
+    SPedge%p%xptar%min = 0
+    SPedge%p%xptar%max = 0
+ / 
