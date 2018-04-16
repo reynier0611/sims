@@ -1,0 +1,66 @@
+=== modified file 'hrsl/struct_hrsl.inc'
+--- hrsl/struct_hrsl.inc	2016-11-07 18:58:19 +0000
++++ hrsl/struct_hrsl.inc	2016-11-07 19:07:13 +0000
+@@ -22,19 +22,24 @@
+ ! STAND ALONE CODES.
+ 
+ 	integer*4 lSTOP_trials
+-	integer*4 lSTOP_slit_hor,lSTOP_slit_vert
++	integer*4 lSTOP_col_entr,lSTOP_col_exit
++	integer*4 lSTOP_spec_entr
+ 	integer*4 lSTOP_Q1_in,lSTOP_Q1_mid,lSTOP_Q1_out
+ 	integer*4 lSTOP_Q2_in,lSTOP_Q2_mid,lSTOP_Q2_out
+ 	integer*4 lSTOP_Q3_in,lSTOP_Q3_mid,lSTOP_Q3_out
+ 	integer*4 lSTOP_D1_in,lSTOP_D1_out
+ 	integer*4 lSTOP_hut,lSTOP_dc1,lSTOP_dc2
+-	integer*4 lSTOP_s1,lSTOP_s2,lSTOP_cal,lSTOP_successes
+-
++	integer*4 lSTOP_s0,lSTOP_cer,lSTOP_s2
++	integer*4 lSTOP_prl1,lSTOP_prl2,lSTOP_successes
++	
+ 	common/spectrometer4/ lSTOP_trials,
+-     >		 lSTOP_slit_hor,lSTOP_slit_vert,
++     >	         lSTOP_col_entr,lSTOP_col_exit,
++     >		 lSTOP_spec_entr,
+      >		 lSTOP_Q1_in,lSTOP_Q1_mid,lSTOP_Q1_out,
+      >		 lSTOP_Q2_in,lSTOP_Q2_mid,lSTOP_Q2_out,
+      >		 lSTOP_Q3_in,lSTOP_Q3_mid,lSTOP_Q3_out,
+      >		 lSTOP_D1_in,lSTOP_D1_out,
+      >		 lSTOP_hut,lSTOP_dc1,lSTOP_dc2,
+-     >		 lSTOP_s1,lSTOP_s2,lSTOP_cal,lSTOP_successes
++     >           lSTOP_s0,lSTOP_cer,lSTOP_s2,
++     >           lSTOP_prl1,lSTOP_prl2,lSTOP_successes
++
+
+=== modified file 'hrsr/struct_hrsr.inc'
+--- hrsr/struct_hrsr.inc	2016-11-07 18:58:19 +0000
++++ hrsr/struct_hrsr.inc	2016-11-07 19:07:00 +0000
+@@ -22,19 +22,24 @@
+ ! STAND ALONE CODES.
+ 
+ 	integer*4 rSTOP_trials
++	integer*4 rSTOP_col_entr,rSTOP_col_exit
++        integer*4 rSTOP_spec_entr
+ 	integer*4 rSTOP_slit_hor,rSTOP_slit_vert
+ 	integer*4 rSTOP_Q1_in,rSTOP_Q1_mid,rSTOP_Q1_out
+ 	integer*4 rSTOP_Q2_in,rSTOP_Q2_mid,rSTOP_Q2_out
+ 	integer*4 rSTOP_Q3_in,rSTOP_Q3_mid,rSTOP_Q3_out
+ 	integer*4 rSTOP_D1_in,rSTOP_D1_out
+ 	integer*4 rSTOP_hut,rSTOP_dc1,rSTOP_dc2
+-	integer*4 rSTOP_s1,rSTOP_s2,rSTOP_cal,rSTOP_successes
++	integer*4 rSTOP_s0,rSTOP_cer,rSTOP_s2
++	integer*4 rSTOP_ps,rSTOP_sh,rSTOP_successes
+ 
+ 	common/spectrometer3/ rSTOP_trials,
+-     >		 rSTOP_slit_hor,rSTOP_slit_vert,
++     >		 rSTOP_col_entr,rSTOP_col_exit,
++     >		 rSTOP_spec_entr,
+      >		 rSTOP_Q1_in,rSTOP_Q1_mid,rSTOP_Q1_out,
+      >		 rSTOP_Q2_in,rSTOP_Q2_mid,rSTOP_Q2_out,
+      >		 rSTOP_Q3_in,rSTOP_Q3_mid,rSTOP_Q3_out,
+      >		 rSTOP_D1_in,rSTOP_D1_out,
+      >		 rSTOP_hut,rSTOP_dc1,rSTOP_dc2,
+-     >		 rSTOP_s1,rSTOP_s2,rSTOP_cal,rSTOP_successes
++     >		 rSTOP_s0,rSTOP_cer,rSTOP_s2,
++     >		 rSTOP_ps,rSTOP_sh,rSTOP_successes
+

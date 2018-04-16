@@ -1,4 +1,0 @@
-source do_helium_slow_benhar.sh
-source do_helium_slow_kaptari.sh
-source do_tritium_slow_benhar.sh
-source do_tritium_slow_kaptari.sh

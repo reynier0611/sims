@@ -20,7 +20,7 @@
 !	set appropriatly.
 !
 ! 4. doing_phsp:Generate acceptance with radiation and cross section disabled,
-!	use doing_kaon or doing_pion to set hadron mass, then 
+!	use doing_kaon or doing_pion to set hadron mass, then
 !	set doing_eep,doing_kaon and doing_pion to FALSE.
 !	May or may not be properly  implemented.
 !
@@ -29,13 +29,14 @@
 !	cross section model.  Initial implementation will be for proton target
 !	only (generation well be general, but cross section model will be
 !	a 'shortcut' version to start with.
-! 6. doing_semi: H(e,e'pi)X (doing_semipi) and H(e,e'k)X (doing_semika) 
+! 6. doing_semi: H(e,e'pi)X (doing_semipi) and H(e,e'k)X (doing_semika)
 ! 7. doing_rho: H(e,e'rho)p
 
 	implicit none
 	include 'radc.inc'
 	include 'histograms.inc'
 	include 'simulate.inc'
+	include 'g_dump_all_events.inc'
 
 	real*8 dum1,dum2,dum3,dum4,dum5,dum6,dum7
 	real*8 mrec_guess
@@ -46,15 +47,15 @@
 	logical success
 	character filename*80,tmpfile*80
 	character dbase_file*60 !needs to be shorter than filename
-	
+
 
 	type (histograms):: H
 
 	! for debugging
 	character*80 dump1, dump2, dump3
-	data dump1/'dump1.dat'/, dump2/'dump2.dat'/, 
+	data dump1/'dump1.dat'/, dump2/'dump2.dat'/,
      >       dump3/'simc_parameter_dump.dat'/
-	
+
 ! ... Register CTP vars
 
 	call get_defaults
@@ -70,14 +71,13 @@
 	write(6,*) '*                --- SIMC ---                  *'
 	write(6,*) '*                                              *'
 	write(6,*) '*          Welcome to Jefferson Lab            *'
-	write(6,*) '*         Last edited on: 05/24/2017           *'
+	write(6,*) '*         Last edited on: 9/27/2017           *'
 	write(6,*) '*                                              *'
 	write(6,*) '************************************************'
 	write(6,*) 'Enter the input filename'
 	write(6,*) '(assumed to be in infiles directory):'
-	!read(5,'(a)') dbase_file
-	dbase_file = 'current.data'
-	write(6,*) 'Will automatically read current.data'
+	read(5,'(a)') dbase_file
+
 	write(6,*) '*************************************************'
 
 	j=index(dbase_file,'/')
@@ -122,7 +122,7 @@
 !	  ierr = thbook()
 	  if (ierr.ne.0) stop ' Booking problem!  Not going to try again...wouldnt be prudent'
 	endif	!extra dbase input file
-	
+
 ! all has been read in, dump the parameters to check
 !	call dump_parameters(dump2)
 
@@ -142,13 +142,13 @@ C DJG:
 ! ... dbase field experiment.
 	if (doing_pion) then
 	  Mh=Mpi
-	  if (nint(targ%A).eq.1 .and. which_pion.eq.1) 
+	  if (nint(targ%A).eq.1 .and. which_pion.eq.1)
      >		stop 'Pi- production from Hydrogen not allowed!'
-	  if (nint(targ%A).le.2 .and. which_pion.ge.10) 
+	  if (nint(targ%A).le.2 .and. which_pion.ge.10)
      >		stop 'Coherent production from Hydrogen/Deuterium not allowed!'
-	  if (nint(targ%A).eq.3 .and. which_pion.eq.11) 
+	  if (nint(targ%A).eq.3 .and. which_pion.eq.11)
      >		stop 'Coherent Pi- production from 3He not allowed!'
-	  if (nint(targ%A).eq.4 .and. which_pion.ge.10) 
+	  if (nint(targ%A).eq.4 .and. which_pion.ge.10)
      >		stop 'Coherent production from 4He not allowed!'
 	  doing_hydpi = (nint(targ%A).eq.1)
 	  doing_deutpi = (nint(targ%A).eq.2)
@@ -167,7 +167,7 @@ C DJG:
 	  Mh=Mk
 	  if (nint(targ%A).eq.1 .and. which_kaon.eq.2)
      >		stop 'Sigma- production from Hydrogen not allowed!'
-	  if (nint(targ%A).le.2 .and. which_kaon.ge.10) 
+	  if (nint(targ%A).le.2 .and. which_kaon.ge.10)
      >		stop 'Coherent production from Hydrogen/Deuterium not allowed!'
 	  doing_hydkaon = (nint(targ%A).eq.1)
 	  doing_deutkaon = (nint(targ%A).eq.2)
@@ -184,7 +184,7 @@ C DJG:
 
 	else if (doing_delta) then
 	  Mh=Mp
-	  if (nint(targ%A).ge.2) 
+	  if (nint(targ%A).ge.2)
      >      write(6,*) 'WARNING: Delta cross section model only set up for proton target!'
 	  doing_hyddelta = (nint(targ%A).eq.1)
 	  doing_deutdelta = (nint(targ%A).eq.2)
@@ -322,7 +322,7 @@ C DJG:
 	   endif
 
 
-! ... for normal production, Strike p (n), recoil partile is n(p). 
+! ... for normal production, Strike p (n), recoil partile is n(p).
 ! ... for bound final state, use targ.Mrec if it appears to be OK (same A
 ! ... A as target, with one n->p or p->n.
 
@@ -533,18 +533,18 @@ C DJG:
 ! ... may not be correct if there is strength beyond p=p_max (MeV/c)
 
 	if(doing_deutpi.or.doing_hepi.or.doing_deutkaon.or.doing_hekaon.or.doing_deutsemi) then
-	  if(doing_deutpi .or. doing_deutkaon .or. doing_deutsemi) open(1,file='./SF_files/deut.dat',status='old',form='formatted')
+	  if(doing_deutpi .or. doing_deutkaon .or. doing_deutsemi) open(1,file='deut.dat',status='old',form='formatted')
 	  if(doing_hepi .or. doing_hekaon) then
 	    if (nint(targ%A).eq.3) then
-	      open(1,file='./SF_files/he3.dat',status='old',form='formatted')
+	      open(1,file='he3.dat',status='old',form='formatted')
 	    else if (nint(targ%A).eq.4) then
-	      open(1,file='./SF_files/he4.dat',status='old',form='formatted')
+	      open(1,file='he4.dat',status='old',form='formatted')
 	    else if (nint(targ%A).eq.12) then
-	      open(1,file='./SF_files/c12.dat',status='old',form='formatted')
+	      open(1,file='c12.dat',status='old',form='formatted')
 	    else
 	      write(6,*) 'No Momentum Distribution for A = ',targ%A
 	      write(6,*) 'Defaulting to carbon momentum distribution'
-	      open(1,file='./SF_files/c12.dat',status='old',form='formatted')
+	      open(1,file='c12.dat',status='old',form='formatted')
 	    endif
 	  endif
 	  do ii=1,2000
@@ -564,56 +564,48 @@ C DJG:
 
 	if(doing_hepi.or.doing_hekaon .or. (doing_heavy.and.use_sf)) then
 	  if (nint(targ%A).eq.3) then
-! ============================================================
-! RCT 10/26/2016 - using different spectral function versions
 	    if (sf_version.eq.0) then
-	      tmpfile='./SF_files/benharsf_3mod.dat'  
 	      write(6,*) 'Using the Benhar version of 3He S.F.'
 	    else if (sf_version.eq.1) then
-	      tmpfile='./SF_files/kaptarisf_3par.dat'
 	      write(6,*) 'Using the Kaptari version of the 3He S.F.'
 	    else
-	      tmpfile='./SF_files/benharsf_3mod.dat'
 	      write(6,*) 'No proper S.F. specified. Defaulting to Benhar S.F.'
 	    endif
 ! ============================================================
+! RCT 10/26/2016 - using different spectral function versions
+!           Benhar spectral function
+	    if (sf_version.eq.0) then
+	      tmpfile='benharsf_3mod.dat'
+!           Kaptari spectral function
+	    else if (sf_version.eq.1) then
+	      tmpfile='kaptarisf_3par.dat'
+	    else
+	      write(6,*) 'Wrong value for sf_version. Defaulting to Benhar'
+	      tmpfile='benharsf_3mod.dat'
+	    endif
+! ============================================================
 	  else if (nint(targ%A).eq.4) then
-	    tmpfile='./SF_files/benharsf_4.dat'
-	    write(6,*) 'Using the A=4 Benhar S.F.'
+	    tmpfile='benharsf_4.dat'
 	  else if (nint(targ%A).eq.12) then
-	    tmpfile='./SF_files/benharsf_12.dat'
-	    write(6,*) 'Using the A=12 Benhar S.F.'
+	    tmpfile='benharsf_12.dat'
 	  else if (nint(targ%A).eq.56) then
-	    tmpfile='./SF_files/benharsf_56.dat'
-	    write(6,*) 'Using the A=56 Benhar S.F.'
+	    tmpfile='benharsf_56.dat'
 	  else if (nint(targ%A).eq.197) then
-	    tmpfile='./SF_files/benharsf_197.dat'
-	    write(6,*) 'Using the A=197 Benhar S.F.'
+	    tmpfile='benharsf_197.dat'
 	  else
 	    write(6,*) 'No spectral function for A = ',targ%A
 	    write(6,*) 'Defaulting to Carbon S.F.'
-	    tmpfile='./SF_files/benharsf_12.dat'
+	    tmpfile='benharsf_12.dat'
 	  endif
 
 ! *****************************************************************************
 ! RCT 9/13/2016 Added this little piece of code that takes the neutron
 ! 3He distribution and uses it for the proton distribution in tritium.
-	  if ((nint(targ%A).eq.3).and.(nint(targ%Z).eq.1)) then
-	    call sf_lookup_init(tmpfile,.false.)                !the false flag calls the neutron S.F.	
-	  else 
-	    call sf_lookup_init(tmpfile,.true.) 
+	  if ((nint(targ%A).eq.3).and.(nint(targ%Z).eq.2)) then
+	    call sf_lookup_init(tmpfile,.true.)                 !the true flag calls the proton S.F.
+	  else if ((nint(targ%A).eq.3).and.(nint(targ%Z).eq.1)) then
+	    call sf_lookup_init(tmpfile,.false.)                !the false flag calls the neutron S.F.
 	  endif
-
-!          if ((nint(targ%A).eq.3).and.(nint(targ%Z).eq.2)) then
-!            call sf_lookup_init(tmpfile,.true.)                 !the true flag calls the proton S.F.
-!          else if ((nint(targ%A).eq.3).and.(nint(targ%Z).eq.1)) then
-!            call sf_lookup_init(tmpfile,.false.)                !the false flag calls the neutron S.F.
-!          else if(nint(targ%A).eq.12) then
-!            call sf_lookup_init(tmpfile,.true.)
-!          else if(nint(targ%A).eq.56) then
-!            call sf_lookup_init(tmpfile,.true.)
-!          endif
-
 ! Choos proton or neutron spectral function based on targ.Mtar_struck
 !	  if (abs(targ%Mtar_struck-Mp).le.1.d-6) then
 !	    call sf_lookup_init(tmpfile,.true.)			!proton S.F.
@@ -704,7 +696,7 @@ C DJG:
 	    stop 'I don''t have ANY idea what (e,e''p) we''re doing!!!'
 	  endif
 
-	else if (doing_semi) then 
+	else if (doing_semi) then
            if (doing_semipi) then
 	      if(doing_hydsemi) then
 		 if(doing_hplus) then
@@ -719,7 +711,7 @@ C DJG:
 		    write(6,*) ' ****--------  D(e,e''pi-)X  --------****'
 		 endif
 	      endif
-	      
+
 	   else if (doing_semika) then
 	      if (doing_hydsemi) then
 		 if(doing_hplus) then
@@ -734,10 +726,10 @@ C DJG:
 		    write(6,*) ' ****--------  D(e,e''K-)X  --------****'
 		 endif
 	      endif
-	   else  
+	   else
 	      stop 'I don''t have ANY idea what (e,e''m)X we''re doing!!!'
-	   endif 
-                   
+	   endif
+
 	else if (doing_delta) then
 	  if (doing_hyddelta) then
 	    write(6,*) ' ****--------  H(e,e''p)pi  --------****'
@@ -892,13 +884,13 @@ C DJG:
 	if (.not.using_Eloss) write(6,*) 'NOTE: Will NOT be calculating energy loss in the target'
 	if (.not.standard_Eloss) write(6,*) 'NOTE: Will be calculating full energy loss in the target for recon'
 	if (.not.using_Coulomb) write(6,*) 'NOTE: Will NOT be calculating Coulomb correction (default for Hydrogen target)'
-	if (using_Coulomb) write(6,*) 'NOTE: WILL be calculating Coulomb corrections. 
+	if (using_Coulomb) write(6,*) 'NOTE: WILL be calculating Coulomb corrections.
      >     (Implemented for beam and scattered electron only)'
 	if (.not.correct_Eloss) write(6,*) 'NOTE: Will NOT correct reconstructed data for energy loss'
 	if (.not.correct_raster) write(6,*) 'NOTE: Will NOT use raster terms in reconstruction'
 	write(6,*) ''
-	write(6,*) ' *************************************************'	
-! everything has been set now dump the parameters	
+	write(6,*) ' *************************************************'
+! everything has been set now dump the parameters
 	call dump_parameters(dump3)
 
 	return
@@ -920,43 +912,43 @@ C DJG:
 	open(io_nl, file = 'nml_default.data', status = 'old')
 	read( io_nl, NML = RESTSW, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  RESTSW', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  RESTSW', iret
 	read( io_nl, NML = EXPERIMENT, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  EXPERIMENT', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  EXPERIMENT', iret
 	read( io_nl, NML = DEBUG_PARM, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  DEBUG_PARM', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  DEBUG_PARM', iret
 	read( io_nl, NML = TARGET, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  TARGET', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  TARGET', iret
 	read( io_nl, NML = E_ARM_MAIN, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error : E_ARM_MAIN ', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error : E_ARM_MAIN ', iret
 	read( io_nl, NML = P_ARM_MAIN, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  P_ARM_MAIN', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  P_ARM_MAIN', iret
 	read( io_nl, NML = E_ARM_OFFSET, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  E_ARM_OFFSET', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  E_ARM_OFFSET', iret
 	read( io_nl, NML = P_ARM_OFFSET, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  P_ARM_OFFSET', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  P_ARM_OFFSET', iret
 	read( io_nl, NML = MISC2INT, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  MISC2INT', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  MISC2INT', iret
 	read( io_nl, NML = SIMULATE, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  SIMULATE', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  SIMULATE', iret
 	read( io_nl, NML = E_ARM_ACCEPT, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  E_ARM_ACCEPT', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  E_ARM_ACCEPT', iret
 	read( io_nl, NML = P_ARM_ACCEPT, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  P_ARM_ACCEPT', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  P_ARM_ACCEPT', iret
 	read( io_nl, NML = THEORY_CTRL, iostat = iret)
 	rewind(io_nl)
-	if (iret .ne. 0) print *, 'get_defaults: read error :  THEORY', iret 
+	if (iret .ne. 0) print *, 'get_defaults: read error :  THEORY', iret
 
 	close(io_nl)
 
@@ -970,8 +962,8 @@ C DJG:
 ! in what order. Then read the corresponding namelists
 !
 ! for this to work the names stores in dbase_namelists.inc MUST agree
-! with the namelists that have been defined 
-	
+! with the namelists that have been defined
+
 	implicit none
 	character*80 line, filename, current_name
 	character *80 dump
@@ -980,7 +972,7 @@ C DJG:
 	include 'dbase_namelists.inc'
 !       loop indices
 	integer i, j
-! it is assumed that each namelist occurs only once in the input field 
+! it is assumed that each namelist occurs only once in the input field
 	integer nl_array(nnames)
 
 
@@ -990,8 +982,8 @@ C DJG:
 ! find the namelist sequence in the input file
 	open(io_nl, file = filename)
 	nl_counter = 0
-! endless loop	
-	input:do 
+! endless loop
+	input:do
 	   read(io_nl, '(a)', iostat = iret) line
 	   if (iret .ne. 0) then
 	      exit
@@ -1015,56 +1007,56 @@ C DJG:
  999	rewind(io_nl)
 	if (nl_counter .eq. 0) then
 	   write (6,*) 'read_parameters: nothing to read from : '//filename
-	   return 
+	   return
 	endif
 ! now read the namelists according to what is in the file
 	do i = 1, nl_counter
 	   select case( nl_array(i) )
 	   case (1)
 	      read( io_nl, NML = RESTSW, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error : RESTSW', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error : RESTSW', iret
 	   case (2)
 	      read( io_nl, NML = EXPERIMENT, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  EXPERIMENT', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  EXPERIMENT', iret
 	   case (3)
 	      read( io_nl, NML = DEBUG_PARM, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  DEBUG_PARM', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  DEBUG_PARM', iret
 	   case (4)
 	      read( io_nl, NML = TARGET, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error : TARGET ', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error : TARGET ', iret
 	   case (5)
 	      read( io_nl, NML = E_ARM_MAIN, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  E_ARM_MAIN', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  E_ARM_MAIN', iret
 	   case (6)
 	      read( io_nl, NML = P_ARM_MAIN, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  P_ARM_MAIN ', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  P_ARM_MAIN ', iret
 	   case (7)
 	      read( io_nl, NML = E_ARM_OFFSET, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :   E_ARM_OFFSET', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :   E_ARM_OFFSET', iret
 	   case (8)
 	      read( io_nl, NML = P_ARM_OFFSET, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  P_ARM_OFFSET', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  P_ARM_OFFSET', iret
 	   case (9)
 	      read( io_nl, NML = MISC2INT, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  MISC2INT', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  MISC2INT', iret
 	   case (10)
 	      read( io_nl, NML = SIMULATE, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  SIMULATE', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  SIMULATE', iret
 	   case (11)
 	      read( io_nl, NML = E_ARM_ACCEPT, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error : E_ARM_ACCEPT', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error : E_ARM_ACCEPT', iret
 	   case (12)
 	      read( io_nl, NML = P_ARM_ACCEPT, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  P_ARM_ACCEPT', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  P_ARM_ACCEPT', iret
 	   case (13)
 	      read( io_nl, NML = KINEMATICS_MAIN, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  KINEMATICS_MAIN', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  KINEMATICS_MAIN', iret
 	   case (14)
 	      read( io_nl, NML = BEAM_AND_TARGET_INFO, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  BEAM_AND_TARGET_INFO', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  BEAM_AND_TARGET_INFO', iret
 	   case (15)
 	      read( io_nl, NML = THEORY_CTRL, iostat = iret)
-	      if (iret .ne. 0) print *, 'read_parameters: read error :  THEORY', iret 
+	      if (iret .ne. 0) print *, 'read_parameters: read error :  THEORY', iret
 	   end select
 	enddo
 	close( io_nl)
@@ -1077,7 +1069,7 @@ C DJG:
 	return
 	end
 
-	
+
 !----------------------------------------------------------------------
 	subroutine dump_parameters( dump_file)
 	implicit none

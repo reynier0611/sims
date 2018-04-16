@@ -1,14 +1,14 @@
-# automatic settings for root
+ # automatic settings for root
 
-ROOTCFLAGS   := $(shell root-config --cflags)
+ROOTCFLAGS   := $(shell root-config --cflags) 
 ROOTLIBS     := $(shell root-config --libs)
 ROOTGLIBS    := $(shell root-config --glibs)
 
 # Linux with egcs, gcc 2.9x, gcc 3.x (>= RedHat 5.2)
 CXX           := $(shell root-config --cxx)
 CXXFLAGS      = -O -Wall -fPIC -I$(ROOTSYS)/include
-LD            := $(shell root-config --ld)
-LDFLAGS       = -O
+LD            := $(shell root-config --ld) -Wl,-rpath,$(ROOTSYS)/lib
+LDFLAGS    q = -O
 SOFLAGS       = -shared
 #
 

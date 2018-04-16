@@ -150,8 +150,8 @@ times 2. I removed that piece of code from this version.
 
 ***************************
             8
-      ADDED TRITIUM
-    SPECTRAL FUNCTION
+ATTEMPTED TO ADD TRITIUM
+SPECTRAL FUNCTION
 ***************************
 The tritium proton spectral function is the same as the 3He neutron spectral
 function. I added a small piece of code in dbase.f. Here it is:
@@ -205,120 +205,6 @@ This last change maked the default of said parameter be 0
               tmpfile='benharsf_3mod.dat'
             endif
 ! ============================================================
-
-***************************
-           9.2
-  UPDATED SPECTROMETER
-        GEOMETRY
-***************************
-The Q1 quadrupoles were replaced with new ones. Barak updated
-the geometries in simc, and in this step, Florian and myself
-worked to implement Baraks files. The challenge was in that
-Barak implemented these for the default simc version whereas
-we are working with Werner's version. Here's how we implemented it:
-
-1) Replace the hrsl (left) and hrsr (right) directories with the
-new ones.
-
-2) In simc.f there was a section where the name of the variables
-in the hrsl and hrsr directories was called differently in the old
-and new geometries. These were some debug flags etcetera. No
-bid deal. However we had to fix them in order for simc to compile.
-
-3) in both the hrsl and hrsr directories, files mc_hrsl.f
-(mc_hrsr.r) and mc_hrsl_hut.f (mc_hrsr_hut.f) were looking for
-g_dump_all_events.inc in the main directory
-(include '../g_dump_all_events.inc'). I replaced these with
-include './g_dump_all_events.inc'
-
-4) Last but not least, there was a parameter in the input file
-to specify a collimator. We got rid of that, for which we had to
-hardcode the collimator flag in mc_hrsl.f (mc_hrsr.r) and remove
-this flag from the list of parameters that were passed into the
-function as an argument.
-
-
-***************************
-           9.3
-   THIS VERSION USES
-CURRENT.DATA AS DEFAULT
-       INPUT FILE
-***************************
-
-in dbase.f I commented out:
-!read(5,'(a)') dbase_file
-
-And right below added:
-dbase_file = 'current.data'
-
-thus, simc will not ask for an input file. It will just take whatever input
-is in the input directory named current.data. This was convenient for me
-but will set it back the way it was later.
-
-***************************
-WE DID SOMETHING IN V10
-WHICH IS NOT INCLUDED HERE
-***************************
-
-***************************
-           11
- THIS VERSION CORRECTS
-AND ISSUE WITH MISSING
-        MOMENTUM
-***************************
-
-Hi Rey,
-
-I looked a little at the missing momentum components, and there was something
-strange going on. In the event.f code, the (x,y,z) components are in the lab
-frame (with z downstream, x vertically down, y horizontal). But in the
-results_write.f code, they seem to change the coordinate system before writing
-out to the ntuple. These new variables are not used anywhere else; and they
-are similar to the ones relative to the q vector. So, I'm not quite sure what
-use they are. So, I adjusted it back to the lab frame. Here's the code:
-
-       if (doing_hyd_elast .or. doing_deuterium .or. doing_heavy) then
-          poftheta = Mp*Ebeam / (2*ebeam*sin(recon%e%theta/2.)**2 + Mp)
-          corrsing = recon%e%P - poftheta
-!         Pm_Heepz = -(recon%Pmy*recon%uq%y+recon%Pmz*recon%uq%z)
-!     >         / sqrt(recon%uq%y**2+recon%uq%z**2)
-!         Pm_Heepy =  (recon%Pmz*recon%uq%y-recon%Pmy*recon%uq%z)
-!     >         / sqrt(recon%uq%y**2+recon%uq%z**2)
-!         Pm_Heepx =  -recon%Pmx
-
-          !Keep in lab coordinate system. Barak Schmookler, March 2017
-          Pm_Heepz = recon%Pmz
-          Pm_Heepy = recon%Pmy
-          Pm_Heepx = recon%Pmx
-        endif
-
-Also note that in SIMC they calculate the missing momentum as p_proton - p_q,
-which is negative the recoil momentum.
--Barak
-
-***************************
-           12
-  ADDED SOME BRANCHES TO
-   THE OUTPUT ROOT FILE
-***************************
-Edits made in:
-1)NtupleInit.f 
-2)results_write.f
-
-To add the following branches:
-'theta_ei'        ! 67 RCT 5/26/2017 outgoing electron in-plane angle generated
-'theta_pi'        ! 68 RCT 5/26/2017 outgoing proton n in-plane angle generated
-'e_spec_p'        ! 69 RCT 5/26/2017 electron spectrometer central momentum
-'h_spec_p'        ! 70 RCT 5/26/2017 proton   spectrometer central momentum
-'e_spec_th'       ! 71 RCT 5/26/2017 electron spectrometer central angle
-'h_spec_th'       ! 72 RCT 5/26/2017 proton   spectrometer central angle  
-'xB'              ! 73 RCT 5/26/2017 Bjorken x
-
-
-
-
-
-
 
 
 

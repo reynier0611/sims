@@ -1,0 +1,80 @@
+! q3_d20 kinematic of E01020 to test the calculation
+! of radiative corrections
+!
+! kinematics from mceep input q3_d20_mp.inp
+! 5008.550,0.,0.,2750.659,29.235050,-0.060390,3031.415,-30.590997,0.082506
+!
+! 'TF' stands for 'this field'
+! ONE equals TRUE unless specified otherwise
+
+ =?
+ &EXPERIMENT
+     ngen  =  50000					!  POS: # of successes
+     EXPER%charge  =   2160.0                           !  total charge (mC) for I = 25uA current and 1 day beam time
+     doing_phsp  =  F					!  (T = TRUE)	- If all of the doing_* are
+     doing_kaon  =  F					!  (T = TRUE)   false, then doing (e,e'p).
+     doing_pion  =  F					!  (T = TRUE)
+     doing_decay  =  F					!  1=decay ON, 0=decay OFF.
+     ctau  =  780.4					!  decay length (cm)
+     extra_dbase_file = 'extra_deuteron.data' 		!  additional input parameters. 
+     !use_benhar_sf = T					!  Benhar
+     !doing_bound = T            			!  T = 2-body break up, F = 3-body break up
+/ 
+ =?
+ &KINEMATICS_MAIN
+     Ebeam  =  4400.                       	!  (MeV)
+     dEbeam  =  0.05                          	!  beam energy variation (%)
+     electron_arm  =  4                         !  1=hms,2=sos,3=hrsr,4=hrsl,5 = shms
+     hadron_arm  =  3                           !  1=hms,2=sos,3=hrsr,4=hrsl,5 = shms
+     spec%e%P  =   3643.28                    	!  e arm central momentum (MeV/c)
+     spec%e%theta  = 20.3549                	!  e arm angle setting (degrees)
+     spec%p%P  =  1352.43                    	!  p arm central momentum (MeV/c)
+     spec%p%theta  =  58.55                	!  p arm angle setting (degrees)
+/ 
+
+ ?=
+ &TARGET
+     targ%A  =  2.0				!  target A
+     targ%Z  =  1.0				!  target Z
+     targ%mass_amu  =  2.01355	        	!  target mass in amu
+     targ%mrec_amu  =  1.008665	        	!  recoil mass in amu (eep=A-1 system,pion=A-2)
+     targ%rho  =  0.003		        	!  target density (g/cm^3)
+     targ%thick  =  75.				!  target thick (mg/cm^2)
+     targ%angle  =  0.		        	!  target angle (for solid target) (degrees)
+     targ%abundancy  =  100.			!  target purity (%)
+     targ%can  =  1                     	!  1=beer can (fpi), 2=pudding can (nucpi)
+/ 
+
+ &DEBUG_PARM
+     debug(1)  =  F				!  turns on output from brem.f
+     debug(2)  =  F				!  into/outa subs.
+     debug(3)  =  F				!  spit out values (init. and main loop).
+     debug(4)  =  F				!  mostly comp_ev, gen_rad diagnostics.
+     debug(5)  =  F				!  a bit of everything.
+/ 
+
+ &E_ARM_ACCEPT
+     SPedge%e%delta%min  =  -4.5		!  delta min (SPECTROMETER ACCEPTANC
+     SPedge%e%delta%max  =   4.5		!  delta max
+     SPedge%e%yptar%min  =  -60.0		!  yptar min = {TF} / 1000 (mrad)
+     SPedge%e%yptar%max  =   60.0		!  yptar max = {TF} / 1000
+     SPedge%e%xptar%min  =  -130.0		!  xptar min = {TF} / 1000 (mrad)
+     SPedge%e%xptar%max  =   130.0		!  xptar max = {TF} / 1000
+/ 
+
+ &P_ARM_ACCEPT
+     SPedge%p%delta%min  =  -4.5		!  delta min (SPECTROMETER ACCEPTANC
+     SPedge%p%delta%max  =   4.5		!  delta max
+     SPedge%p%yptar%min  =  -60.0		!  yptar min = {TF} / 1000 (mrad)
+     SPedge%p%yptar%max  =   60.0		!  yptar max = {TF} / 1000
+     SPedge%p%xptar%min  =  -130.0		!  xptar min = {TF} / 1000 (mrad)
+     SPedge%p%xptar%max  =   130.0		!  xptar max = {TF} / 1000
+/ 
+
+ &THEORY_CTRL
+    theory_par%model = ''       		! select a model name
+    theory_par%data_file = './'           	! directory for the data file
+    theory_par%FLAGS = 10*F	        	! 10 flags are available
+    theory_par%parameter(1) = 0         	! 1 do fsi
+/ 	
+

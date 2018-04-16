@@ -2,9 +2,29 @@
 #
 # tun this script
 #
-import run_command as rc
+import subprocess as sub
+
 import shutil as sh
 import os.path as p
+
+
+#------------------------------------------------------------
+def run_command( cmd, out_file, err_file, **kwargs):
+   output_f = open(out_file,"w")
+   error_f =  open(err_file,"w")
+   p = sub.Popen(cmd, \
+                 shell=True, \
+                 stdout=output_f, \
+                 stderr=error_f, \
+                 close_fds=True, \
+                    **kwargs)
+   p.communicate(None)
+   error_f.close()
+   output_f.close()
+   return p.returncode
+#------------------------------------------------------------
+
+
 
 # SIMC root directory
 # SIMDIR = '/data/boeglin.1/HallC/simc_gfortran.1/'
@@ -52,11 +72,11 @@ dd.write( "%r\n"%(normfac))
 dd.close()
 print 'temporary file make_root_tmp.dat created converto to root file'
 command = 'cat ' + data_file + ' >> ./make_root_tmp.dat'
-rc.run_command(command, 'out1', 'err1')
+run_command(command, 'out1', 'err1')
 command = SIMDIR+'root/make_tree < make_root_tmp.dat'
-rc.run_command(command,'out2','err2')
+run_command(command,'out2','err2')
 print 'rename root file to : ', root_res_file
 command = 'mv simc.root ' + root_res_file
-rc.run_command(command,'out3','err3')
-command = 'rm make_root_tmp.dat'
-rc.run_command(command,'out4','err4')
+run_command(command,'out3','err3')
+#command = 'rm make_root_tmp.dat'
+#rc.run_command(command,'out4','err4')

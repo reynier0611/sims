@@ -74,18 +74,18 @@
 	logical using_cit_generation, using_Coulomb, using_Eloss, use_sf
 	logical correct_Eloss, standard_Eloss, correct_raster,do_fermi
 	logical using_tgt_field
-	integer*4 electron_arm, hadron_arm, use_first_cer
+	integer*4 electron_arm, hadron_arm, use_first_cer, col_flag
 	real*8 transparency
 
 
 	common /gnrl/   Mh, Mh2, Mh2_final, Ebeam, dEbeam, Ebeam_vertex_ave,
      >    genvol, genvol_inclusive, luminosity, targetfac,
      >    normfac, wtcontribute, dE_edge_test, Egamma_gen_max,pt_b_param,
-     >    sigc_kin_min,sigc_kin_max,sigc_kin_ind,targ_Bangle, targ_Bphi, targ_pol, 
+     >    sigc_kin_min,sigc_kin_max,sigc_kin_ind,targ_Bangle, targ_Bphi, targ_pol,
      >    drift_to_cal,sign_hadron,sigc_flag,sigc_nbin,
      >    gen, spec, cuts, edge, VERTEXedge, SPedge,
      >    slop, EXPER, mc_smear, mc_smear_addl, debug, nevent, ntried, ngen,
-     >    deForest_flag, Nntu, ncontribute, npasscuts, ncontribute_no_rad_proton, 
+     >    deForest_flag, Nntu, ncontribute, npasscuts, ncontribute_no_rad_proton,
      >    spect_mode, phsp_mode, base,
      >    extra_dbase_file,tgt_field_file,using_E_arm_montecarlo,using_P_arm_montecarlo,
      >    doing_phsp, using_rad, hard_cuts, doing_hyd_elast, doing_deuterium, doing_heavy,
@@ -94,7 +94,8 @@
      >    which_pion, using_cit_generation, using_Coulomb, using_Eloss,
      >    correct_Eloss, standard_Eloss, correct_raster, do_fermi,using_tgt_field,
      >    electron_arm, hadron_arm, use_first_cer, doing_bound, use_sf, sf_version,
-     >    transparency
+     >    col_flag, transparency
+
 
 ! ........ note: make these first two parameters at least ONE BIGGER than the actual dimensions you want to read in
 	integer*4 ntheorymax,nrhoPmmax
@@ -106,7 +107,7 @@
 	character	theory_file*80, theory_base*40, theory_target*40
 
 	type(axis)::	Pm_theory
-	
+
         type(theory_param) theory_par
 
 

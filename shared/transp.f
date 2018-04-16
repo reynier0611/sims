@@ -62,9 +62,7 @@ C Parameters.
 !	integer*4	max_class
 !	parameter	(max_class = 18)	!max number of classes
 	real*8		coeff_min
-!	parameter	(coeff_min = 1.0d-14)	!coeff's smaller than this = 0
-! WB needed to change this
-	parameter	(coeff_min = 5.0d-14)	!coeff's smaller than this = 0
+	parameter	(coeff_min = 1.0e-14)	!coeff's smaller than this = 0
 
 C Local declarations.
 
@@ -175,9 +173,9 @@ C initial particle's momentum.
 C Pack local copy of input coordinates.
 
 	ray(1) = xs			!cm.	( "X" )
-	ray(2) = dxdzs*1000.d0		!mrad.	( "THETA" )
+	ray(2) = dxdzs*1000.e0		!mrad.	( "THETA" )
 	ray(3) = ys			!cm.	( "Y" )
-	ray(4) = dydzs*1000.d0		!mrad.	( "PHI" )
+	ray(4) = dydzs*1000.e0		!mrad.	( "PHI" )
 	ray(5) = dpps			!Fractional "Delta P/P"
 
 C Reset COSY sums.
@@ -190,9 +188,9 @@ C Compute COSY sums.
 
 	k = class
 	do i = 1,n_terms(spectr,k)
-	  term = 1.0d0
+	  term = 1.0e0
 	  do j = 1,5
-	    temp = 1.0d0
+	    temp = 1.0e0
 	    if (expon(spectr,j,i,k).ne.0.) temp = ray(j)**expon(spectr,j,i,k)
 	    term = term*temp
 	  enddo
@@ -207,9 +205,9 @@ C Unpack output coordinates. Note that DPPS is unchanged by transformation.
 C Pathlength correction: real pathlength=nominal-sum(5), so delta_z=-sum(5)
 
 	xs    = sum(1)			!cm
-	dxdzs = sum(2)/1000.d0		!slope (mr)
+	dxdzs = sum(2)/1000.e0		!slope (mr)
 	ys    = sum(3)			!cm
-	dydzs = sum(4)/1000.d0		!slope (mr)
+	dydzs = sum(4)/1000.e0		!slope (mr)
 	delta_z = -sum(5)		!deltaZ (cm)
 
 C Check for decay in 2nd half of element, which is applied AFTER trasnporting.
@@ -274,7 +272,7 @@ C    SOS: if spectr = 2
 	else if (spectr.eq.4) then
 	  file_name='hrsl/hrs_forward_cosy.dat'
 	else if (spectr.eq.5) then
-	  file_name='shms/SHMS_lq_qd_spl_forward.dat'
+	  file_name='shms/shms_forward_cosy_2011_dipole26cm_dm1.2_nov9.dat'
 	else if (spectr.eq.6) then
 c	  file_name='shms/shms_forward_cosy_LSA.dat'
 	  write(6,*) 'LSA tune for SHMS no longer used!'
@@ -378,69 +376,33 @@ cdg	endif
 	      order = e1 + e2 + e3 + e4
 
 	      if (order.eq.1) then
-		 if (e1.eq.1) then
-		    if (abs(c1-1.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (abs(c2-0.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (abs(c3-0.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (abs(c4-0.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (.not. adrift(spectr,kk)) then
-		       if ((spectr .eq.4) .or. (spectr .eq.3 )) then
-			  if ((kk .eq. 7) .or. (kk .eq.12)) then
-			     print *,spectr, kk, "e1:c1,c2,c3,c4 ", c1,c2, c3, c4
-			  endif
-		       endif
-		    endif
-		 else if (e2.eq.1) then
-		    driftdist(spectr,kk)=1000.d0*c1 !drift distance in cm.
-		    if (abs(c2-1.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (abs(c3-0.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (abs(c4-0.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (.not. adrift(spectr,kk)) then
-		       if ((spectr .eq.4) .or. (spectr .eq.3 )) then
-			  if ((kk .eq. 7) .or. (kk .eq.12)) then
-			     print *,spectr, kk, "e2:c2,c3,c4 ", c2, c3, c4
-			  endif
-		       endif
-		    endif
-		 else if (e3.eq.1) then
-		    if (abs(c1-0.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (abs(c2-0.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (abs(c3-1.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (abs(c4-0.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (.not. adrift(spectr,kk)) then
-		       if ((spectr .eq.4) .or. (spectr .eq.3 )) then
-			  if ((kk .eq. 7) .or. (kk .eq.12)) then
-			     print *,spectr, kk, "e3:c1,c2,c3,c4 ", c1, c2, c3, c4
-			  endif
-		       endif
-		    endif
-		 else if (e4.eq.1) then
-		    if (abs(c1-0.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (abs(c2-0.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (abs(driftdist(spectr,kk)-1000.d0*c3).gt.coeff_min) 
-     1			 adrift(spectr,kk)=.false. 
-		    if (abs(c4-1.d0) .gt. coeff_min) adrift(spectr,kk)=.false.
-		    if (.not. adrift(spectr,kk)) then
-		       if ((spectr .eq.4) .or. (spectr .eq.3 )) then
-			  if ((kk .eq. 7) .or. (kk .eq.12)) then
-			     print *,spectr, kk, "e4:c1,c2,drift3,c4", 
-     1			  c1,c2,c3,(abs(driftdist(spectr,kk))-1000.d0*c3), c4
-			  endif
-		       endif
-		    endif
-		 endif
-	      else		!if order.ne.1
-		 if (.not. adrift(spectr,kk)) then
-		    if (abs(csum).gt.coeff_min) adrift(spectr,kk)=.false.
-		    if ((spectr .eq.4) .or. (spectr .eq.3 )) then
-		       if ((kk .eq. 7) .or. (kk .eq.12)) then
-			  print *,spectr, kk, "fin:csum,coeffmin",abs(csum), coeff_min 
-		       endif
-		    endif
-		 endif
+	        if (e1.eq.1) then
+		  if (abs(c1-1.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		  if (abs(c2-0.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		  if (abs(c3-0.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		  if (abs(c4-0.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		else if (e2.eq.1) then
+		  driftdist(spectr,kk)=1000.e0*c1     !drift distance in cm.
+		  if (abs(c2-1.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		  if (abs(c3-0.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		  if (abs(c4-0.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		else if (e3.eq.1) then
+		  if (abs(c1-0.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		  if (abs(c2-0.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		  if (abs(c3-1.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		  if (abs(c4-0.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		else if (e4.eq.1) then
+		  if (abs(c1-0.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		  if (abs(c2-0.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		  if (abs(driftdist(spectr,kk)-1000.e0*c3).gt.coeff_min) 
+     >					     adrift(spectr,kk)=.false. 
+		  if (abs(c4-1.e0) .gt. coeff_min) adrift(spectr,kk)=.false.
+		endif
+	      else	!if order.ne.1
+		if (abs(csum).gt.coeff_min) adrift(spectr,kk)=.false.
 	      endif
-	   endif
-	   
+	    endif
+
 ! Fetch next line from file.
 
 	    read (chan,1001) str_line

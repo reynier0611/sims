@@ -1,0 +1,2 @@
+for i in *.f; do diff -b ../../simc_gfortran.1/$i $i > `echo $i`_diff; done
+

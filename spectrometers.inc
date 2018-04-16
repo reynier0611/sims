@@ -2,7 +2,7 @@ C flag for forward MEs telling if a transformation is drift-only, and giving
 C the extracted drift length.
 
 	integer*4       max_class               !maximum number of classes.
-	parameter       (max_class = 18)        !must also change in transp.f
+	parameter       (max_class = 41)        !must also change in transp.f
 	integer*4       nspectr
 	parameter       (nspectr=6)
 

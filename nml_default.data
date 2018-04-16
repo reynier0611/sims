@@ -5,7 +5,7 @@
     hadron_arm = 0
     use_first_cer = 0
     extra_dbase_file = ' '
-/ 
+/
  &EXPERIMENT
     Ebeam = 0
     dEbeam = 0
@@ -24,11 +24,11 @@
     use_sf = F
     sf_version = 0
     transparency = 1
- / 
+ /
 
  &DEBUG_PARM
     debug = F,F,F,F,F,F
-/ 
+/
  =?
 
  &TARGET
@@ -50,21 +50,21 @@
     targ_Bangle = 0
     targ_Bphi = 0
     targ_pol = 0
- / 
+ /
  =?
 
  &E_ARM_MAIN
     spec%e%P = 0.
     spec%e%theta = 0.
     spec%e%sig_musc = 1.1e-6, 1.2e-6
- / 
+ /
  =?
 
  &P_ARM_MAIN
     spec%p%P = 0.
     spec%p%theta = 0.
     spec%p%sig_musc = 1.1e-6, 1.2e-6
- / 
+ /
  =?
 
  &E_ARM_OFFSET
@@ -75,7 +75,7 @@
     spec%e%offset%z = 0
     spec%e%offset%xptar = 0
     spec%e%offset%yptar = 0
- / 
+ /
 
  =?
  &P_ARM_OFFSET
@@ -84,14 +84,15 @@
     spec%p%offset%z = 0.
     spec%p%offset%xptar = 0
     spec%p%offset%yptar = 0
- / 
+ /
 
  =?
  &MISC2INT
     use_expon = 0
     one_tail = 0
+    dump_all_in_ntuple = F
     intcor_mode = 0
- / 
+ /
 
  =?
  &SIMULATE
@@ -109,8 +110,8 @@
     using_tgt_field = F
     tgt_field_file = ' '
     mc_smear = F
-    mc_smear_addl = F   
-
+    mc_smear_addl = F
+    col_flag = 0
     ngen = 0
     spect_mode = 0
     cuts%Em%min = 0
@@ -129,7 +130,7 @@
     sigc_kin_max = 1.0
     sigc_kin_ind = 0.0
     drift_to_cal = 0
- / 
+ /
  =?
  &E_ARM_ACCEPT
     SPedge%e%delta%min = -0.01
@@ -138,7 +139,7 @@
     SPedge%e%yptar%max = 0.02
     SPedge%e%xptar%min = -0.03
     SPedge%e%xptar%max = 0.03
- / 
+ /
  =?
  &P_ARM_ACCEPT
     SPedge%p%delta%min = 0
@@ -147,12 +148,11 @@
     SPedge%p%yptar%max = 0
     SPedge%p%xptar%min = 0
     SPedge%p%xptar%max = 0
- / 
+ /
  =?
  &THEORY_CTRL
     theory_par%model = ''
     theory_par%data_file = ''
-    theory_par%FLAGS = 10*F	
+    theory_par%FLAGS = 10*F
     theory_par%parameter = 10*0.
  /
-

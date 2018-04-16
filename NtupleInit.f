@@ -350,29 +350,15 @@
 	  m = m+1
 	  NtupleTag(m) = 'e_pf'	! 63 recon. electron final momentum
 	  m = m+1
-	  NtupleTag(m) = 'h_pfi'! 64 recon. electron final momentum
+	  NtupleTag(m) = 'Ein'	! 64 recon. beam energy
 	  m = m+1
-	  NtupleTag(m) = 'e_pfi'! 65 recon. electron final momentum
+	  NtupleTag(m) = 'theta_rq'	! 65 recoil angle
 	  m = m+1
-	  NtupleTag(m) = 'Ein'	! 66 recon. beam energy
+	  NtupleTag(m) = 'SF_weight_recon'	! 66 spectral function with reconstructed quantities
+	  m = m+1                     ! 67 RCT 8/9/2016 outgoing proton in-plane angle
+          NtupleTag(m) = 'h_Thf'      ! 67 RCT 8/9/2016 outgoing proton in-plane angle
 	  m = m+1
-	  NtupleTag(m) = 'theta_rq'	! 67 recoil angle
-	  m = m+1
-	  NtupleTag(m) = 'SF_weight_recon' ! 68 spectral function with reconstructed quantities
-	  m = m+1 
-	  NtupleTag(m) = 'theta_ei'        ! 69 RCT 5/26/2017 outgoing electron in-plane angle generated
-	  m = m+1
-	  NtupleTag(m) = 'theta_pi'        ! 70 RCT 5/26/2017 outgoing proton n in-plane angle generated
-	  m = m+1
-	  NtupleTag(m) = 'e_spec_p'        ! 71 RCT 5/26/2017 electron spectrometer central momentum
-	  m = m+1
-	  NtupleTag(m) = 'h_spec_p'        ! 72 RCT 5/26/2017 proton   spectrometer central momentum
-	  m = m+1
-	  NtupleTag(m) = 'e_spec_th'       ! 73 RCT 5/26/2017 electron spectrometer central angle
-	  m = m+1
-	  NtupleTag(m) = 'h_spec_th'       ! 74 RCT 5/26/2017 proton   spectrometer central angle  
-	  m = m+1
-	  NtupleTag(m) = 'xB'              ! 75 RCT 5/26/2017 Bjorken x
+	  NtupleTag(m) = 'Ein_v'	! 68 vertex beam energy
 	endif
 
 !	else		!used to be the if (doing_phsp) option.

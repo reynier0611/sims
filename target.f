@@ -34,7 +34,6 @@
 	     write(6,*) 'Force position to max. possible value : ', zpos
 	  endif
 	endif
-
 ! Which particle are we interested in?
 
 	goto (10,20,30) narm

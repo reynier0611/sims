@@ -128,7 +128,8 @@
 	allsum = termC*WC + termT*WT + termS*WS + termI*WI
 	if (deForest_flag.le.0) allsum = allsum/4.0
 	deForest = sigMott(ev%e%E,ev%e%theta,ev%Q2)*ev%p%P*allsum/ebar	!microbarn*(MeV/sr)**2
-	if (debug(5)) write(6,*) 'deForest',GE,GM
+	if (debug(5)) write(6,*) 'deForest: GE,EM, Ei, the, Q2, pf'
+	if (debug(5)) write(6,*) GE,GM,ev%e%E,ev%e%theta,ev%Q2,ev%p%P 
 
 	return
 	end

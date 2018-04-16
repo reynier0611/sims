@@ -60,6 +60,9 @@ names=\
 names=\
 ['pm_0.5_4.2_1.35_11.00',\
  'pm_1.0_4.2_1.35_11.00']
+# special calculations
+names=\
+['werner_h2_example']
 
 # select which type of calculation is done via the extension of
 # input files used
@@ -85,8 +88,8 @@ cc.close()
 
 for name in names:
     # create the file name
-    file_root = name + ext1 + ext2
-    file = file_root + ext3
+    file_root = name + ext3
+    file = name + ext3
     print 'calculate : '+file
     # copy curren input file to current.data
     sh.copy(INDIR+file, INDIR+'current.data')

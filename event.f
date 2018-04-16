@@ -1568,10 +1568,15 @@ C If using Coulomb corrections, include focusing factor
 	  write(6,*)'Ein =',vertex%Ein
 	  write(6,*)'hadron mom =',vertex%p%P
 	  write(6,*)'e mom =',vertex%e%P
+	  write(6,*)'Pmiss =',recon%Pm	  
+	  write(6,*)'Pmiss_v =',vertex%Pm	  
 	  write(6,*)'mass =',Mh
-	  write(6,*)'epsilon =',main%epsilon
-	  write(6,*)'phi_pq =',main%phi_pq
-	  write(6,*)'theta_pq =',main%theta_pq
+	  write(6,*)'epsilon =',recon%epsilon
+	  write(6,*)'phi_pq =',recon%phi_pq
+	  write(6,*)'theta_pq =',recon%theta_pq
+	  write(6,*)'epsilon_v =',main%epsilon
+	  write(6,*)'phi_pq_v =',main%phi_pq
+	  write(6,*)'theta_pq_v =',main%theta_pq
 	  write(6,*)'======================================'
 	endif
 
@@ -1608,6 +1613,16 @@ C If using Coulomb corrections, include focusing factor
 
 	success = .true.
 
+	if (debug(3)) then
+	  write(6,*)'======================================'
+	  write(6,*)'complete_main: cross section'
+	  write(6,*)'SF = ', main%SF_weight
+	  write(6,*)'Jacobian = ', main%jacobian
+	  write(6,*)'Sig_CC =  ', main%sigcc
+	  write(6,*)'Sig = ', main%sig
+	  write(6,*)'======================================'
+	endif
+
 	if (debug(2)) write(6,*)'comp_main: ending, success =',success
 	return
 	end
@@ -1631,7 +1646,7 @@ C If using Coulomb corrections, include focusing factor
 	real*8 theta0,phi0	!central physics angles of spectrometer.
 	real*8 theta,phi	!physics angles for event.
 	real*8 r,sinth,costh,sinph,cosph	!intermediate variables.
-	real*8 tmp, numerator
+	real*8 tmp
 
 	include 'constants.inc'
 
@@ -1649,32 +1664,13 @@ C If using Coulomb corrections, include focusing factor
 	tmp=(costh - dy*sinth*sinph) / r
 	if (abs(tmp).gt.1) write(6,*) 'tmp=',tmp
 	theta = acos( (costh - dy*sinth*sinph) / r )
-
-	
-! ========================================================================
-! B. Schmookler & RCT (March 13th 2017)
 	if (dx.ne.0.0) then
-	  numerator = dy*costh + sinth*sinph
-	  phi = atan( numerator / dx )	!gives -90 to 90 deg.
-	
-	  if(dx.gt.0.0) then
-	    if(numerator.lt.0.0) phi = phi + twopi
-	  elseif(dx.lt.0.0) then
-	    phi = phi + pi
-	  endif
+	  phi = atan( (dy*costh + sinth*sinph) / dx )	!gives -90 to 90 deg.
+	  if (phi.le.0) phi=phi+pi			!make 0 to 180 deg.
+	  if (sinph.lt.0.) phi=phi+pi		!add pi to phi for HMS
 	else
-	   phi = phi0
+	  phi = phi0
 	endif
-
-!	if (dx.ne.0.0) then
-!          phi = atan( (dy*costh + sinth*sinph) / dx )   !gives -90 to 90 deg.
-!          if (phi.le.0) phi=phi+pi                      !make 0 to 180 deg.
-!          if (sinph.lt.0.) phi=phi+pi           !add pi to phi for HMS
-!        else
-!          phi = phi0
-!        endif
-! ========================================================================
-
 	return
 	end
 

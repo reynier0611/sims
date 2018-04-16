@@ -1,0 +1,14 @@
+
+# kinematics list
+#
+#! kin[s,0]/ calc[s,2]/
+ b40 fsi
+ b50 fsi
+
+ c20 fsi
+ c40 fsi
+
+ d20 fsi
+ d40 fsi
+ d50 fsi
+

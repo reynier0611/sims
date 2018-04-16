@@ -1,1 +1,0 @@
- gfortran -c -O -W -ff2c -fno-automatic -fdefault-real-8 -ffixed-line-length-132 simc.f

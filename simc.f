@@ -10,6 +10,7 @@
 	implicit none
 !	include 'simulate_init.inc'
 	include 'simulate.inc'
+	include 'g_dump_all_events.inc'
 	include 'histograms_init.inc'
 	include 'radc.inc'
 	include 'hbook.inc'
@@ -34,7 +35,6 @@
 	type(histograms)::	H
 	type(event_central)::	central
 	type(sums_twoarm)::	sumerr, sumerr2, aveerr, resol
-
 	real*8 one
 	parameter (one=1.0d0)	!double precision 1 for subroutine calls
 
@@ -201,6 +201,15 @@ cdg	call time (timestring1(11:23))
 ! Run the event through various manipulations, checking to see whether
 ! it made it at each stage
 
+! When dumping all events, at least require that the generation step
+! is successful...
+
+      if(dump_all_in_ntuple .and. success) then
+        dump_all_this_ev = .true.
+      else
+        dump_all_this_ev = .false.
+      endif
+
 ! ... run through spectrometers and check SP cuts
 
 	  if(debug(3)) write(6,*)'sim: before mc: orig.p.E =',orig%p%E
@@ -208,16 +217,22 @@ cdg	call time (timestring1(11:23))
 	  if(debug(2)) write(6,*)'sim: after mc, success =',success
 
 ! ... calculate everything else about the event
-
-	  if (success) then
-	    call complete_recon_ev(recon,success)
-	  endif
+      if (success .or. dump_all_this_ev) then
+	      temp_success = success
+        call complete_recon_ev(recon,success)
+        if (.not.temp_success .and. success) success = temp_success
+      endif
 
 	  if(debug(2)) write(6,*)'sim: after comp_ev, success =',success
 	  if(debug(5)) write(6,*) 'recon%Em,recon%Pm',recon%Em,recon%Pm
 ! ... calculate remaining pieces of the main structure
 
-	  if (success) call complete_main(.false.,main,vertex,vertex0,recon,success)
+      if (success .or. dump_all_this_ev) then
+        temp_success = success
+        call complete_main(.false.,main,vertex,vertex0,recon,success)
+        if (.not.temp_success .and. success) success = temp_success
+      endif
+
 ! ... Apply SPedge cuts to success if hard_cuts is set.
 	    pass_cuts = .not. (
      >	      recon%e%delta .le. (SPedge%e%delta%min+slop%MC%e%delta%used) .or.
@@ -880,9 +895,9 @@ c	  write(7,*) 'BP thingie in/out     ',shmsSTOP_BP_in,shmsSTOP_BP_out
      >          'doing_deutrho', doing_deutrho, 'doing_herho', doing_herho
 	write(iun,'(5x,(2x,a19,''='',l2),2(2x,a19,''='',i2))') 'mc_smear',
      >		mc_smear,'electron_arm',electron_arm,'hadron_arm',hadron_arm
-	write(iun,'(5x,3(2x,a19,''='',l2)))') 'using_Eloss', using_Eloss,
+	write(iun,'(5x,3(2x,a19,''='',l2))') 'using_Eloss', using_Eloss,
      >		'using_Coulomb',using_Coulomb,'deForest_flag',deForest_flag
-	write(iun,'(5x,3(2x,a19,''='',l2)))') 'correct_Eloss', correct_Eloss,
+	write(iun,'(5x,3(2x,a19,''='',l2))') 'correct_Eloss', correct_Eloss,
      >		'correct_raster',correct_raster, 'doing_decay', doing_decay
 	write(iun,'(5x,2(2x,a19,''='',l2))')
      >		'using_E_arm_montecarlo', using_E_arm_montecarlo,
@@ -1479,12 +1494,12 @@ C DJG moved this to the last part of generate!!!
 	    call mc_hrsr(spec%p%P, spec%p%theta, delta_P_arm, x_P_arm,
      >		y_P_arm, z_P_arm, dx_P_arm, dy_P_arm, xfp, dxfp, yfp, dyfp,
      >		m2, mc_smear, mc_smear, doing_decay,
-     >		ntup%resfac, fry, ok_P_arm, pathlen)
+     >		ntup%resfac, fry, ok_P_arm, pathlen, col_flag)
 	  else if (hadron_arm.eq.4) then
 	    call mc_hrsl(spec%p%P, spec%p%theta, delta_P_arm, x_P_arm,
      >		y_P_arm, z_P_arm, dx_P_arm, dy_P_arm, xfp, dxfp, yfp, dyfp,
      >		m2, mc_smear, mc_smear, doing_decay,
-     >		ntup%resfac, fry, ok_P_arm, pathlen)
+     >		ntup%resfac, fry, ok_P_arm, pathlen, col_flag)
 	  else if (hadron_arm.eq.5 .or. hadron_arm.eq.6) then
 	    call mc_shms(spec%p%P, spec%p%theta, delta_P_arm, x_P_arm,
      >		y_P_arm, z_P_arm, dx_P_arm, dy_P_arm, xfp, dxfp, yfp, dyfp,
@@ -1694,12 +1709,12 @@ C	  recon%p%delta = (recon%p%P-spec%p%P)/spec%p%P*100.
 	    call mc_hrsr(spec%e%P, spec%e%theta, delta_E_arm, x_E_arm,
      >		y_E_arm, z_E_arm, dx_E_arm, dy_E_arm, xfp, dxfp, yfp, dyfp,
      >		me2, mc_smear, mc_smear, .false.,
-     >		tmpfact, fry, ok_E_arm, pathlen)
+     >		tmpfact, fry, ok_E_arm, pathlen, col_flag)
 	  else if (electron_arm.eq.4) then
 	    call mc_hrsl(spec%e%P, spec%e%theta, delta_E_arm, x_E_arm,
      >		y_E_arm, z_E_arm, dx_E_arm, dy_E_arm, xfp, dxfp, yfp, dyfp,
      >		me2, mc_smear, mc_smear, .false.,
-     >		tmpfact, fry, ok_E_arm, pathlen)
+     >		tmpfact, fry, ok_E_arm, pathlen, col_flag)
 	  else if (electron_arm.eq.5 .or. electron_arm.eq.6) then
 	    call mc_shms(spec%e%P, spec%e%theta, delta_E_arm, x_E_arm,
      >		y_E_arm, z_E_arm, dx_E_arm, dy_E_arm, xfp, dxfp, yfp, dyfp,

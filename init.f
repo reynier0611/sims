@@ -155,6 +155,7 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 ! ... get slop values for the difference between orig and recon
 ! ... SPECTROMETER quantities (recon inaccuracies due to the montecarlos)
 
+	
 	if (using_E_arm_montecarlo) then
 	  if (electron_arm.eq.1) then
 	    slop%MC%e%delta%used = slop_param_d_HMS
@@ -854,8 +855,9 @@ c	exponentiate = use_expon
 
 	real*8 Pm_values(ntheorymax), absorption
 	integer m,n,iok, do_fsi, interpol
+	logical save_grid, use_binary_file
 	logical success
-
+	
 ! ... open the file
 	if ( nint(targ%A) .eq. 2) then
 	   ! various deuteron models, here for laget model
@@ -863,13 +865,13 @@ c	exponentiate = use_expon
 	      doing_deuterium = .TRUE.
 	   endif
 	   ! this is redundant for the laget model and is the default model
-	   theory_file='./SF_files/h2.theory'
+	   theory_file='h2.theory'
 	else if ( nint(targ%A) .eq. 12) then
-	  theory_file='./SF_files/c12.theory'
+	  theory_file='c12.theory'
 	else if ( nint(targ%A) .eq. 56) then
-	  theory_file='./SF_files/fe56.theory'
+	  theory_file='fe56.theory'
 	else if ( nint(targ%A) .eq. 197) then
-	  theory_file='./SF_files/au197.theory'
+	  theory_file='au197.theory'
 
 !---------------------------------------------------------------------
 	! RCT 8/5/2016 This simc version uses a Spectral Function for
@@ -877,13 +879,13 @@ c	exponentiate = use_expon
 	! uses c12.theory just to set the Pmiss range
 	else if ( nint(targ%A) .eq. 3) then
 	  write(6,*) 'Defaulting to c12.theory to set Pmiss range'
-	  theory_file='./SF_files/c12.theory'
+	  theory_file='c12.theory'
 !---------------------------------------------------------------------
 
 	else
 	  write(6,*) 'No Theory File (spectral function) for A = ',targ%A
 	  write(6,*) 'Defaulting to c12.theory'
-	  theory_file='./SF_files/c12.theory'
+	  theory_file='c12.theory'
 	endif
 
 c	open(unit=1,file=theory_file,status='old',readonly,shared,iostat=iok)
@@ -950,9 +952,14 @@ c	open(unit=1,file=theory_file,status='old',readonly,shared,iostat=iok)
 				! initialize LAGET model
 	   do_fsi =  theory_par%parameter(1) !! 0 = PWIA, 1 = FSI
 	   interpol =  theory_par%parameter(2) !! 1 linear, 2 = log
-           call init_laget( theory_par%data_file, do_fsi, interpol )
+	   use_binary_file = (int(theory_par%parameter(3)) .eq. 1) !! 1 = use binary file
+	   save_grid =  .False.
+!           call init_laget( theory_par%data_file, do_fsi, interpol )
+	   call init_laget( theory_par%data_file, do_fsi, interpol,
+     >                      save_grid, use_binary_file)
 	endif
 	      
+	
 
 ! ... we made it
 	success=.true.

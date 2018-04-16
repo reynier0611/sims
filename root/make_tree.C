@@ -6,10 +6,10 @@
 #include <iostream>
 #include <fstream>
 
-#include "TROOT.h"
-#include "TFile.h"
-#include "TString.h"
-#include "TTree.h"
+#include <TROOT.h>
+#include <TFile.h>
+#include <TString.h>
+#include <TTree.h>
 
 using namespace std;
 
