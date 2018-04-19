@@ -556,7 +556,7 @@ C Call energy loss here - just before sending on to the spectrometers.
 ! ---------------------------------------------------------------------------------------------------------
 	elseif (doing_deuterium .or. (doing_heavy .and. doing_bound)) then	!need Ep, and a jacobian.
 
-	  vertex%Em = targ%Mtar_struck + targ%Mrec - targ%M	!=2.2249 MeV
+	  vertex%Em = targ%Mtar_struck + targ%Mrec - targ%M	! = binding energy
 	  vertex%Mrec = targ%M - targ%Mtar_struck + vertex%Em	!=targ.Mrec
 
 	  a = -1.*vertex%q*(vertex%uq%x*vertex%up%x+vertex%uq%y*vertex%up%y+vertex%uq%z*vertex%up%z)
