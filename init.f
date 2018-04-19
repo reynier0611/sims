@@ -325,10 +325,15 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 	  VERTEXedge%Pm%max = 0.0
 ! -------------------------------------------------------------------------------------------
 	else if (doing_deuterium .or.(doing_heavy.and.doing_bound)) then
-	  VERTEXedge%Em%min = Mp + Mn - targ%M		!2.2249 MeV, if deuterium, I hope.
-	  VERTEXedge%Em%max = Mp + Mn - targ%M
-	  VERTEXedge%Pm%min = 0.0
-	  VERTEXedge%Pm%max = max(abs(Pm_theory(1)%min),abs(Pm_theory(1)%max))
+	  if(doing_deuterium) then
+	      VERTEXedge%Em%min = Mp + Mn - targ%M		!2.2249 MeV, if deuterium, I hope
+	      VERTEXedge%Em%max = Mp + Mn - targ%M
+	  else
+	      VERTEXedge%Em%min = Mp + targ%Mrec - targ%M
+	      VERTEXedge%Em%max = Mp + targ%Mrec - targ%M
+	  endif
+	      VERTEXedge%Pm%min = 0.0
+	      VERTEXedge%Pm%max = max(abs(Pm_theory(1)%min),abs(Pm_theory(1)%max))
 ! -------------------------------------------------------------------------------------------
 	else if (doing_heavy .and.(.not.doing_bound)) then
 	  VERTEXedge%Pm%min=0.0
