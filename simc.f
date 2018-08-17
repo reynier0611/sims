@@ -94,7 +94,20 @@ c
 	if (debug(4)) write(6,*)'sim: at 2'
 
 ! ... Note: EXPER.charge is in mC and the luminosity comes out in fm^-2
-! ...   now luminosity is in ub^-1
+
+! ----------------------------------------------------------------------------
+! RCT: Nothing changed, just a note:
+! luminosity has to be in units of ub^-1
+! charge will be in units of mC
+! therefore, targetfac has to be in units of ub*mC
+! to achieve this, targetfac has to be:
+! (target mass in amu)/(target thickness in mg/cm^2)/(conversion factor)
+! this implies that the conversion factor has to be in units of:
+! ub*mC*(mg/cm^2)/amu
+! this can be achieved with the following conversion factor:
+! (6.022E+20 amu/mg)(1E-30 cm^2/ub)/(e charge in mC)
+! (6.022E+20 amu/mg)(1E-30 cm^2/ub)/(1.60218E-16 mC)
+! this factor comes out to be: 3.75914E+06 
 
 	luminosity = EXPER%charge/targetfac
 	if (debug(4)) write(6,*)'sim: at 3'
