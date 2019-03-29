@@ -328,6 +328,9 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 	  if(doing_deuterium) then
 	      VERTEXedge%Em%min = Mp + Mn - targ%M		!2.2249 MeV, if deuterium, I hope
 	      VERTEXedge%Em%max = Mp + Mn - targ%M
+	  else if(targ%A.eq.3 .and. targ%Z.eq.2) then
+	      VERTEXedge%Em%min = 5.494 ! MeV --> mp + mD - m3He
+	      VERTEXedge%Em%max = 5.494 ! MeV --> mp + mD - m3He
 	  else
 	      VERTEXedge%Em%min = Mp + targ%Mrec - targ%M
 	      VERTEXedge%Em%max = Mp + targ%Mrec - targ%M
@@ -342,7 +345,13 @@ c	  targ%Coulomb%max = targ%Coulomb_constant * 3.0
 	    t1=max(abs(Pm_theory(i)%min),abs(Pm_theory(i)%max))
 	    VERTEXedge%Pm%max = max(VERTEXedge%Pm%max,t1)
 	  enddo
-	  VERTEXedge%Em%min = E_Fermi
+	  if(targ%A.eq.3 .and. targ%Z.eq.2) then
+	    VERTEXedge%Em%min = 7.719 ! MeV --> 2*mp + mn - m3He
+	  else if(targ%A.eq.3 .and. targ%Z.eq.1) then
+	    VERTEXedge%Em%min = 8.484 ! MeV --> 2*mn + mp - m3He
+	  else
+	    VERTEXedge%Em%min = E_Fermi
+	  endif
 	  VERTEXedge%Em%max = 1000.	!Need Egamma_tot_max for good limit.
 ! -------------------------------------------------------------------------------------------
 	else if (doing_hydpi .or. doing_hydkaon .or. doing_hyddelta .or. doing_hydrho) then
