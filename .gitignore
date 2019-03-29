@@ -1,0 +1,5 @@
+simc
+*.o
+infiles/*.data
+*.sh
+outfiles
