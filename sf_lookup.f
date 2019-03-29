@@ -67,7 +67,7 @@
 	do iPm = 1 , numPm
 	  sfnorm(iPm) = 0.0
 	  do iEm = 1 , numEm
-	    sfnorm(iPm) = sfnorm(iPm) + sfval(iEm,iPm)
+	    sfnorm(iPm) = sfnorm(iPm) + sfval(iEm,iPm)	
 	    sftotnorm = sftotnorm + sfval(iEm,iPm)
 	  enddo
 

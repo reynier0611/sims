@@ -1600,6 +1600,7 @@ C If using Coulomb corrections, include focusing factor
      >                   main%coul_corr
 	endif
 	main%weight = main%weight * tgtweight	!correct for #/nucleons involved
+
 ! ============================================================
 	if ((doing_kaon.or.doing_semika) .and. .not.doing_decay) 
      >		main%weight = main%weight*survivalprob

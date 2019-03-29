@@ -110,6 +110,7 @@ c
 ! this factor comes out to be: 3.75914E+06 
 
 	luminosity = EXPER%charge/targetfac
+	write(6,*) 'Luminosity = ',luminosity,' micro-barn^{-1}'
 	if (debug(4)) write(6,*)'sim: at 3'
 
 ! ... initialize the random number generator and number of attempts

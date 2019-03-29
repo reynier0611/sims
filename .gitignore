@@ -3,3 +3,8 @@ simc
 infiles/*.data
 *.sh
 outfiles
+output
+infiles/Tritium/
+infiles/current.data
+infiles/nathaly/
+worksim/current.data
